@@ -1,0 +1,12 @@
+{
+  "name": "crushingviz",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.19.1",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
