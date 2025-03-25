@@ -134,4 +134,4 @@ dist
 !.env.project
 !.env.vault
 .~lock*
-*.csv
+packages/history-of-violence/data
