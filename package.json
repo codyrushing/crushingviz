@@ -2,9 +2,16 @@
   "name": "crushingviz",
   "module": "index.ts",
   "type": "module",
+  "workspaces": [
+    "packages/data"
+  ],
   "scripts": {
     "secrets:pull": "dotenv-vault pull",
-    "secrets:push": "dotenv-vault push"
+    "secrets:push": "dotenv-vault push",
+    "types:generate": "cd packages/api && tygo generate",
+    "dev:api": "cd packages/api && go run .",
+    "dev:web": "npm run types:generate && cd packages/web && astro dev",
+    "build": "npm run types:generate && cd packages/web && astro build"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.19.1",
@@ -14,5 +21,7 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "astro": "^5.16.6"
+  }
 }

@@ -1,27 +1,43 @@
-## crushingviz
+# Astro Starter Kit: Minimal
 
-Notes on the ACLED methodology: https://acleddata.com/knowledge-base/faqs-acled-fatality-methodology/
-* > the data cannot generally be used to estimate the number of deaths caused or suffered by one actor or another in a conflict, as a single event may contain information on fatalities caused or suffered by both parties in a battle. The exception to this is events targeting civilians and protesters, who are by definition not engaging in violence themselves.1 Therefore, the number of fatalities reported for each event involving civilians or protesters as ‘Actor 2’ can be understood as the number of civilians or protesters killed.2
-* > As such, aggregate estimates of “civilian fatalities” in ACLED’s curated data 3do not include civilians that may have died as ‘collateral damage’ during fighting between armed groups or as a result of the remote targeting of armed groups 
-* Palestine/Israel data go back to Jan 2016
-* There are specialized curated datasets for attacks on media journalists, health workers, women, and civilians here https://acleddata.com/curated-data-files/#media
-* > ACLED emphasizes that fatalities are often a poor approximation of a conflict’s form and impact. They are often debated and can vary widely. Conflict actors may overstate or under-report fatalities to appear strong to the opposition or to minimize international backlash.... Event counts can be one alternative to fatality counts. The relationship between conflict events and fatalities is not consistent. Some conflicts have relatively fewer events yet the number of reported fatalities is high, such as in Afghanistan. 
-* https://www.politico.eu/article/israel-hamas-gaza-a-fixation-on-death-tolls-can-be-a-fatal-distraction/
-* https://acleddata.com/2023/10/10/fact-sheet-israel-and-palestine-conflict/
-* https://www.uu.se/en/news/2024/2024-06-05-mapping-the-death-toll-in-gaza
-
-## Development
-
-https://dbdiagram.io/d/crushingviz-67e04bc275d75cc844257e09
-
-#### Run migrations
-```bash
-cd ./migrate; 
-go run . up;
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-#### Reverse migrations
-```bash
-cd ./migrate; 
-go run . down;
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+
+## 🚀 Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
+
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

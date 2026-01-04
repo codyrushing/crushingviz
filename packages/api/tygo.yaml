@@ -1,0 +1,37 @@
+# You can specify default mappings that will apply to all packages.
+type_mappings:
+  time.Time: "string /* RFC3339 */"
+
+# You can specify more than one package
+packages:
+  # The package path just like you would import it in Go
+  - path: "crushingviz.info/api/types"
+
+    # Where this output should be written to.
+    # If you specify a folder it will be written to a file `index.ts` within that folder. By default it is written into the Golang package folder.
+    output_path: "../web/types/api.ts"
+
+    # Customize the indentation (use \t if you want tabs)
+    indent: "\t"
+
+    # Specify your own custom type translations, useful for custom types, `time.Time` and `null.String`.
+    # By default unrecognized types will be `any`.
+    # A mapping specified here will override one specified globally.
+    # type_mappings:
+    #   time.Time: "string"
+    #   my.Type: "SomeType"
+
+    # This content will be put at the top of the output Typescript file, useful for importing custom types.
+    # frontmatter: |
+    #   "import {SomeType} from "../lib/sometype.ts"
+
+    # # Filenames of Go source files that should not be included
+    # # in the output.
+    # exclude_files:
+    #   - "private_stuff.go"
+
+    # Enum generation style. Supported values: "const" (default), "enum", "union".
+    # "const" generates individual export const declarations (traditional behavior).
+    # "enum" generates TypeScript enum declarations for Go const groups.
+    # "union" generates TypeScript union type declarations for Go const groups.
+    enum_style: "union"
