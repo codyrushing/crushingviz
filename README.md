@@ -7,5 +7,12 @@ Viz projects and data apps
 * Explore geospatial data.
 
 ## Architecture - TBD
-* The `packages/web` Go package powers the web app.
-* Separate cron services will populate data.
+* The `packages/api` - data API written in Go. It is also the source of truth for all types, and `tygo` is used to generate typescript types from them.
+* The `packages/web` - Astro site which does a static build of the site using the above API.
+* `packages/data` - responsible for fetching and ingesting data from various sources into database. These will run on some sort of schedule
+
+## Prerequisites
+* Bun
+* Go
+* [tygo](https://github.com/gzuidhof/tygo)
+  * go install github.com/gzuidhof/tygo@latest
