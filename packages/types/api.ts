@@ -4,46 +4,143 @@
 // source: acled.go
 
 /**
- *  ***************************
- *  * * ACLED CUSTOM DATA TYPES *
- *  * ***************************
+ * DisorderType represents the three broad categories of disorder in ACLED data
  */
 export type DisorderType = string;
-export const Demonstrations: DisorderType = "Demonstrations";
-export const PoliticalViolence: DisorderType = "Political violence";
-export const PoliticalViolenceDemonstrations: DisorderType = "Political violence; Demonstrations";
-export const StrategicDevelopments: DisorderType = "Strategic developments";
-export type EventType = string;
-export const Battles: EventType = "Battles";
-export const Protests: EventType = "Protests";
-export const Riots: EventType = "Riots";
-export const ExplosionsRemoteViolence: EventType = "Explosions / Remote violence";
-export const ViolenceAgainstCivilians: EventType = "Violence against civilians";
-export const StrategicDevelopmentsEvent: EventType = "Strategic developments";
-export type SubEventType = string;
-export const GovernmentRegainsTerritory: SubEventType = "Government regains territory";
-export const NonStateActorOvertakesTerritory: SubEventType = "Non-state actor overtakes territory";
-export const ArmedClash: SubEventType = "Armed clash";
+export const DisorderTypePoliticalViolence: DisorderType = "Political violence";
+export const DisorderTypeDemonstrations: DisorderType = "Demonstrations";
+export const DisorderTypeStrategic: DisorderType = "Strategic developments";
 /**
- * https://acleddata.com/faq-codebook-tools#acleds-aggregated-data-0
+ * EventType represents the six main event classifications in ACLED data
+ */
+export type EventType = string;
+export const EventTypeBattles: EventType = "Battles";
+export const EventTypeProtests: EventType = "Protests";
+export const EventTypeRiots: EventType = "Riots";
+export const EventTypeExplosionsRemoteViolence: EventType = "Explosions/Remote violence";
+export const EventTypeViolenceAgainstCivilians: EventType = "Violence against civilians";
+export const EventTypeStrategicDevelopments: EventType = "Strategic developments";
+/**
+ * SubEventType represents the most detailed event type classification (25 total)
+ */
+export type SubEventType = string;
+/**
+ * Battles sub-event types
+ */
+export const SubEventTypeGovernmentRegainsTerritory: SubEventType = "Government regains territory";
+export const SubEventTypeNonStateActorOvertakesTerritory: SubEventType = "Non-state actor overtakes territory";
+export const SubEventTypeArmedClash: SubEventType = "Armed clash";
+/**
+ * Protests sub-event types
+ */
+export const SubEventTypeExcessiveForceAgainstProtesters: SubEventType = "Excessive force against protesters";
+export const SubEventTypeProtestWithIntervention: SubEventType = "Protest with intervention";
+export const SubEventTypePeacefulProtest: SubEventType = "Peaceful protest";
+/**
+ * Riots sub-event types
+ */
+export const SubEventTypeViolentDemonstration: SubEventType = "Violent demonstration";
+export const SubEventTypeMobViolence: SubEventType = "Mob violence";
+/**
+ * Explosions/Remote violence sub-event types
+ */
+export const SubEventTypeChemicalWeapon: SubEventType = "Chemical weapon";
+export const SubEventTypeAirDroneStrike: SubEventType = "Air/drone strike";
+export const SubEventTypeSuicideBomb: SubEventType = "Suicide bomb";
+export const SubEventTypeShellingArtilleryMissile: SubEventType = "Shelling/artillery/missile attack";
+export const SubEventTypeRemoteExplosiveLandmineIED: SubEventType = "Remote explosive/landmine/IED";
+export const SubEventTypeGrenade: SubEventType = "Grenade";
+/**
+ * Violence against civilians sub-event types
+ */
+export const SubEventTypeSexualViolence: SubEventType = "Sexual violence";
+export const SubEventTypeAttack: SubEventType = "Attack";
+export const SubEventTypeAbductionForcedDisappear: SubEventType = "Abduction/forced disappearance";
+/**
+ * Strategic developments sub-event types
+ */
+export const SubEventTypeAgreement: SubEventType = "Agreement";
+export const SubEventTypeArrests: SubEventType = "Arrests";
+export const SubEventTypeChangeToGroupActivity: SubEventType = "Change to group/activity";
+export const SubEventTypeDisruptedWeaponsUse: SubEventType = "Disrupted weapons use";
+export const SubEventTypeHeadquartersOrBaseEstablished: SubEventType = "Headquarters or base established";
+export const SubEventTypeLootingPropertyDestruction: SubEventType = "Looting/property destruction";
+export const SubEventTypeNonViolentTransferOfTerritory: SubEventType = "Non-violent transfer of territory";
+export const SubEventTypeOther: SubEventType = "Other";
+/**
+ * Region represents ACLED's broad geographic classifications
+ */
+export type Region = string;
+export const RegionMiddleEast: Region = "Middle East";
+export const RegionSouthAsia: Region = "South Asia";
+export const RegionSoutheastAsia: Region = "Southeast Asia";
+export const RegionEastAsia: Region = "East Asia";
+export const RegionCentralAsia: Region = "Central Asia";
+export const RegionCaucasus: Region = "Caucasus and Central Asia";
+export const RegionEasternAfrica: Region = "Eastern Africa";
+export const RegionMiddleAfrica: Region = "Middle Africa";
+export const RegionSouthernAfrica: Region = "Southern Africa";
+export const RegionWesternAfrica: Region = "Western Africa";
+export const RegionEasternEurope: Region = "Eastern Europe";
+export const RegionSoutheasternEurope: Region = "Southeastern Europe";
+export const RegionWesternEurope: Region = "Western Europe";
+export const RegionNorthAmerica: Region = "North America";
+export const RegionCentralAmerica: Region = "Central America";
+export const RegionSouthAmerica: Region = "South America";
+export const RegionCaribbean: Region = "Caribbean";
+export const RegionOceania: Region = "Oceania";
+/**
+ * ACLEDWeeklyAggregate represents aggregated ACLED data organized by week-country-admin1-event type
+ * Events and fatalities are summed across specified geographic and temporal parameters
  */
 export interface ACLEDWeeklyAggregate {
-	week: number /* int64 */;
 	/**
-	 * TODO make this an enum
+	 * Week is the date of the Saturday marking the start of that week of aggregated data (Saturday to Friday)
 	 */
-	region: string;
+	week: string /* RFC3339 */;
+	/**
+	 * Region is the broad geographic classification
+	 */
+	region: Region;
+	/**
+	 * Country is the country or territory identifier
+	 */
 	country: string;
+	/**
+	 * Admin1 is the first-order administrative division (state, province, department, etc.)
+	 */
 	admin1: string;
-	disorderType: DisorderType;
-	eventType: EventType;
-	subEventType: SubEventType;
-	eventCount: number /* uint64 */;
-	fatalityCount: number /* uint64 */;
-	populationExposure: number /* uint64 */;
+	/**
+	 * DisorderType is one of three broad categories: Political violence, Demonstrations, or Strategic developments
+	 */
+	disorder_type: DisorderType;
+	/**
+	 * EventType is one of six main event classifications
+	 */
+	event_type: EventType;
+	/**
+	 * SubEventType is the most detailed event type classification level
+	 */
+	sub_event_type: SubEventType;
+	/**
+	 * Events is the total number of discrete events recorded for the specified week, Admin1, and sub_event_type
+	 */
+	events: number /* uint64 */;
+	/**
+	 * Fatalities is the sum of reported fatalities across the events for this row
+	 */
+	fatalities: number /* uint64 */;
+	/**
+	 * PopulationBest is the best aggregated estimate of people exposed to any events that week
+	 * NOTE: Users should not sum these values as they represent exposure estimates based on proximity
+	 */
+	population_best: number /* uint64 */;
+	/**
+	 * CentroidLongitude is the longitude of the geographic center point for mapping the administrative district
+	 */
+	centroid_longitude: number /* float64 */;
+	/**
+	 * CentroidLatitude is the latitude of the geographic center point for mapping the administrative district
+	 */
+	centroid_latitude: number /* float64 */;
 }
-
-//////////
-// source: something_else.go
-
-export type SomethingElse = string;
