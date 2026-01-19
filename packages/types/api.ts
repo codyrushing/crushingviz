@@ -6,94 +6,99 @@
 /**
  * DisorderType represents the three broad categories of disorder in ACLED data
  */
-export type DisorderType = string;
-export const DisorderTypePoliticalViolence: DisorderType = "Political violence";
-export const DisorderTypeDemonstrations: DisorderType = "Demonstrations";
-export const DisorderTypeStrategic: DisorderType = "Strategic developments";
+export const DisorderTypePoliticalViolence = "Political violence";
+export const DisorderTypeDemonstrations = "Demonstrations";
+export const DisorderTypeStrategic = "Strategic developments";
+export type DisorderType = typeof DisorderTypePoliticalViolence | typeof DisorderTypeDemonstrations | typeof DisorderTypeStrategic;
 /**
  * EventType represents the six main event classifications in ACLED data
  */
-export type EventType = string;
-export const EventTypeBattles: EventType = "Battles";
-export const EventTypeProtests: EventType = "Protests";
-export const EventTypeRiots: EventType = "Riots";
-export const EventTypeExplosionsRemoteViolence: EventType = "Explosions/Remote violence";
-export const EventTypeViolenceAgainstCivilians: EventType = "Violence against civilians";
-export const EventTypeStrategicDevelopments: EventType = "Strategic developments";
+export const EventTypeBattles = "Battles";
+export const EventTypeProtests = "Protests";
+export const EventTypeRiots = "Riots";
+export const EventTypeExplosionsRemoteViolence = "Explosions/Remote violence";
+export const EventTypeViolenceAgainstCivilians = "Violence against civilians";
+export const EventTypeStrategicDevelopments = "Strategic developments";
+export type EventType = typeof EventTypeBattles | typeof EventTypeProtests | typeof EventTypeRiots | typeof EventTypeExplosionsRemoteViolence | typeof EventTypeViolenceAgainstCivilians | typeof EventTypeStrategicDevelopments;
 /**
- * SubEventType represents the most detailed event type classification (25 total)
+ * SubEventType is a marker interface that all sub-event types must implement
  */
-export type SubEventType = string;
+export type SubEventType = any;
 /**
  * Battles sub-event types
  */
-export const SubEventTypeGovernmentRegainsTerritory: SubEventType = "Government regains territory";
-export const SubEventTypeNonStateActorOvertakesTerritory: SubEventType = "Non-state actor overtakes territory";
-export const SubEventTypeArmedClash: SubEventType = "Armed clash";
+export type BattlesSubEventType = string;
+export const BattlesGovernmentRegainsTerritory: BattlesSubEventType = "Government regains territory";
+export const BattlesNonStateActorOvertakesTerritory: BattlesSubEventType = "Non-state actor overtakes territory";
+export const BattlesArmedClash: BattlesSubEventType = "Armed clash";
 /**
  * Protests sub-event types
  */
-export const SubEventTypeExcessiveForceAgainstProtesters: SubEventType = "Excessive force against protesters";
-export const SubEventTypeProtestWithIntervention: SubEventType = "Protest with intervention";
-export const SubEventTypePeacefulProtest: SubEventType = "Peaceful protest";
+export type ProtestsSubEventType = string;
+export const ProtestsExcessiveForceAgainstProtesters: ProtestsSubEventType = "Excessive force against protesters";
+export const ProtestsProtestWithIntervention: ProtestsSubEventType = "Protest with intervention";
+export const ProtestsPeacefulProtest: ProtestsSubEventType = "Peaceful protest";
 /**
  * Riots sub-event types
  */
-export const SubEventTypeViolentDemonstration: SubEventType = "Violent demonstration";
-export const SubEventTypeMobViolence: SubEventType = "Mob violence";
+export type RiotsSubEventType = string;
+export const RiotsViolentDemonstration: RiotsSubEventType = "Violent demonstration";
+export const RiotsMobViolence: RiotsSubEventType = "Mob violence";
 /**
  * Explosions/Remote violence sub-event types
  */
-export const SubEventTypeChemicalWeapon: SubEventType = "Chemical weapon";
-export const SubEventTypeAirDroneStrike: SubEventType = "Air/drone strike";
-export const SubEventTypeSuicideBomb: SubEventType = "Suicide bomb";
-export const SubEventTypeShellingArtilleryMissile: SubEventType = "Shelling/artillery/missile attack";
-export const SubEventTypeRemoteExplosiveLandmineIED: SubEventType = "Remote explosive/landmine/IED";
-export const SubEventTypeGrenade: SubEventType = "Grenade";
+export type ExplosionsRemoteViolenceSubEventType = string;
+export const ExplosionsRemoteViolenceChemicalWeapon: ExplosionsRemoteViolenceSubEventType = "Chemical weapon";
+export const ExplosionsRemoteViolenceAirDroneStrike: ExplosionsRemoteViolenceSubEventType = "Air/drone strike";
+export const ExplosionsRemoteViolenceSuicideBomb: ExplosionsRemoteViolenceSubEventType = "Suicide bomb";
+export const ExplosionsRemoteViolenceShellingArtilleryMissile: ExplosionsRemoteViolenceSubEventType = "Shelling/artillery/missile attack";
+export const ExplosionsRemoteViolenceRemoteExplosiveLandmineIED: ExplosionsRemoteViolenceSubEventType = "Remote explosive/landmine/IED";
+export const ExplosionsRemoteViolenceGrenade: ExplosionsRemoteViolenceSubEventType = "Grenade";
 /**
  * Violence against civilians sub-event types
  */
-export const SubEventTypeSexualViolence: SubEventType = "Sexual violence";
-export const SubEventTypeAttack: SubEventType = "Attack";
-export const SubEventTypeAbductionForcedDisappear: SubEventType = "Abduction/forced disappearance";
+export type ViolenceAgainstCiviliansSubEventType = string;
+export const ViolenceAgainstCiviliansSexualViolence: ViolenceAgainstCiviliansSubEventType = "Sexual violence";
+export const ViolenceAgainstCiviliansAttack: ViolenceAgainstCiviliansSubEventType = "Attack";
+export const ViolenceAgainstCiviliansAbductionForcedDisappear: ViolenceAgainstCiviliansSubEventType = "Abduction/forced disappearance";
 /**
  * Strategic developments sub-event types
  */
-export const SubEventTypeAgreement: SubEventType = "Agreement";
-export const SubEventTypeArrests: SubEventType = "Arrests";
-export const SubEventTypeChangeToGroupActivity: SubEventType = "Change to group/activity";
-export const SubEventTypeDisruptedWeaponsUse: SubEventType = "Disrupted weapons use";
-export const SubEventTypeHeadquartersOrBaseEstablished: SubEventType = "Headquarters or base established";
-export const SubEventTypeLootingPropertyDestruction: SubEventType = "Looting/property destruction";
-export const SubEventTypeNonViolentTransferOfTerritory: SubEventType = "Non-violent transfer of territory";
-export const SubEventTypeOther: SubEventType = "Other";
+export type StrategicDevelopmentsSubEventType = string;
+export const StrategicDevelopmentsAgreement: StrategicDevelopmentsSubEventType = "Agreement";
+export const StrategicDevelopmentsArrests: StrategicDevelopmentsSubEventType = "Arrests";
+export const StrategicDevelopmentsChangeToGroupActivity: StrategicDevelopmentsSubEventType = "Change to group/activity";
+export const StrategicDevelopmentsDisruptedWeaponsUse: StrategicDevelopmentsSubEventType = "Disrupted weapons use";
+export const StrategicDevelopmentsHeadquartersOrBaseEstablished: StrategicDevelopmentsSubEventType = "Headquarters or base established";
+export const StrategicDevelopmentsLootingPropertyDestruction: StrategicDevelopmentsSubEventType = "Looting/property destruction";
+export const StrategicDevelopmentsNonViolentTransferOfTerritory: StrategicDevelopmentsSubEventType = "Non-violent transfer of territory";
+export const StrategicDevelopmentsOther: StrategicDevelopmentsSubEventType = "Other";
 /**
  * Region represents ACLED's broad geographic classifications
  */
-export type Region = string;
-export const RegionMiddleEast: Region = "Middle East";
-export const RegionSouthAsia: Region = "South Asia";
-export const RegionSoutheastAsia: Region = "Southeast Asia";
-export const RegionEastAsia: Region = "East Asia";
-export const RegionCentralAsia: Region = "Central Asia";
-export const RegionCaucasus: Region = "Caucasus and Central Asia";
-export const RegionEasternAfrica: Region = "Eastern Africa";
-export const RegionMiddleAfrica: Region = "Middle Africa";
-export const RegionSouthernAfrica: Region = "Southern Africa";
-export const RegionWesternAfrica: Region = "Western Africa";
-export const RegionEasternEurope: Region = "Eastern Europe";
-export const RegionSoutheasternEurope: Region = "Southeastern Europe";
-export const RegionWesternEurope: Region = "Western Europe";
-export const RegionNorthAmerica: Region = "North America";
-export const RegionCentralAmerica: Region = "Central America";
-export const RegionSouthAmerica: Region = "South America";
-export const RegionCaribbean: Region = "Caribbean";
-export const RegionOceania: Region = "Oceania";
+export const RegionMiddleEast = "Middle East";
+export const RegionSouthAsia = "South Asia";
+export const RegionSoutheastAsia = "Southeast Asia";
+export const RegionEastAsia = "East Asia";
+export const RegionCentralAsia = "Central Asia";
+export const RegionCaucasus = "Caucasus and Central Asia";
+export const RegionEasternAfrica = "Eastern Africa";
+export const RegionMiddleAfrica = "Middle Africa";
+export const RegionSouthernAfrica = "Southern Africa";
+export const RegionWesternAfrica = "Western Africa";
+export const RegionEasternEurope = "Eastern Europe";
+export const RegionSoutheasternEurope = "Southeastern Europe";
+export const RegionWesternEurope = "Western Europe";
+export const RegionNorthAmerica = "North America";
+export const RegionCentralAmerica = "Central America";
+export const RegionSouthAmerica = "South America";
+export const RegionCaribbean = "Caribbean";
+export const RegionOceania = "Oceania";
+export type Region = typeof RegionMiddleEast | typeof RegionSouthAsia | typeof RegionSoutheastAsia | typeof RegionEastAsia | typeof RegionCentralAsia | typeof RegionCaucasus | typeof RegionEasternAfrica | typeof RegionMiddleAfrica | typeof RegionSouthernAfrica | typeof RegionWesternAfrica | typeof RegionEasternEurope | typeof RegionSoutheasternEurope | typeof RegionWesternEurope | typeof RegionNorthAmerica | typeof RegionCentralAmerica | typeof RegionSouthAmerica | typeof RegionCaribbean | typeof RegionOceania;
 /**
- * ACLEDWeeklyAggregate represents aggregated ACLED data organized by week-country-admin1-event type
- * Events and fatalities are summed across specified geographic and temporal parameters
+ * ACLEDWeeklyAggregateBase contains the common fields for all aggregated ACLED data
  */
-export interface ACLEDWeeklyAggregate {
+export interface ACLEDWeeklyAggregateBase {
 	/**
 	 * Week is the date of the Saturday marking the start of that week of aggregated data (Saturday to Friday)
 	 */
@@ -120,6 +125,7 @@ export interface ACLEDWeeklyAggregate {
 	event_type: EventType;
 	/**
 	 * SubEventType is the most detailed event type classification level
+	 * This will be one of the concrete sub-event types (BattlesSubEventType, RiotsSubEventType, etc.)
 	 */
 	sub_event_type: SubEventType;
 	/**
@@ -144,3 +150,44 @@ export interface ACLEDWeeklyAggregate {
 	 */
 	centroid_latitude: number /* float64 */;
 }
+/**
+ * BattlesAggregate ensures SubEventType can only be a BattlesSubEventType
+ */
+export interface BattlesAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * ProtestsAggregate ensures SubEventType can only be a ProtestsSubEventType
+ */
+export interface ProtestsAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * RiotsAggregate ensures SubEventType can only be a RiotsSubEventType
+ */
+export interface RiotsAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * ExplosionsRemoteViolenceAggregate ensures SubEventType can only be an ExplosionsRemoteViolenceSubEventType
+ */
+export interface ExplosionsRemoteViolenceAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * ViolenceAgainstCiviliansAggregate ensures SubEventType can only be a ViolenceAgainstCiviliansSubEventType
+ */
+export interface ViolenceAgainstCiviliansAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * StrategicDevelopmentsAggregate ensures SubEventType can only be a StrategicDevelopmentsSubEventType
+ */
+export interface StrategicDevelopmentsAggregate {
+	ACLEDWeeklyAggregateBase: ACLEDWeeklyAggregateBase;
+}
+/**
+ * ACLEDWeeklyAggregate is an alias for ACLEDWeeklyAggregateBase for backwards compatibility
+ * and to make it clear when you're working with the base type directly
+ */
+export type ACLEDWeeklyAggregate = ACLEDWeeklyAggregateBase;

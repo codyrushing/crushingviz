@@ -34,4 +34,4 @@ packages:
     # "const" generates individual export const declarations (traditional behavior).
     # "enum" generates TypeScript enum declarations for Go const groups.
     # "union" generates TypeScript union type declarations for Go const groups.
-    enum_style: "const"
+    enum_style: "union"

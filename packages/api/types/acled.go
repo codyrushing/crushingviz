@@ -31,47 +31,90 @@ const (
 	EventTypeStrategicDevelopments    EventType = "Strategic developments"
 )
 
-// SubEventType represents the most detailed event type classification (25 total)
-type SubEventType string
+// SubEventType is a marker interface that all sub-event types must implement
+type SubEventType interface {
+	subEventType()
+	String() string
+}
+
+// Battles sub-event types
+type BattlesSubEventType string
 
 const (
-	// Battles sub-event types
-	SubEventTypeGovernmentRegainsTerritory      SubEventType = "Government regains territory"
-	SubEventTypeNonStateActorOvertakesTerritory SubEventType = "Non-state actor overtakes territory"
-	SubEventTypeArmedClash                      SubEventType = "Armed clash"
-
-	// Protests sub-event types
-	SubEventTypeExcessiveForceAgainstProtesters SubEventType = "Excessive force against protesters"
-	SubEventTypeProtestWithIntervention         SubEventType = "Protest with intervention"
-	SubEventTypePeacefulProtest                 SubEventType = "Peaceful protest"
-
-	// Riots sub-event types
-	SubEventTypeViolentDemonstration SubEventType = "Violent demonstration"
-	SubEventTypeMobViolence          SubEventType = "Mob violence"
-
-	// Explosions/Remote violence sub-event types
-	SubEventTypeChemicalWeapon               SubEventType = "Chemical weapon"
-	SubEventTypeAirDroneStrike               SubEventType = "Air/drone strike"
-	SubEventTypeSuicideBomb                  SubEventType = "Suicide bomb"
-	SubEventTypeShellingArtilleryMissile     SubEventType = "Shelling/artillery/missile attack"
-	SubEventTypeRemoteExplosiveLandmineIED   SubEventType = "Remote explosive/landmine/IED"
-	SubEventTypeGrenade                      SubEventType = "Grenade"
-
-	// Violence against civilians sub-event types
-	SubEventTypeSexualViolence            SubEventType = "Sexual violence"
-	SubEventTypeAttack                    SubEventType = "Attack"
-	SubEventTypeAbductionForcedDisappear  SubEventType = "Abduction/forced disappearance"
-
-	// Strategic developments sub-event types
-	SubEventTypeAgreement                      SubEventType = "Agreement"
-	SubEventTypeArrests                        SubEventType = "Arrests"
-	SubEventTypeChangeToGroupActivity          SubEventType = "Change to group/activity"
-	SubEventTypeDisruptedWeaponsUse            SubEventType = "Disrupted weapons use"
-	SubEventTypeHeadquartersOrBaseEstablished  SubEventType = "Headquarters or base established"
-	SubEventTypeLootingPropertyDestruction     SubEventType = "Looting/property destruction"
-	SubEventTypeNonViolentTransferOfTerritory  SubEventType = "Non-violent transfer of territory"
-	SubEventTypeOther                          SubEventType = "Other"
+	BattlesGovernmentRegainsTerritory      BattlesSubEventType = "Government regains territory"
+	BattlesNonStateActorOvertakesTerritory BattlesSubEventType = "Non-state actor overtakes territory"
+	BattlesArmedClash                      BattlesSubEventType = "Armed clash"
 )
+
+func (BattlesSubEventType) subEventType() {}
+func (b BattlesSubEventType) String() string { return string(b) }
+
+// Protests sub-event types
+type ProtestsSubEventType string
+
+const (
+	ProtestsExcessiveForceAgainstProtesters ProtestsSubEventType = "Excessive force against protesters"
+	ProtestsProtestWithIntervention         ProtestsSubEventType = "Protest with intervention"
+	ProtestsPeacefulProtest                 ProtestsSubEventType = "Peaceful protest"
+)
+
+func (ProtestsSubEventType) subEventType() {}
+func (p ProtestsSubEventType) String() string { return string(p) }
+
+// Riots sub-event types
+type RiotsSubEventType string
+
+const (
+	RiotsViolentDemonstration RiotsSubEventType = "Violent demonstration"
+	RiotsMobViolence          RiotsSubEventType = "Mob violence"
+)
+
+func (RiotsSubEventType) subEventType() {}
+func (r RiotsSubEventType) String() string { return string(r) }
+
+// Explosions/Remote violence sub-event types
+type ExplosionsRemoteViolenceSubEventType string
+
+const (
+	ExplosionsRemoteViolenceChemicalWeapon             ExplosionsRemoteViolenceSubEventType = "Chemical weapon"
+	ExplosionsRemoteViolenceAirDroneStrike             ExplosionsRemoteViolenceSubEventType = "Air/drone strike"
+	ExplosionsRemoteViolenceSuicideBomb                ExplosionsRemoteViolenceSubEventType = "Suicide bomb"
+	ExplosionsRemoteViolenceShellingArtilleryMissile   ExplosionsRemoteViolenceSubEventType = "Shelling/artillery/missile attack"
+	ExplosionsRemoteViolenceRemoteExplosiveLandmineIED ExplosionsRemoteViolenceSubEventType = "Remote explosive/landmine/IED"
+	ExplosionsRemoteViolenceGrenade                    ExplosionsRemoteViolenceSubEventType = "Grenade"
+)
+
+func (ExplosionsRemoteViolenceSubEventType) subEventType() {}
+func (e ExplosionsRemoteViolenceSubEventType) String() string { return string(e) }
+
+// Violence against civilians sub-event types
+type ViolenceAgainstCiviliansSubEventType string
+
+const (
+	ViolenceAgainstCiviliansSexualViolence           ViolenceAgainstCiviliansSubEventType = "Sexual violence"
+	ViolenceAgainstCiviliansAttack                   ViolenceAgainstCiviliansSubEventType = "Attack"
+	ViolenceAgainstCiviliansAbductionForcedDisappear ViolenceAgainstCiviliansSubEventType = "Abduction/forced disappearance"
+)
+
+func (ViolenceAgainstCiviliansSubEventType) subEventType() {}
+func (v ViolenceAgainstCiviliansSubEventType) String() string { return string(v) }
+
+// Strategic developments sub-event types
+type StrategicDevelopmentsSubEventType string
+
+const (
+	StrategicDevelopmentsAgreement                     StrategicDevelopmentsSubEventType = "Agreement"
+	StrategicDevelopmentsArrests                       StrategicDevelopmentsSubEventType = "Arrests"
+	StrategicDevelopmentsChangeToGroupActivity         StrategicDevelopmentsSubEventType = "Change to group/activity"
+	StrategicDevelopmentsDisruptedWeaponsUse           StrategicDevelopmentsSubEventType = "Disrupted weapons use"
+	StrategicDevelopmentsHeadquartersOrBaseEstablished StrategicDevelopmentsSubEventType = "Headquarters or base established"
+	StrategicDevelopmentsLootingPropertyDestruction    StrategicDevelopmentsSubEventType = "Looting/property destruction"
+	StrategicDevelopmentsNonViolentTransferOfTerritory StrategicDevelopmentsSubEventType = "Non-violent transfer of territory"
+	StrategicDevelopmentsOther                         StrategicDevelopmentsSubEventType = "Other"
+)
+
+func (StrategicDevelopmentsSubEventType) subEventType() {}
+func (s StrategicDevelopmentsSubEventType) String() string { return string(s) }
 
 // Region represents ACLED's broad geographic classifications
 type Region string
@@ -97,9 +140,8 @@ const (
 	RegionOceania             Region = "Oceania"
 )
 
-// ACLEDWeeklyAggregate represents aggregated ACLED data organized by week-country-admin1-event type
-// Events and fatalities are summed across specified geographic and temporal parameters
-type ACLEDWeeklyAggregate struct {
+// ACLEDWeeklyAggregateBase contains the common fields for all aggregated ACLED data
+type ACLEDWeeklyAggregateBase struct {
 	// Week is the date of the Saturday marking the start of that week of aggregated data (Saturday to Friday)
 	Week time.Time `json:"week"`
 
@@ -119,6 +161,7 @@ type ACLEDWeeklyAggregate struct {
 	EventType EventType `json:"event_type"`
 
 	// SubEventType is the most detailed event type classification level
+	// This will be one of the concrete sub-event types (BattlesSubEventType, RiotsSubEventType, etc.)
 	SubEventType SubEventType `json:"sub_event_type"`
 
 	// Events is the total number of discrete events recorded for the specified week, Admin1, and sub_event_type
@@ -136,4 +179,104 @@ type ACLEDWeeklyAggregate struct {
 
 	// CentroidLatitude is the latitude of the geographic center point for mapping the administrative district
 	CentroidLatitude float64 `json:"centroid_latitude"`
+}
+
+// Type-safe event aggregates with compile-time enforced event/sub-event relationships
+// These wrapper types ensure at compile time that only valid sub-event types are used with their parent event type
+
+// BattlesAggregate ensures SubEventType can only be a BattlesSubEventType
+type BattlesAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType BattlesSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// ProtestsAggregate ensures SubEventType can only be a ProtestsSubEventType
+type ProtestsAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType ProtestsSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// RiotsAggregate ensures SubEventType can only be a RiotsSubEventType
+type RiotsAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType RiotsSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// ExplosionsRemoteViolenceAggregate ensures SubEventType can only be an ExplosionsRemoteViolenceSubEventType
+type ExplosionsRemoteViolenceAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType ExplosionsRemoteViolenceSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// ViolenceAgainstCiviliansAggregate ensures SubEventType can only be a ViolenceAgainstCiviliansSubEventType
+type ViolenceAgainstCiviliansAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType ViolenceAgainstCiviliansSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// StrategicDevelopmentsAggregate ensures SubEventType can only be a StrategicDevelopmentsSubEventType
+type StrategicDevelopmentsAggregate struct {
+	ACLEDWeeklyAggregateBase
+	TypedSubEventType StrategicDevelopmentsSubEventType `json:"-"` // Use this for type-safe access
+}
+
+// ACLEDWeeklyAggregate is an alias for ACLEDWeeklyAggregateBase for backwards compatibility
+// and to make it clear when you're working with the base type directly
+type ACLEDWeeklyAggregate = ACLEDWeeklyAggregateBase
+
+// Helper functions to get all possible sub-event types for each event type
+
+func GetBattlesSubEventTypes() []BattlesSubEventType {
+	return []BattlesSubEventType{
+		BattlesGovernmentRegainsTerritory,
+		BattlesNonStateActorOvertakesTerritory,
+		BattlesArmedClash,
+	}
+}
+
+func GetProtestsSubEventTypes() []ProtestsSubEventType {
+	return []ProtestsSubEventType{
+		ProtestsExcessiveForceAgainstProtesters,
+		ProtestsProtestWithIntervention,
+		ProtestsPeacefulProtest,
+	}
+}
+
+func GetRiotsSubEventTypes() []RiotsSubEventType {
+	return []RiotsSubEventType{
+		RiotsViolentDemonstration,
+		RiotsMobViolence,
+	}
+}
+
+func GetExplosionsRemoteViolenceSubEventTypes() []ExplosionsRemoteViolenceSubEventType {
+	return []ExplosionsRemoteViolenceSubEventType{
+		ExplosionsRemoteViolenceChemicalWeapon,
+		ExplosionsRemoteViolenceAirDroneStrike,
+		ExplosionsRemoteViolenceSuicideBomb,
+		ExplosionsRemoteViolenceShellingArtilleryMissile,
+		ExplosionsRemoteViolenceRemoteExplosiveLandmineIED,
+		ExplosionsRemoteViolenceGrenade,
+	}
+}
+
+func GetViolenceAgainstCiviliansSubEventTypes() []ViolenceAgainstCiviliansSubEventType {
+	return []ViolenceAgainstCiviliansSubEventType{
+		ViolenceAgainstCiviliansSexualViolence,
+		ViolenceAgainstCiviliansAttack,
+		ViolenceAgainstCiviliansAbductionForcedDisappear,
+	}
+}
+
+func GetStrategicDevelopmentsSubEventTypes() []StrategicDevelopmentsSubEventType {
+	return []StrategicDevelopmentsSubEventType{
+		StrategicDevelopmentsAgreement,
+		StrategicDevelopmentsArrests,
+		StrategicDevelopmentsChangeToGroupActivity,
+		StrategicDevelopmentsDisruptedWeaponsUse,
+		StrategicDevelopmentsHeadquartersOrBaseEstablished,
+		StrategicDevelopmentsLootingPropertyDestruction,
+		StrategicDevelopmentsNonViolentTransferOfTerritory,
+		StrategicDevelopmentsOther,
+	}
 }
