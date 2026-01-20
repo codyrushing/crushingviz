@@ -1,0 +1,56 @@
+Project crushingviz {
+  database_type: 'PostgreSQL'
+  Note: 'A collection of data visualization apps'
+}
+
+Table geographic_area {
+  id integer [primary key, not null]
+  acled_code integer [unique]
+  name text [not null]
+  type enum [
+    not null,
+    note: '''
+      "region",
+      "country",
+      "admin_1"
+    '''
+  ]
+  iso string
+  parent integer [ref: > geographic_area.id]
+  geojson jsonb
+}
+
+enum disorder_type {
+  "Political violence"
+  "Demonstrations"
+  "Strategic developments"
+}
+
+enum event_type {
+  "Battles"
+	"Protests"
+	"Riots"
+	"Explosions/Remote violence"
+	"Violence against civilians"
+	"Strategic developments"
+}
+
+Table acled_weekly_agg {
+  week timestamp [not null]
+	region_id integer [not null, ref: > geographic_area.id]
+	country_id integer [ref: > geographic_area.id]
+	admin1_id integer [ref: > geographic_area.id]
+	disorder_type disorder_type [note: 'DisorderType is one of three broad categories: Political violence, Demonstrations, or Strategic developments']
+	event_type event_type [note: 'Protests, Riots, Explosions/Remote violence, Violence against civilians, Strategic developments']
+	event_count integer [note: 'Events is the total number of discrete events recorded for the specified week, Admin1, and sub_event_type']
+	fatalities integer [note: 'Fatalities is the sum of reported fatalities across the events for this row']
+	population_exposure integer [note: 'Population exposure is the best aggregated estimate of people exposed to any events that week. Users should not sum these values as they represent exposure estimates based on proximity']
+	centroid_longitude number
+	centroid_latitude number
+
+	indexes {
+	  (week, region_id, country_id, admin1_id) [pk]
+		(country_id, week)
+		(admin1_id, week)
+	}
+}

@@ -7,9 +7,13 @@ Viz projects and data apps
 * Explore geospatial data.
 
 ## Architecture - TBD
-* The `packages/api` - data API written in Go. It is also the source of truth for all types, and `tygo` is used to generate typescript types from them.
-* The `packages/web` - Astro site which does a static build of the site using the above API.
+* `packages/api` - data API written in Go. It is also the source of truth for any API related-types, and `tygo` is used to generate typescript types from them.
+* `packages/types` - a collection of shared types. API-related types from `packages/api` are converted from Go to TS and output to `packages/types/api.ts`.
+* `packages/web` - Astro site which does a static build of the site using the above API.
 * `packages/data` - responsible for fetching and ingesting data from various sources into database. These will run on some sort of schedule
+
+## Database design
+The database design is documented in the [crushingviz.dbml](crushingviz.dbml) file. This can be dropped into [dbdiagram.io](https://dbdiagram.io/) to create an entity-relationship graph.
 
 ## Prerequisites
 * Bun

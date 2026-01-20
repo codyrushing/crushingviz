@@ -172,7 +172,7 @@ type ACLEDWeeklyAggregateBase struct {
 
 	// PopulationBest is the best aggregated estimate of people exposed to any events that week
 	// NOTE: Users should not sum these values as they represent exposure estimates based on proximity
-	PopulationBest uint64 `json:"population_best"`
+	PopulationExposure uint64 `json:"population_exposure"`
 
 	// CentroidLongitude is the longitude of the geographic center point for mapping the administrative district
 	CentroidLongitude float64 `json:"centroid_longitude"`
