@@ -39,3 +39,14 @@ CREATE TABLE acled_weekly_agg (
 -- Create additional indexes for query optimization
 CREATE INDEX idx_acled_weekly_agg_country_week ON acled_weekly_agg(country_id, week);
 CREATE INDEX idx_acled_weekly_agg_admin1_week ON acled_weekly_agg(admin1_id, week);
+
+-- Create data_job table
+CREATE TABLE data_job (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT NOW(),
+    source TEXT,
+    status TEXT,
+    duration INTEGER,
+    type TEXT NOT NULL,
+    meta JSONB
+);

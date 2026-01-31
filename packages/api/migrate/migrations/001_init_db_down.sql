@@ -1,4 +1,5 @@
 -- Drop tables (order matters due to foreign keys)
+DROP TABLE IF EXISTS data_job;
 DROP TABLE IF EXISTS acled_weekly_agg;
 DROP TABLE IF EXISTS geographic_area;
 

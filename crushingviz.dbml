@@ -54,3 +54,13 @@ Table acled_weekly_agg {
 		(admin1_id, week)
 	}
 }
+
+Table data_job {
+  id integer [pk, increment]
+  created_at timestamp [default: 'now()']
+  source text
+  status text
+  duration integer
+  type text [not null]
+  meta jsonb
+}
