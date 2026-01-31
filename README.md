@@ -20,3 +20,6 @@ The database design is documented in the [crushingviz.dbml](crushingviz.dbml) fi
 * Go
 * [tygo](https://github.com/gzuidhof/tygo)
   * go install github.com/gzuidhof/tygo@latest
+
+## Development
+* `./dev all` starts runs database migrations and starts all services
