@@ -8,5 +8,11 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/pg": "^8.16.0",
+    "pg": "^8.18.0",
+    "puppeteer": "^24.36.1",
+    "xlsx": "^0.18.5"
   }
 }
