@@ -31,6 +31,7 @@ import * as XLSX from 'xlsx';
 import { Pool, type PoolClient } from 'pg';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { DisorderType, EventType, GeographicAreaType, GeographicArea } from '@crushingviz/types'
 
 // Environment variables
 const ACLED_EMAIL = process.env.ACLED_EMAIL!;
@@ -49,32 +50,6 @@ if (!POSTGRES_CONNECTION_STRING) {
 const pool = new Pool({
   connectionString: POSTGRES_CONNECTION_STRING,
 });
-
-// Types
-type DisorderType = 'Political violence' | 'Demonstrations' | 'Strategic developments';
-type EventType = 'Battles' | 'Protests' | 'Riots' | 'Explosions/Remote violence' | 'Violence against civilians' | 'Strategic developments';
-type GeographicAreaType = 'region' | 'country' | 'admin_1';
-
-interface WeeklyAggregate {
-  week: Date;
-  region: string;
-  country: string;
-  admin1: string;
-  disorder_type: DisorderType;
-  event_type: EventType;
-  event_count: number;
-  fatalities: number;
-  population_exposure: number;
-  centroid_longitude: number;
-  centroid_latitude: number;
-}
-
-interface GeographicArea {
-  id: number;
-  name: string;
-  type: GeographicAreaType;
-  acled_code?: number;
-}
 
 // Helper function to parse date from various formats
 function parseDate(dateStr: string): Date {
@@ -415,6 +390,10 @@ async function main() {
 
       return links;
     });
+
+    if (!regionLinks.length) {
+      throw new Error("Failed to find links for region aggregate pages");
+    }
 
     console.log(`Found ${regionLinks.length} regions:`, regionLinks.map(r => r.region).join(', '));
 

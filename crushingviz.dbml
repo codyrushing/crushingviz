@@ -20,6 +20,40 @@ Table geographic_area {
   geojson jsonb
 }
 
+enum geographic_area_type {
+  "region"
+  "country"
+  "admin_1"
+}
+
+enum sub_event_type {
+  "Government regains territory"
+  "Non-state actor overtakes territory"
+  "Armed clash"
+  "Excessive force against protesters"
+  "Protest with intervention"
+  "Peaceful protest"
+  "Violent demonstration"
+  "Mob violence"
+  "Chemical weapon"
+  "Air/drone strike"
+  "Suicide bomb"
+  "Shelling/artillery/missile attack"
+  "Remote explosive/landmine/IED"
+  "Grenade"
+  "Sexual violence"
+  "Attack"
+  "Abduction/forced disappearance"
+  "Agreement"
+  "Arrests"
+  "Change to group/activity"
+  "Disrupted weapons use"
+  "Headquarters or base established"
+  "Looting/property destruction"
+  "Non-violent transfer of territory"
+  "Other"
+}
+
 enum disorder_type {
   "Political violence"
   "Demonstrations"
@@ -42,6 +76,7 @@ Table acled_weekly_agg {
 	admin1_id integer [ref: > geographic_area.id]
 	disorder_type disorder_type [note: 'DisorderType is one of three broad categories: Political violence, Demonstrations, or Strategic developments']
 	event_type event_type [note: 'Protests, Riots, Explosions/Remote violence, Violence against civilians, Strategic developments']
+	sub_event_type sub_event_type [note: 'The most detailed event type classification level']
 	event_count integer [note: 'Events is the total number of discrete events recorded for the specified week, Admin1, and sub_event_type']
 	fatalities integer [note: 'Fatalities is the sum of reported fatalities across the events for this row']
 	population_exposure integer [note: 'Population exposure is the best aggregated estimate of people exposed to any events that week. Users should not sum these values as they represent exposure estimates based on proximity']

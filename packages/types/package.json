@@ -1,5 +1,5 @@
 {
-  "name": "types",
+  "name": "@crushingviz/types",
   "module": "index.ts",
   "type": "module",
   "private": true,

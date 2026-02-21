@@ -2,6 +2,33 @@
 CREATE TYPE geographic_area_type AS ENUM ('region', 'country', 'admin_1');
 CREATE TYPE disorder_type AS ENUM ('Political violence', 'Demonstrations', 'Strategic developments');
 CREATE TYPE event_type AS ENUM ('Battles', 'Protests', 'Riots', 'Explosions/Remote violence', 'Violence against civilians', 'Strategic developments');
+CREATE TYPE sub_event_type AS ENUM (
+    'Government regains territory',
+    'Non-state actor overtakes territory',
+    'Armed clash',
+    'Excessive force against protesters',
+    'Protest with intervention',
+    'Peaceful protest',
+    'Violent demonstration',
+    'Mob violence',
+    'Chemical weapon',
+    'Air/drone strike',
+    'Suicide bomb',
+    'Shelling/artillery/missile attack',
+    'Remote explosive/landmine/IED',
+    'Grenade',
+    'Sexual violence',
+    'Attack',
+    'Abduction/forced disappearance',
+    'Agreement',
+    'Arrests',
+    'Change to group/activity',
+    'Disrupted weapons use',
+    'Headquarters or base established',
+    'Looting/property destruction',
+    'Non-violent transfer of territory',
+    'Other'
+);
 
 -- Create geographic_area table
 CREATE TABLE geographic_area (
@@ -28,6 +55,7 @@ CREATE TABLE acled_weekly_agg (
     admin1_id INTEGER REFERENCES geographic_area(id),
     disorder_type disorder_type,
     event_type event_type,
+    sub_event_type sub_event_type,
     event_count INTEGER,
     fatalities INTEGER,
     population_exposure INTEGER,

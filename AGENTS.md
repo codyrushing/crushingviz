@@ -104,3 +104,6 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+
+## Database schemas
+* The source of truth for database schemas is defined in `crushingviz.dbml`.
