@@ -55,13 +55,13 @@ CREATE TABLE acled_weekly_agg (
     admin1_id INTEGER REFERENCES geographic_area(id),
     disorder_type disorder_type,
     event_type event_type,
-    sub_event_type sub_event_type,
+    sub_event_type sub_event_type NOT NULL,
     event_count INTEGER,
     fatalities INTEGER,
     population_exposure INTEGER,
     centroid_longitude DECIMAL,
     centroid_latitude DECIMAL,
-    PRIMARY KEY (week, region_id, country_id, admin1_id)
+    PRIMARY KEY (week, region_id, country_id, admin1_id, disorder_type, event_type, sub_event_type)
 );
 
 -- Create additional indexes for query optimization

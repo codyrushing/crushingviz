@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# run_with_env — run a command with the repo's .env loaded via dotenvx.
+#
+# Usage:
+#   ./run_with_env <command> [args...]
+#
+# Example:
+#   ./run_with_env bun packages/data/acled/fetch-weekly-aggregates.ts
+#
+# The .env is resolved relative to this script's location, so it works
+# regardless of the current working directory.
+#
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec "$SCRIPT_DIR/node_modules/.bin/dotenvx" run --env-file "$SCRIPT_DIR/.env" -- "$@"

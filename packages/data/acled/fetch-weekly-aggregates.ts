@@ -3,7 +3,7 @@
 /**
 This script fetches the ACLED weekly aggregates.
 
-This data is available as static .xslx files per region which are updated weekly. Use puppeteer to navigate to the ACLED website, login with email and password, and download those files
+This data is available as static .xslx files per region which are updated weekly. Use playwright to navigate to the ACLED website, login with email and password, and download those files
 
 Here is a list of operations this script should complete:
 
@@ -26,12 +26,11 @@ Other notes:
 * The `week` row of each item in the xlsx file may appear in different formats (eg. "11/19/2022", "Nov 19 2022", "2022-11-19", etc).
 **/
 
-import puppeteer, { type Browser, type Page } from 'puppeteer';
+import { chromium, type Browser, type Page } from 'playwright';
 import * as XLSX from 'xlsx';
-import { Pool, type PoolClient } from 'pg';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { DisorderType, EventType, GeographicAreaType, GeographicArea } from '@crushingviz/types'
+import { DisorderType, EventType, SubEventType, GeographicAreaType, GeographicArea } from '@crushingviz/types'
 
 // Environment variables
 const ACLED_EMAIL = process.env.ACLED_EMAIL!;
@@ -46,10 +45,7 @@ if (!POSTGRES_CONNECTION_STRING) {
   throw new Error('POSTGRES_CONNECTION_STRING environment variable is required');
 }
 
-// Database connection pool
-const pool = new Pool({
-  connectionString: POSTGRES_CONNECTION_STRING,
-});
+const sql = new Bun.SQL(POSTGRES_CONNECTION_STRING);
 
 // Helper function to parse date from various formats
 function parseDate(dateStr: string): Date {
@@ -80,9 +76,11 @@ function parseDate(dateStr: string): Date {
   throw new Error(`Unable to parse date: ${dateStr}`);
 }
 
+type Transaction = ReturnType<typeof sql.begin> extends Promise<infer T> ? T : never;
+
 // Helper function to get or create geographic area
 async function getOrCreateGeographicArea(
-  client: PoolClient,
+  tx: Transaction,
   name: string,
   type: GeographicAreaType,
   parentId?: number
@@ -90,49 +88,41 @@ async function getOrCreateGeographicArea(
   const trimmedName = name.trim();
 
   // Try to find existing area
-  let existing;
-  if (parentId) {
-    existing = await client.query<GeographicArea>(
-      'SELECT id FROM geographic_area WHERE name = $1 AND type = $2 AND parent = $3 LIMIT 1',
-      [trimmedName, type, parentId]
-    );
+  let existing: GeographicArea[];
+  if (parentId !== undefined) {
+    existing = await tx`SELECT id FROM geographic_area WHERE name = ${trimmedName} AND type = ${type} AND parent = ${parentId} LIMIT 1`;
   } else {
-    existing = await client.query<GeographicArea>(
-      'SELECT id FROM geographic_area WHERE name = $1 AND type = $2 AND parent IS NULL LIMIT 1',
-      [trimmedName, type]
-    );
+    existing = await tx`SELECT id FROM geographic_area WHERE name = ${trimmedName} AND type = ${type} AND parent IS NULL LIMIT 1`;
   }
 
-  if (existing.rows.length > 0) {
-    return existing.rows[0].id;
+  if (existing.length > 0) {
+    return existing[0].id;
   }
 
   // Create new area
-  const inserted = await client.query<GeographicArea>(
-    'INSERT INTO geographic_area (name, type, parent) VALUES ($1, $2, $3) RETURNING id',
-    [trimmedName, type, parentId || null]
-  );
+  const inserted: GeographicArea[] = await tx`
+    INSERT INTO geographic_area (name, type, parent) VALUES (${trimmedName}, ${type}, ${parentId ?? null}) RETURNING id
+  `;
 
-  return inserted.rows[0].id;
+  return inserted[0].id;
 }
 
 // Helper function to check if filename has changed
 async function hasFilenameChanged(region: string, filename: string): Promise<boolean> {
-  const result = await pool.query<{ meta: any }>(
-    `SELECT meta FROM data_job
-     WHERE type = 'acled_weekly_agg'
-       AND source = $1
-       AND status = 'successful'
-     ORDER BY created_at DESC
-     LIMIT 1`,
-    [region]
-  );
+  const rows: { meta: any }[] = await sql`
+    SELECT meta FROM data_job
+    WHERE type = 'acled_weekly_agg'
+      AND source = ${region}
+      AND status = 'successful'
+    ORDER BY created_at DESC
+    LIMIT 1
+  `;
 
-  if (result.rows.length === 0) {
+  if (rows.length === 0) {
     return true;
   }
 
-  const lastFilename = result.rows[0]?.meta?.filename;
+  const lastFilename = rows[0]?.meta?.filename;
   return lastFilename !== filename;
 }
 
@@ -141,8 +131,6 @@ async function processRegionFile(region: string, filePath: string, filename: str
   const startTime = Date.now();
   let status = 'successful';
   let errorMessage: string | undefined;
-
-  const client = await pool.connect();
 
   try {
     console.log(`Processing ${region} from ${filename}...`);
@@ -159,12 +147,9 @@ async function processRegionFile(region: string, filePath: string, filename: str
 
     console.log(`  Found ${rows.length} rows`);
 
-    // Start transaction
-    await client.query('BEGIN');
-
-    try {
+    await sql.begin(async (tx) => {
       // Get or create region geographic area
-      const regionId = await getOrCreateGeographicArea(client, region, 'region');
+      const regionId = await getOrCreateGeographicArea(tx, region, 'region');
 
       // Cache for geographic areas to avoid duplicate lookups
       const countryCache = new Map<string, number>();
@@ -173,16 +158,17 @@ async function processRegionFile(region: string, filePath: string, filename: str
       // Collect all data for batch insert
       const aggregateData: Array<{
         week: Date;
-        regionId: number;
-        countryId: number | null;
-        admin1Id: number | null;
-        disorderType: DisorderType;
-        eventType: EventType;
-        eventCount: number;
+        region_id: number;
+        country_id: number | null;
+        admin1_id: number | null;
+        disorder_type: DisorderType;
+        event_type: EventType;
+        sub_event_type: SubEventType;
+        event_count: number;
         fatalities: number;
-        popExposure: number;
-        longitude: number;
-        latitude: number;
+        population_exposure: number;
+        centroid_longitude: number;
+        centroid_latitude: number;
       }> = [];
 
       // Process each row and collect data
@@ -194,6 +180,7 @@ async function processRegionFile(region: string, filePath: string, filename: str
           const admin1Name = (row['Admin1'] || row['admin1'] || row['Admin 1'] || '').trim();
           const disorderType = (row['Disorder Type'] || row['disorder_type'] || '').trim() as DisorderType;
           const eventType = (row['Event Type'] || row['event_type'] || '').trim() as EventType;
+          const subEventType = (row['Sub Event Type'] || row['sub_event_type'] || '').trim() as SubEventType;
           const eventCount = parseInt(row['Events'] || row['events'] || row['event_count'] || '0');
           const fatalities = parseInt(row['Fatalities'] || row['fatalities'] || '0');
           const popExposure = parseInt(row['Population Exposure'] || row['population_exposure'] || '0');
@@ -213,7 +200,7 @@ async function processRegionFile(region: string, filePath: string, filename: str
             if (countryCache.has(countryName)) {
               countryId = countryCache.get(countryName)!;
             } else {
-              countryId = await getOrCreateGeographicArea(client, countryName, 'country', regionId);
+              countryId = await getOrCreateGeographicArea(tx, countryName, 'country', regionId);
               countryCache.set(countryName, countryId);
             }
           }
@@ -225,23 +212,24 @@ async function processRegionFile(region: string, filePath: string, filename: str
             if (admin1Cache.has(cacheKey)) {
               admin1Id = admin1Cache.get(cacheKey)!;
             } else {
-              admin1Id = await getOrCreateGeographicArea(client, admin1Name, 'admin_1', countryId);
+              admin1Id = await getOrCreateGeographicArea(tx, admin1Name, 'admin_1', countryId);
               admin1Cache.set(cacheKey, admin1Id);
             }
           }
 
           aggregateData.push({
             week,
-            regionId,
-            countryId,
-            admin1Id,
-            disorderType,
-            eventType,
-            eventCount,
+            region_id: regionId,
+            country_id: countryId,
+            admin1_id: admin1Id,
+            disorder_type: disorderType,
+            event_type: eventType,
+            sub_event_type: subEventType,
+            event_count: eventCount,
             fatalities,
-            popExposure,
-            longitude,
-            latitude,
+            population_exposure: popExposure,
+            centroid_longitude: longitude,
+            centroid_latitude: latitude,
           });
         } catch (rowError) {
           console.error('  Error processing row:', rowError);
@@ -249,87 +237,40 @@ async function processRegionFile(region: string, filePath: string, filename: str
         }
       }
 
-      // Batch insert all aggregates in chunks to avoid hitting parameter limits
-      // PostgreSQL has a limit of 65535 parameters, and each row has 11 fields
-      // So we'll chunk at 5000 rows to be safe (5000 * 11 = 55000 parameters)
-      const BATCH_SIZE = 5000;
       if (aggregateData.length > 0) {
-        console.log(`  Batch inserting ${aggregateData.length} rows in chunks of ${BATCH_SIZE}...`);
-
-        for (let i = 0; i < aggregateData.length; i += BATCH_SIZE) {
-          const chunk = aggregateData.slice(i, i + BATCH_SIZE);
-          console.log(`  Inserting chunk ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(aggregateData.length / BATCH_SIZE)} (${chunk.length} rows)...`);
-
-          // Build the VALUES clause with parameterized queries
-          const values: any[] = [];
-          const placeholders: string[] = [];
-
-          chunk.forEach((data, idx) => {
-            const offset = idx * 11;
-            placeholders.push(
-              `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6}, $${offset + 7}, $${offset + 8}, $${offset + 9}, $${offset + 10}, $${offset + 11})`
-            );
-            values.push(
-              data.week,
-              data.regionId,
-              data.countryId,
-              data.admin1Id,
-              data.disorderType,
-              data.eventType,
-              data.eventCount,
-              data.fatalities,
-              data.popExposure,
-              data.longitude,
-              data.latitude
-            );
-          });
-
-          const query = `
-            INSERT INTO acled_weekly_agg (
-              week, region_id, country_id, admin1_id, disorder_type, event_type,
-              event_count, fatalities, population_exposure, centroid_longitude, centroid_latitude
-            ) VALUES ${placeholders.join(', ')}
-          `;
-
-          await client.query(query, values);
-        }
+        console.log(`  Upserting ${aggregateData.length} rows...`);
+        await tx`
+          INSERT INTO acled_weekly_agg (
+            week, region_id, country_id, admin1_id, disorder_type, event_type, sub_event_type,
+            event_count, fatalities, population_exposure, centroid_longitude, centroid_latitude
+          ) SELECT * FROM json_to_recordset(${JSON.stringify(aggregateData)}::json) AS t(
+            week timestamptz, region_id int, country_id int, admin1_id int,
+            disorder_type text, event_type text, sub_event_type text, event_count int, fatalities int,
+            population_exposure int, centroid_longitude float8, centroid_latitude float8
+          )
+          ON CONFLICT (week, region_id, country_id, admin1_id, disorder_type, event_type, sub_event_type) DO UPDATE SET
+            event_count = EXCLUDED.event_count,
+            fatalities = EXCLUDED.fatalities,
+            population_exposure = EXCLUDED.population_exposure,
+            centroid_longitude = EXCLUDED.centroid_longitude,
+            centroid_latitude = EXCLUDED.centroid_latitude
+        `;
       }
 
-      // Delete old data for this region
-      const deleted = await client.query(
-        `DELETE FROM acled_weekly_agg
-         WHERE region_id = $1
-           AND week < (SELECT MIN(week) FROM (
-             SELECT week FROM acled_weekly_agg WHERE region_id = $1 ORDER BY week DESC LIMIT $2
-           ) AS recent)`,
-        [regionId, rows.length]
-      );
-
-      console.log(`  Deleted ${deleted.rowCount} old rows`);
       console.log(`  Successfully processed ${rows.length} rows for ${region}`);
-
-      // Commit transaction
-      await client.query('COMMIT');
-    } catch (error) {
-      // Rollback on error
-      await client.query('ROLLBACK');
-      throw error;
-    }
+    });
   } catch (error) {
     status = 'failed';
     errorMessage = error instanceof Error ? error.message : String(error);
     console.error(`Error processing ${region}:`, error);
     throw error;
   } finally {
-    client.release();
-
     // Record data job (outside transaction, even if processing failed)
     const duration = Date.now() - startTime;
-    await pool.query(
-      `INSERT INTO data_job (source, status, duration, type, meta)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [region, status, duration, 'acled_weekly_agg', JSON.stringify({ filename, error: errorMessage })]
-    );
+    await sql`
+      INSERT INTO data_job (source, status, duration, type, meta)
+      VALUES (${region}, ${status}, ${duration}, 'acled_weekly_agg', ${JSON.stringify({ filename, error: errorMessage })}::jsonb)
+    `;
   }
 }
 
@@ -341,29 +282,32 @@ async function main() {
     console.log('Starting ACLED weekly aggregates fetch...');
 
     // Launch browser
-    browser = await puppeteer.launch({
+    browser = await chromium.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
-    const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
     // Login
     console.log('Logging in to ACLED...');
-    await page.goto('https://acleddata.com/');
+    await page.goto('https://acleddata.com/user/login');
 
     // Wait for and click login link/button
-    await page.waitForSelector('a[href*="login"], button:has-text("Login"), a:has-text("Login")');
-    await page.click('a[href*="login"], button:has-text("Login"), a:has-text("Login")');
+    const loginWithEmailButton = page.locator('button', { hasText: 'Login with email' });
+    await loginWithEmailButton.click();
 
     // Fill in credentials
-    await page.waitForSelector('input[type="email"], input[name="email"]');
-    await page.type('input[type="email"], input[name="email"]', ACLED_EMAIL);
-    await page.type('input[type="password"], input[name="password"]', ACLED_PASSWORD);
+    console.log('Filling out login form');
+    await page.fill('input[type="email"], input[name="email"]', ACLED_EMAIL);
+    await page.fill('input[type="password"], input[name="password"]', ACLED_PASSWORD);
 
     // Submit form
-    await page.click('button[type="submit"], input[type="submit"]');
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      page.click('input[type="submit"]'),
+    ]);
 
     console.log('Logged in successfully');
 
@@ -429,10 +373,13 @@ async function main() {
           continue;
         }
 
-        // Download file
+        // Download file (uses the context's authenticated cookies)
         const downloadPath = join('/tmp', filename);
-        const response = await page.goto(href);
-        const buffer = await response!.buffer();
+        const response = await page.request.get(href);
+        if (!response.ok()) {
+          throw new Error(`Failed to download ${filename}: ${response.status()} ${response.statusText()}`);
+        }
+        const buffer = await response.body();
         await Bun.write(downloadPath, buffer);
 
         console.log(`  Downloaded to ${downloadPath}`);
@@ -453,7 +400,7 @@ async function main() {
     if (browser) {
       await browser.close();
     }
-    await pool.end();
+    await sql.end();
   }
 }
 

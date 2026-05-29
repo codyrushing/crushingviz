@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -47,6 +48,8 @@ func (m *Migrator) LoadMigrations(dirPath string) error {
 
 	// Clear existing migrations
 	m.migrations = make([]*Migration, 0)
+
+	fmt.Printf("Traversing %s directory\n\n", dirPath)
 
 	err := filepath.Walk(dirPath, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
@@ -179,10 +182,6 @@ func (m *Migrator) UpToVersion(targetVersion int) error {
 		return err
 	}
 
-	if currentVersion >= targetVersion {
-		return nil // Already at or beyond target version
-	}
-
 	// Start a transaction
 	tx, err := m.db.Begin()
 	if err != nil {
@@ -213,7 +212,7 @@ func (m *Migrator) UpToVersion(targetVersion int) error {
 
 		// Record migration
 		_, err = tx.Exec(`
-            INSERT INTO schema_migrations (version, description, applied_at) 
+            INSERT INTO schema_migrations (version, description, applied_at)
             VALUES ($1, $2, $3)
         `, migration.Version, migration.Description, time.Now())
 		if err != nil {
@@ -259,9 +258,9 @@ func (m *Migrator) DownToVersion(targetVersion int) error {
 
 	// Get applied migrations
 	rows, err := m.db.Query(`
-        SELECT version, description 
-        FROM schema_migrations 
-        WHERE version > $1 
+        SELECT version, description
+        FROM schema_migrations
+        WHERE version > $1
         ORDER BY version DESC
     `, targetVersion)
 	if err != nil {
@@ -324,7 +323,7 @@ func (m *Migrator) DownToVersion(targetVersion int) error {
 
 		// Remove migration record
 		_, err = tx.Exec(`
-            DELETE FROM schema_migrations 
+            DELETE FROM schema_migrations
             WHERE version = $1
         `, migration.Version)
 		if err != nil {
@@ -354,6 +353,10 @@ func (m *Migrator) Down() error {
 func main() {
 	// Connect to the database
 	connStr := os.Getenv("POSTGRES_CONNECTION_STRING")
+	if len(connStr) == 0 {
+		fmt.Printf("Connection string not found\n")
+	}
+	fmt.Printf("Connecting to DB using connection string %s\n", connStr)
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
@@ -363,8 +366,13 @@ func main() {
 	// Create a migrator
 	migrator := NewMigrator(db)
 
-	// Load migrations from the directory
-	migrationsDir := "./migrations"
+	// Load migrations from the directory, defaulting to ./migrations
+	// relative to this source file so `go run` works from any CWD.
+	_, thisFile, _, ok := runtime.Caller(0)
+	if !ok {
+		log.Fatal("Failed to determine source file path")
+	}
+	migrationsDir := filepath.Join(filepath.Dir(thisFile), "migrations")
 	if len(os.Args) >= 3 && os.Args[1] == "dir" {
 		migrationsDir = os.Args[2]
 		os.Args = append(os.Args[:1], os.Args[3:]...)
