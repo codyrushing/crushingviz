@@ -312,6 +312,49 @@ surfaces the real human cost on small islands:
 - **CAVEATS:** zeros (French Polynesia, Tokelau, Niue, Guam) are almost
   certainly **reporting gaps, not absence of disasters** — flag clearly.
   "Affected/capita > 1" = repeated events summed over years.
+
+#### Deep dive — `VC_DSR_AFFCT` "directly affected persons" (2026-06-16)
+
+Pulled the full country×year panel (21 PICTs, 2005–2023, one row/country-year,
+no demographic breakdown — all `_T`). Source UNDRR/Sendai. Derived:
+`disaster_affected_by_country.json` (per-country series + per-capita + biggest
+event + regional `by_year`). Script `analysis/extract_affected.py`. Five distinct
+insights, strongest first:
+
+1. **⭐ "Whole-nation events" — the small-island amplifier.** A *single* disaster
+   routinely affects a number equal to most — sometimes **more than 100%** — of an
+   atoll nation's entire population. Biggest single-year event as % of population:
+   **Palau 136% (2021), Marshall Is. 133% (2020), Vanuatu 83% (2020, TC Harold),
+   Tonga 80% (2018, TC Gita), Tuvalu 77% (2022), Fiji 69% (2016, TC Winston).**
+   No continental country has anything like this (PNG's worst year = 0.8%). This is
+   the human-scale headline: one storm = the whole country.
+2. **Repeated affliction (cumulative burden).** Over 2005–2023, cumulative
+   affected *exceeds total population*: Marshall Is. **3.6×**, Palau 2.1×, Fiji
+   1.35×, Vanuatu 1.05×, Tuvalu 1.0×. Disasters aren't rare shocks — the average
+   resident has been a disaster victim several times over.
+3. **Per-capita inverts the ranking (justice angle).** By raw count Fiji
+   (1.24M cumulative), Solomon Is. (562k), PNG dominate; per-capita the atolls
+   (Marshall, Palau, Tuvalu, Vanuatu) rise to the top and PNG vanishes (0.01×).
+   Same reframe as the emissions-inequality note — smallest/lowest-emitting bear
+   the highest relative human cost.
+4. **Synchronized regional shock years (ENSO/cyclone signal).** Regional affected
+   totals spike in lockstep: 2015 (196k), **2016 (734k — Winston)**, 2018 (463k —
+   Gita), **2020 (549k — Harold + Yasa)**. These are severe-cyclone / strong-El
+   Niño seasons → a regional timeline with named events annotated pairs naturally
+   with `SST_ANOM` / ENSO from the climate dataset.
+5. **Long tail — a few named events dominate.** Each country's total is carried by
+   one or two identifiable disasters (Winston alone = 633k = half of Fiji's
+   18-year cumulative). Supports a "handful of catastrophes" decomposition.
+
+**CAVEATS (critical — data is patchy):** zeros are often **reporting gaps, not
+absence**. Smoking gun: **Vanuatu 2015 = 0**, yet that is the year of **Cyclone
+Pam**, the worst disaster in Vanuatu's history (~half the country affected) — a
+flagship event simply missing. So treat absolute cross-country totals cautiously;
+the *shape* (whole-nation single events, per-capita ordering) is the robust story,
+not precise totals. Also: counts >100% of pop = affected-person-incidents (repeat/
+overlap counting), not unique people; "affected" is UNDRR's broad category;
+French Polynesia/Guam/Niue/Tokelau/Wallis report ≤1 yr (gaps).
+
 - Disaster econ loss (`VC_DSR_AALT`) **unit bug fixed** → normalized to USD in
   `derived/disaster_econ_loss_by_country.json` (4 `USD_MILLIONS` rows ×1e6).
   Totals: FJ $617M, VU $151M, TO $36M, PF $30M, FM $29M… Caveats: sparse
@@ -357,6 +400,68 @@ international shipping/bunker fuel onto a tiny resident population. New
 Caledonia's is real industry (nickel smelting). Keep only if framed with this
 context; otherwise misleading.
 
+## P0f findings — remaining SDG datasets (2026-06-16)
+
+Explored the three datasets named in the data README but never opened:
+`DF_SDG_03` (health, 18 indicators), `DF_SDG_06` (water/sanitation, 7),
+`DF_SDG_15` (biodiversity, 12), plus the large `DF_NMDI_POP` (detailed
+population) and `DF_METEO_MONITOR_NET`. Profiling +
+extraction: `analysis/explore_sdg_bio_water.py`. New derived series in
+`redlist_index_by_country.json`, `water_sanitation_by_country.json`.
+
+**⭐ NEW LEAD — Red List Index: a universal, 30-yr biodiversity decline.**
+`ER_RSK_LST` (SDG 15.5.1), all **22 PICTs, 1993–2024**, continuous index
+(1 = no species threatened → 0 = all extinct). **Every single country declines.**
+This is the one unexplored dataset with a clean, region-wide, continuous,
+defensible signal — a candidate *second backbone* or strong companion thread to
+the flood spine ("seas rise on the people; extinction risk rises on the species").
+
+| Country | 1993 → 2024 | change | note |
+|---|--:|--:|---|
+| Guam (GU) | 0.71 → **0.36** | **−49%** | brown tree snake — near-total native bird collapse |
+| Palau (PW) | 0.95 → 0.66 | −31% | |
+| N. Marianas (MP) | 0.69 → 0.58 | −16% | also lost 16.5pp forest cover (only real forest decline) |
+| FSM / Vanuatu / NC | ~−12 to −15% | | |
+| (regional) | most −5 to −11% | | only Niue/Am.Samoa flat |
+
+- **Honest divergence, not a forced correlation:** the biodiversity-collapse
+  leaders (Guam, Palau, N. Marianas — high islands, invasive-species driven) are
+  **not** the flood-exposed atolls (Marshall, Tuvalu, Kiribati). The two crises
+  hit *different* countries — a more interesting, truthful framing than pretending
+  one map explains both. (Heeds the P0b "don't build on correlations" lesson.)
+- Caveat: Red List threats are multi-driver (invasive species, habitat loss,
+  *then* climate). Frame as "biodiversity under pressure," not "climate killed
+  these species." Forest cover (`AG_LND_FRST`) is mostly FAO-interpolated/flat —
+  not usable for fine viz except MP's −16.5pp.
+
+**SDG_06 water/sanitation — supporting context, the "freshwater paradox."**
+Mostly slow development *improvement* (resolution OK: `SH_H2O_SAFE` 622 distinct
+vals, 19 countries, 2000–2022). Climate link is contextual (saltwater intrusion +
+drought threaten atoll freshwater lenses) rather than measured. Useful angles:
+- **Outliers bucking the upward trend:** Solomon Is. drinking-water access
+  **falls 78.7 → 67.5%**, French Polynesia 92 → 81.8%, Marshall Is. 88.8 → 85.1%.
+- **The paradox:** atolls report *high* drinking-water % (Tuvalu 99, Kiribati 76)
+  yet are the most water-fragile (rainwater + thin lens) — a "% access hides the
+  climate fragility" panel. Sanitation stays low (Kiribati safely-managed san.
+  24.8%, open defecation 32.8%; Solomon Is. open defecation 44.5%).
+
+**SDG_03 health — weak for a climate spine.** Mostly health-system development
+indicators. The climate-sensitive disease (`SH_STA_MALR` malaria) is a Melanesia-
+only **success story** (Solomon Is. 623→167, Vanuatu 215→3 per 1,000 via
+elimination programs) — an interesting good-news counter-note, not a threat
+backbone.
+
+**DF_NMDI_POP — enrichment only.** Detailed population (age/sex/urban breakdowns,
+1990–2025). Urbanization (`NMDI0004`) is held flat past census years in this pull
+(no real projection). Best use: add age structure to the flood-exposure layer
+(who is exposed), not a new backbone.
+
+**P0f verdict:** flood-risk spine stands. The one genuinely new addition worth
+building is the **Red List Index decline** — either a parallel "two rising
+curves" companion (seas ↑ exposure, threat ↑ extinction risk) or a standalone
+biodiversity small-multiples view. Water/sanitation is a supporting panel
+(freshwater paradox). Health adds little.
+
 ## Rough phases
 
 - [x] **P0 — Explore (climate + coastline)**: `SEA_LVL` too coarse; coastline
@@ -390,10 +495,17 @@ context; otherwise misleading.
 - `pop_coast_by_country.json` — % + count of pop within 1/5/10km of coast (22/22)
 - `disaster_econ_loss_by_country.json` — `VC_DSR_AALT` normalized to USD (unit
   bug fixed); per-year + cumulative total
+- `disaster_affected_by_country.json` — `VC_DSR_AFFCT` directly affected persons,
+  21 PICTs 2005–2023; per-year series + cumulative + per-capita + biggest event +
+  regional `by_year` (P0f deep dive)
 - `slr_2050_by_country.json` — AR6 relative SLR at 2050 (cm), 3 SSPs, 17/50/83
   pct; per-country nearest tide gauge + match distance + low-confidence flag
 - `risk_trajectory_2050.json` — ⭐ the spine: exposed pop (2020/2050) × RSL ×
   flood amplification factor
+- `redlist_index_by_country.json` — Red List Index (extinction risk), 22 PICTs,
+  1993–2024, per-year series + delta (P0f)
+- `water_sanitation_by_country.json` — safely-managed drinking water / sanitation
+  / open defecation %, per-year series + delta (P0f)
 - `raw/DF_POP_LECZ_1.0.csv`, `raw/DF_POP_COAST_2.0.csv` — raw SDMX pulls
 - Analysis scripts in `../analysis/*.py` (all reproducible)
 
