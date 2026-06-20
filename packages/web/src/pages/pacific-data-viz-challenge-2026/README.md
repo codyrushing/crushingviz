@@ -409,30 +409,45 @@ population) and `DF_METEO_MONITOR_NET`. Profiling +
 extraction: `analysis/explore_sdg_bio_water.py`. New derived series in
 `redlist_index_by_country.json`, `water_sanitation_by_country.json`.
 
-**⭐ NEW LEAD — Red List Index: a universal, 30-yr biodiversity decline.**
-`ER_RSK_LST` (SDG 15.5.1), all **22 PICTs, 1993–2024**, continuous index
-(1 = no species threatened → 0 = all extinct). **Every single country declines.**
-This is the one unexplored dataset with a clean, region-wide, continuous,
-defensible signal — a candidate *second backbone* or strong companion thread to
-the flood spine ("seas rise on the people; extinction risk rises on the species").
+**Red List Index — a universal, 30-yr biodiversity decline. (DEMOTED in P0g — see
+correction below.)** `ER_RSK_LST` (SDG 15.5.1), all **22 PICTs, 1993–2024**,
+continuous index (1 = no species threatened → 0 = all extinct). **Every single
+country declines.** Originally floated as a candidate *second backbone* / "two
+rising curves" companion to the flood spine ("seas rise on the people; extinction
+risk rises on the species").
 
-| Country | 1993 → 2024 | change | note |
-|---|--:|--:|---|
-| Guam (GU) | 0.71 → **0.36** | **−49%** | brown tree snake — near-total native bird collapse |
-| Palau (PW) | 0.95 → 0.66 | −31% | |
-| N. Marianas (MP) | 0.69 → 0.58 | −16% | also lost 16.5pp forest cover (only real forest decline) |
-| FSM / Vanuatu / NC | ~−12 to −15% | | |
-| (regional) | most −5 to −11% | | only Niue/Am.Samoa flat |
+| Country | 1993 → 2024 | change | max elev | note |
+|---|--:|--:|--:|---|
+| Guam (GU) | 0.71 → **0.36** | **−49%** | 406 m | brown tree snake — near-total native bird collapse |
+| Palau (PW) | 0.95 → 0.66 | −31% | 242 m | |
+| N. Marianas (MP) | 0.69 → 0.58 | −16% | 965 m | also lost 16.5pp forest cover (only real forest decline) |
+| FSM / Vanuatu / NC | ~−12 to −15% | | 791–1877 m | |
+| (regional, incl. **atolls**) | most −4 to −11% | | (5–4509 m) | Tuvalu/Kiribati/Marshall all ≈−9 to −11%; only Niue/Am.Samoa flat |
 
-- **Honest divergence, not a forced correlation:** the biodiversity-collapse
-  leaders (Guam, Palau, N. Marianas — high islands, invasive-species driven) are
-  **not** the flood-exposed atolls (Marshall, Tuvalu, Kiribati). The two crises
-  hit *different* countries — a more interesting, truthful framing than pretending
-  one map explains both. (Heeds the P0b "don't build on correlations" lesson.)
-- Caveat: Red List threats are multi-driver (invasive species, habitat loss,
-  *then* climate). Frame as "biodiversity under pressure," not "climate killed
-  these species." Forest cover (`AG_LND_FRST`) is mostly FAO-interpolated/flat —
-  not usable for fine viz except MP's −16.5pp.
+**⚠ CORRECTION (P0g, 2026-06-20) — the "two geographies" divergence does NOT
+hold.** Re-tested against the max-elevation data pulled in P0g:
+- **No elevation gradient.** Pearson `r(max elevation, RLI %change) ≈ 0.11`;
+  `r(%pop<10m, RLI %change) ≈ 0.17`. Biodiversity decline is **uncorrelated** with
+  how high or how exposed a country is. The earlier "high islands → biodiversity,
+  low atolls → flood" split was **not in the data**.
+- **Not "larger/higher" islands.** The three big decliners (Guam 540 km², Palau
+  459 km², N. Marianas 464 km²) are *small, mid-elevation* islands, not the big
+  high ones; PNG/Solomon/Vanuatu (the genuinely high/large islands) sit mid-pack.
+- **Atolls are NOT spared.** Tuvalu (−11%), Kiribati (−11%), Marshall (−9%),
+  Nauru (−10%) decline at the *regional average* rate. So there is no clean
+  "different countries" divergence — the real structure is **three invasive-
+  species outliers (Guam above all) on top of a near-universal modest baseline.**
+- **Driver mismatch with a *climate* spine.** RLI decline is driven mainly by
+  invasive species + habitat loss; climate is a secondary, multi-driver factor.
+  The dramatic signal (Guam's brown tree snake) is not a climate story at all.
+
+**Revised role:** **not** a second backbone and **not** a climate companion to the
+flood spine (geography doesn't line up, cause isn't climate, no gradient). Use at
+most as a **single non-climate contrast coda** — e.g. Guam's native-bird collapse
+as *"climate is not the only force erasing the Pacific"* — kept explicitly
+*outside* the climate-justice argument and labelled invasive-species-driven. Or
+cut it to keep the spine sharp. Forest cover (`AG_LND_FRST`) is mostly
+FAO-interpolated/flat — not usable for fine viz except MP's −16.5pp.
 
 **SDG_06 water/sanitation — supporting context, the "freshwater paradox."**
 Mostly slow development *improvement* (resolution OK: `SH_H2O_SAFE` 622 distinct
@@ -456,11 +471,108 @@ backbone.
 (no real projection). Best use: add age structure to the flood-exposure layer
 (who is exposed), not a new backbone.
 
-**P0f verdict:** flood-risk spine stands. The one genuinely new addition worth
-building is the **Red List Index decline** — either a parallel "two rising
-curves" companion (seas ↑ exposure, threat ↑ extinction risk) or a standalone
-biodiversity small-multiples view. Water/sanitation is a supporting panel
-(freshwater paradox). Health adds little.
+**P0f verdict:** flood-risk spine stands. ~~The one genuinely new addition worth
+building is the **Red List Index decline**~~ — **superseded by the P0g
+correction above:** the Red List Index is demoted (no elevation gradient, atolls
+decline at the same rate, invasive-species- not climate-driven). At most a
+non-climate contrast coda, not a companion backbone. Water/sanitation is a
+supporting panel (freshwater paradox). Health adds little. *(The real P0g
+additions worth building are GDP, max elevation, and quintile food burden — see
+P0g findings.)*
+
+## P0g findings — economic / vulnerability dimensions (2026-06-20)
+
+Added **8 Pacific Data Hub datasets** that supply the **denominators and
+economic axes** the project kept flagging as missing ("biggest gap: add
+POPULATION and ideally **GDP**"). These don't replace the flood-risk spine —
+they **complete it** by stacking physical + economic + household vulnerability
+into one per-country profile. Extraction: `analysis/extract_economic.py` (stdlib,
+reproducible); 5 new derived files. Datasets: `DF_NATIONAL_ACCOUNTS`,
+`DF_KEYFACTS`, `DF_HHEXP`, `DF_NMDI`, `DF_CPI`, `DF_NEET`, `DF_POP_DENSITY`,
+`DF_POP_LECZ` (dup).
+
+**⭐ The unifying lead — "No high ground, no buffer."** The smallest, lowest,
+poorest islands face the worst exposure with the least capacity to adapt. Three
+new, validated layers make this quantitative instead of asserted:
+
+**1. GDP — finally (`DF_NATIONAL_ACCOUNTS`, 22 PICTs, 2005–2024, USD + domestic).**
+- **Disaster loss as % of GDP** (joined to the existing econ-loss file): a single
+  storm consumes several % of a national economy. TC Winston = **Fiji 7.6% of GDP
+  in one year (2016)**; Vanuatu 9.4% (2016); FSM 6.1%; Tonga 4.3% (2014). This is
+  the economic twin of the "whole-nation events" affected-population headline.
+- **The injustice axis, quantified.** The most flood-exposed atolls are the
+  *poorest*: GDP/capita Solomon Is. **$2,005**, Kiribati $3,277, Vanuatu $3,304,
+  FSM $3,919 — vs Guam $41,827. Lowest emitters, least wealth, highest exposure,
+  in one scatter.
+
+**2. Max elevation (`DF_KEYFACTS`) — the most evocative new number.** Highest
+point on the *entire nation*: **Tokelau & Tuvalu 5 m, Marshall Is. 10 m**,
+Kiribati 81 m (one raised-limestone island; rest ~3 m). A country whose whole
+landmass tops out at 5 m has **nowhere to retreat to** — pairs devastatingly with
+LECZ exposure and 2050 SLR.
+
+**3. Household precarity (`DF_HHEXP`, 13 PICTs, by income quintile + urban/rural).**
+- **Food burden (Engel's law × climate):** poorest quintile spends **62% on food
+  in Solomon Is., 60% in Vanuatu, 48% in FSM** (vs richest ~30–40%). **Fish** — a
+  warming-/reef-threatened protein — is a top line item (Kiribati 9.2%, FSM/Solomon
+  7.5% of the *whole* budget). Climate shocks to local food hit the poorest hardest.
+- Energy (electricity/imported fuels) share: Marshall 7%, Palau/Tuvalu 6.8%.
+
+**Supporting threads (`DF_NMDI`, the richest single file — 40+ indicators):**
+- **Remittances as % of GDP** (`BX_TRF_PWKR`) — *an adaptive-capacity / divergence
+  thread, NOT a climate-migration signal.* Remittances (money the diaspora wires
+  home) act as a private, countercyclical disaster buffer — they spike after
+  cyclones, insuring islands too poor to self-insure. But the data does **not**
+  support "flood risk drives migration economy": the leaders are **high islands
+  with low exposure** (Tonga **42%** / max elev 1033 m / 27% pop <10 m; Samoa 28%
+  / 1857 m / 13%), while the most flood-exposed atolls have the **thinnest**
+  buffers (Tuvalu **3.2%** / 5 m / 91% pop <10 m; Kiribati 4.2% / 74%; Nauru
+  0.6%). If anything the relationship is *inverse*. The honest finding is the
+  **divergence** (cf. the Red List Index note): the islands facing the worst
+  exposure have the least-developed migration buffer.
+  - **⭐ The Marshall Islands exception proves the mechanism.** Marshall is the
+    *only* atoll with a real buffer (13% of GDP) *and* the worst exposure (96% of
+    pop <10 m, max elev 10 m) — because the **US Compact of Free Association
+    (COFA)** grants Marshallese visa-free residence/work in the US. Tuvalu and
+    Kiribati have no equivalent (only small quota schemes — NZ's Pacific Access
+    Category, seasonal-worker programs). So **institutional access to migration**,
+    not flood risk, determines who has this escape valve. The most-exposed atolls
+    lack not just wealth and high ground but also the diaspora-insurance buffer
+    their less-exposed neighbours built over generations.
+  - **Do NOT claim** remittances measure climate-driven out-migration — most
+    Pacific migration (Tonga/Samoa → NZ/AU/US) is decades-old, economic and
+    family-driven. Use remittances only as an adaptive-capacity bar (alongside
+    GDP/capita) and as the COFA-gated divergence note.
+- **Renewable energy share** (`EG_FEC_RNEW`): PNG 51%, Solomon 50%, Kiribati 42%
+  vs Tonga/Palau/Marshall ~2% — a mitigation counter-narrative, cleaner than the
+  ship-registry-distorted per-capita emissions figures.
+- Plus electricity access, internet, age-dependency, women in parliament =
+  adaptive-capacity indicators.
+
+**Secondary / caveated:**
+- `DF_CPI` (inflation, 2016–2025, 20 PICTs) — can **deflate the nominal-USD
+  disaster losses** (a logged caveat) + a food-price-shock angle.
+- `DF_NEET` (youth not in employment/education, 13 PICTs) — youth-vulnerability
+  angle but values look high/patchy (Vanuatu 87%) → caveat heavily.
+- `DF_POP_DENSITY` — **parsing landmine: year is stored in the `INDICATOR`
+  column** (same as KEYFACTS); raw values looked like population counts, not
+  density. Needs careful re-extraction before use; deferred.
+- `DF_POP_LECZ` (raw) — duplicate of existing `pop_lecz_by_country.json`. Skip.
+
+**Data-quality landmines fixed:**
+- **Corrupt GDP-USD rows** (off-by-10×): VU 2018 reads $95M between two $935M
+  years; SB 2019–20 similar. `extract_economic.py` flags any year >3× from its
+  series median and excludes it from the loss-%-GDP join (full series retained in
+  `gdp_by_country.json`). Use the **domestic-currency** series where USD looks off.
+- KEYFACTS `KM2` is the **maritime/EEZ footprint** (PG ~2.4M km²), *not* land
+  area — do **not** use it for land-density. Stored as `area_km2_reported` w/ note.
+
+**P0g verdict:** the flood-justice spine stands and is now **economically
+grounded**. The headline reframe — *physical exposure × economic fragility ×
+household precarity, all concentrated on the same small islands* — is the
+strongest, most defensible synthesis the data supports. GDP, max elevation, and
+quintile food burden are the three highest-value new series; build them into the
+spine's vulnerability profile.
 
 ## Rough phases
 
@@ -477,6 +589,9 @@ biodiversity small-multiples view. Water/sanitation is a supporting panel
   `risk_trajectory_2050.json` (exposed pop × RSL × amplification factor).
 - [x] **P0e**: refined 5 proxy SLR sites from gridded product (PNG 9→17 cm
   corrected); all sites now <60 km, no low-confidence flags.
+- [x] **P0g**: added economic/vulnerability datasets (GDP, max elevation,
+  household expenditure, remittances, renewables); built 5 derived files;
+  flagged corrupt GDP-USD rows. Spine now economically grounded.
 - [ ] **P1 entry** — build the spine views in d3 + Astro.
 - [ ] **P1 — Quantitative spine**: tidy per-country panel (impacts + population
   + yields); build linked d3 views for the disaster-burden + food-security
@@ -506,6 +621,17 @@ biodiversity small-multiples view. Water/sanitation is a supporting panel
   1993–2024, per-year series + delta (P0f)
 - `water_sanitation_by_country.json` — safely-managed drinking water / sanitation
   / open defecation %, per-year series + delta (P0f)
+- `gdp_by_country.json` — GDP total / per-capita / growth, USD + domestic, 22
+  PICTs 2005–2024; per-year series + latest (P0g; corrupt USD years retained but
+  flagged by the extractor)
+- `disaster_loss_pct_gdp.json` — econ loss joined to same-year USD GDP; per-year
+  `pct_of_gdp` + worst single year (P0g; off-by-10× GDP rows excluded)
+- `max_elevation_by_country.json` — highest point (m) + reported maritime/EEZ
+  area (km², *not* land), 22 PICTs (P0g)
+- `household_expenditure.json` — food / fish / energy budget shares + poorest-vs-
+  richest-quintile food gap, 13 PICTs (P0g; survey snapshot, no year)
+- `remittances_renewables.json` — remittances %GDP / renewable energy % /
+  electricity access %, per-year series + latest, 20 PICTs (P0g)
 - `raw/DF_POP_LECZ_1.0.csv`, `raw/DF_POP_COAST_2.0.csv` — raw SDMX pulls
 - Analysis scripts in `../analysis/*.py` (all reproducible)
 

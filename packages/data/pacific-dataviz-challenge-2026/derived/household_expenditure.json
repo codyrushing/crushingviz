@@ -1,0 +1,132 @@
+{
+ "NR": {
+  "national": {
+   "food": 24.91,
+   "energy": 1.71,
+   "fish": 4.7
+  },
+  "food_poorest_q": 37.04,
+  "food_richest_q": 22.67,
+  "food_quintile_gap": 14.369999999999997
+ },
+ "TK": {
+  "national": {
+   "fish": 7.05,
+   "food": 33.36,
+   "energy": 6.52
+  },
+  "food_poorest_q": 27.93,
+  "food_richest_q": 33.15,
+  "food_quintile_gap": -5.219999999999999
+ },
+ "CK": {
+  "national": {
+   "fish": 1.81,
+   "food": 19.21,
+   "energy": 5.01
+  },
+  "food_poorest_q": 26.62,
+  "food_richest_q": 17.69,
+  "food_quintile_gap": 8.93
+ },
+ "NU": {
+  "national": {
+   "energy": 5.29,
+   "fish": 3.06,
+   "food": 26.55
+  },
+  "food_poorest_q": 34.8,
+  "food_richest_q": 25.62,
+  "food_quintile_gap": 9.179999999999996
+ },
+ "TO": {
+  "national": {
+   "food": 33.42,
+   "energy": 3.29,
+   "fish": 3.4
+  },
+  "food_poorest_q": 37.68,
+  "food_richest_q": 32.52,
+  "food_quintile_gap": 5.159999999999997
+ },
+ "PW": {
+  "national": {
+   "fish": 2.32,
+   "energy": 6.76,
+   "food": 16.94
+  },
+  "food_poorest_q": 24.17,
+  "food_richest_q": 16.09,
+  "food_quintile_gap": 8.080000000000002
+ },
+ "TV": {
+  "national": {
+   "food": 39.35,
+   "energy": 6.76,
+   "fish": 6.88
+  },
+  "food_poorest_q": 39.93,
+  "food_richest_q": 39.37,
+  "food_quintile_gap": 0.5600000000000023
+ },
+ "SB": {
+  "national": {
+   "fish": 7.54,
+   "energy": 2.23,
+   "food": 42.24
+  },
+  "food_poorest_q": 61.69,
+  "food_richest_q": 38.47,
+  "food_quintile_gap": 23.22
+ },
+ "FM": {
+  "national": {
+   "fish": 7.53,
+   "food": 34.43,
+   "energy": 5.69
+  },
+  "food_poorest_q": 48.47,
+  "food_richest_q": 32.02,
+  "food_quintile_gap": 16.449999999999996
+ },
+ "KI": {
+  "national": {
+   "fish": 9.19,
+   "food": 36.97,
+   "energy": 2.86
+  },
+  "food_poorest_q": 41.36,
+  "food_richest_q": 35.79,
+  "food_quintile_gap": 5.57
+ },
+ "VU": {
+  "national": {
+   "fish": 5.93,
+   "energy": 1.84,
+   "food": 45.32
+  },
+  "food_poorest_q": 59.74,
+  "food_richest_q": 42.54,
+  "food_quintile_gap": 17.200000000000003
+ },
+ "MH": {
+  "national": {
+   "food": 28.49,
+   "fish": 3.71,
+   "energy": 7.01
+  },
+  "food_poorest_q": 34.61,
+  "food_richest_q": 27.75,
+  "food_quintile_gap": 6.859999999999999
+ },
+ "WF": {
+  "national": {
+   "food": 28.69,
+   "energy": 3.57,
+   "fish": 3.09
+  },
+  "food_poorest_q": 45.19,
+  "food_richest_q": 26.5,
+  "food_quintile_gap": 18.689999999999998
+ }
+}

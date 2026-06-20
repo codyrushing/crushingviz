@@ -1,0 +1,90 @@
+{
+ "PF": {
+  "area_km2_reported": 4767240.0,
+  "max_elevation_m": 2241.0
+ },
+ "PN": {
+  "max_elevation_m": 347.0,
+  "area_km2_reported": 836108.0
+ },
+ "WF": {
+  "area_km2_reported": 258269.0,
+  "max_elevation_m": 524.0
+ },
+ "AS": {
+  "max_elevation_m": 966.0,
+  "area_km2_reported": 404391.0
+ },
+ "GU": {
+  "max_elevation_m": 406.0,
+  "area_km2_reported": 221504.0
+ },
+ "WS": {
+  "max_elevation_m": 1857.0,
+  "area_km2_reported": 127950.0
+ },
+ "NR": {
+  "max_elevation_m": 71.0,
+  "area_km2_reported": 308480.0
+ },
+ "MP": {
+  "area_km2_reported": 749268.0,
+  "max_elevation_m": 965.0
+ },
+ "TO": {
+  "max_elevation_m": 1033.0,
+  "area_km2_reported": 659558.0
+ },
+ "NC": {
+  "max_elevation_m": 1628.0,
+  "area_km2_reported": 1422540.0
+ },
+ "TV": {
+  "max_elevation_m": 5.0,
+  "area_km2_reported": 749790.0
+ },
+ "TK": {
+  "max_elevation_m": 5.0,
+  "area_km2_reported": 319031.0
+ },
+ "PG": {
+  "area_km2_reported": 2402290.0,
+  "max_elevation_m": 4509.0
+ },
+ "KI": {
+  "max_elevation_m": 81.0,
+  "area_km2_reported": 3441810.0
+ },
+ "VU": {
+  "area_km2_reported": 663251.0,
+  "max_elevation_m": 1877.0
+ },
+ "FM": {
+  "area_km2_reported": 2996420.0,
+  "max_elevation_m": 791.0
+ },
+ "MH": {
+  "max_elevation_m": 10.0,
+  "area_km2_reported": 1990530.0
+ },
+ "PW": {
+  "max_elevation_m": 242.0,
+  "area_km2_reported": 603978.0
+ },
+ "CK": {
+  "max_elevation_m": 652.0,
+  "area_km2_reported": 1830000.0
+ },
+ "NU": {
+  "area_km2_reported": 450000.0,
+  "max_elevation_m": 68.0
+ },
+ "FJ": {
+  "area_km2_reported": 1282980.0,
+  "max_elevation_m": 1324.0
+ },
+ "SB": {
+  "area_km2_reported": 1553440.0,
+  "max_elevation_m": 2335.0
+ }
+}
