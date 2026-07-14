@@ -1,0 +1,5163 @@
+{
+  "indicator": "EM-DAT disaster events by type (PICTs)",
+  "label": "Disaster events from EM-DAT HDX Country Profiles, preserving disaster type/subtype",
+  "source": "EM-DAT (CRED/UCLouvain) via HDX Country Profiles, 2000-2026",
+  "emdat_threshold": "EM-DAT includes disasters with >=10 deaths, >=100 affected, emergency declaration, or international appeal. Smaller events may not appear.",
+  "year_span": [
+    2000,
+    2026
+  ],
+  "flood_relevant_definition": "Storm + Flood + Mass movement (wet) -- events where coastal flooding / storm surge is a component. Tropical cyclone 'affected' includes wind/crop/displacement damage too, not only flood victims.",
+  "coastal_flood_only_definition": "Coastal flood + Storm surge subtypes only (strict flood-only count; small n).",
+  "caveat": "Affected counts >100% of population = affected-person-incidents (repeat/overlap counting), not unique people. UNDRR captures smaller events below EM-DAT's threshold; this file is EM-DAT-only -- see disaster_affected_merged.json for the UNDRR+EM-DAT superset (but that file does not preserve disaster type).",
+  "regional_by_year_affected": {
+    "all": {
+      "2000": 5000,
+      "2001": 22745,
+      "2002": 40825,
+      "2003": 33149,
+      "2004": 109478,
+      "2005": 23327,
+      "2006": 26391,
+      "2007": 165493,
+      "2008": 84985,
+      "2009": 31342,
+      "2010": 62652,
+      "2011": 39600,
+      "2012": 247986,
+      "2013": 54940,
+      "2014": 117326,
+      "2015": 2925368,
+      "2016": 662320,
+      "2017": 18568,
+      "2018": 825822,
+      "2019": 34581,
+      "2020": 576735,
+      "2021": 103626,
+      "2022": 160189,
+      "2023": 1075696,
+      "2024": 126572,
+      "2025": 0,
+      "2026": 649648
+    },
+    "Earthquake": {
+      "2000": 5000,
+      "2001": 201,
+      "2002": 6473,
+      "2005": 200,
+      "2007": 2384,
+      "2009": 8591,
+      "2010": 1126,
+      "2013": 3329,
+      "2016": 9770,
+      "2018": 544300,
+      "2019": 651,
+      "2022": 1969,
+      "2023": 16274,
+      "2024": 85267
+    },
+    "flood_relevant": {
+      "2001": 18044,
+      "2002": 21352,
+      "2003": 33149,
+      "2004": 99878,
+      "2005": 3127,
+      "2006": 23092,
+      "2007": 163109,
+      "2008": 75985,
+      "2009": 22351,
+      "2010": 61526,
+      "2011": 39600,
+      "2012": 247986,
+      "2013": 45227,
+      "2014": 115946,
+      "2015": 303168,
+      "2016": 552550,
+      "2017": 7568,
+      "2018": 267200,
+      "2019": 18130,
+      "2020": 576735,
+      "2021": 90039,
+      "2022": 69564,
+      "2023": 946021,
+      "2024": 27381,
+      "2025": 0,
+      "2026": 649648
+    },
+    "Storm": {
+      "2001": 18044,
+      "2002": 18177,
+      "2003": 32525,
+      "2004": 89278,
+      "2005": 634,
+      "2006": 168,
+      "2007": 162209,
+      "2008": 0,
+      "2009": 3845,
+      "2010": 45509,
+      "2011": 39600,
+      "2012": 23605,
+      "2013": 0,
+      "2014": 36366,
+      "2015": 283168,
+      "2016": 545950,
+      "2017": 2564,
+      "2018": 267200,
+      "2019": 17780,
+      "2020": 515735,
+      "2021": 90039,
+      "2022": 69564,
+      "2023": 946021,
+      "2024": 19532,
+      "2026": 649648
+    },
+    "Flood": {
+      "2001": 0,
+      "2002": 3001,
+      "2003": 3,
+      "2004": 10600,
+      "2005": 2493,
+      "2006": 12624,
+      "2007": 900,
+      "2008": 75985,
+      "2009": 18506,
+      "2010": 16017,
+      "2012": 224381,
+      "2013": 45227,
+      "2014": 79580,
+      "2015": 20000,
+      "2016": 6600,
+      "2017": 5004,
+      "2019": 350,
+      "2020": 60900
+    },
+    "Volcanic activity": {
+      "2001": 4500,
+      "2002": 13000,
+      "2003": 0,
+      "2004": 9600,
+      "2005": 20000,
+      "2006": 3299,
+      "2008": 9000,
+      "2009": 400,
+      "2014": 1380,
+      "2017": 11000,
+      "2018": 14322,
+      "2019": 15800,
+      "2021": 3383,
+      "2022": 84176
+    },
+    "Mass movement (wet)": {
+      "2002": 174,
+      "2003": 621,
+      "2006": 10300,
+      "2009": 0,
+      "2012": 0,
+      "2019": 0,
+      "2020": 100,
+      "2024": 7849,
+      "2025": 0
+    },
+    "coastal_flood_only": {
+      "2008": 75985,
+      "2014": 580,
+      "2024": 19532
+    },
+    "Mass movement (dry)": {
+      "2008": 0
+    },
+    "Drought": {
+      "2011": 0,
+      "2013": 6384,
+      "2015": 2622200,
+      "2016": 100000,
+      "2021": 10204,
+      "2022": 4480,
+      "2023": 113401,
+      "2024": 13924
+    }
+  },
+  "regional_damage_usd_by_type": {
+    "Storm": 6301099000.0,
+    "Earthquake": 296540000.0,
+    "Flood": 276247000.0,
+    "Volcanic activity": 118000000.0,
+    "Drought": 64900000.0,
+    "Mass movement (wet)": 60000000.0
+  },
+  "flood_damage_pct_gdp": {
+    "WS": {
+      "2001": {
+        "flood_damage_usd": 1500000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2012": {
+        "flood_damage_usd": 133000000.0,
+        "gdp_usd": 799981000.0,
+        "pct_of_gdp": 16.63
+      },
+      "_worst": {
+        "year": "2012",
+        "flood_damage_usd": 133000000.0,
+        "gdp_usd": 799981000.0,
+        "pct_of_gdp": 16.63
+      }
+    },
+    "TO": {
+      "2001": {
+        "flood_damage_usd": 51300000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2011": {
+        "flood_damage_usd": 3000000.0,
+        "gdp_usd": 439265000.0,
+        "pct_of_gdp": 0.68
+      },
+      "2014": {
+        "flood_damage_usd": 31000000.0,
+        "gdp_usd": 431679000.0,
+        "pct_of_gdp": 7.18
+      },
+      "2020": {
+        "flood_damage_usd": 111000000.0,
+        "gdp_usd": 491109000.0,
+        "pct_of_gdp": 22.6
+      },
+      "_worst": {
+        "year": "2020",
+        "flood_damage_usd": 111000000.0,
+        "gdp_usd": 491109000.0,
+        "pct_of_gdp": 22.6
+      }
+    },
+    "GU": {
+      "2002": {
+        "flood_damage_usd": 130000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2004": {
+        "flood_damage_usd": 1000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2023": {
+        "flood_damage_usd": 4300000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      }
+    },
+    "FM": {
+      "2002": {
+        "flood_damage_usd": 500000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2015": {
+        "flood_damage_usd": 11000000.0,
+        "gdp_usd": 316500000.0,
+        "pct_of_gdp": 3.48
+      },
+      "_worst": {
+        "year": "2015",
+        "flood_damage_usd": 11000000.0,
+        "gdp_usd": 316500000.0,
+        "pct_of_gdp": 3.48
+      }
+    },
+    "AS": {
+      "2003": {
+        "flood_damage_usd": 50000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2004": {
+        "flood_damage_usd": 150000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      }
+    },
+    "FJ": {
+      "2003": {
+        "flood_damage_usd": 30000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2004": {
+        "flood_damage_usd": 4000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "2006": {
+        "flood_damage_usd": 500000.0,
+        "gdp_usd": 2625175000.0,
+        "pct_of_gdp": 0.02
+      },
+      "2007": {
+        "flood_damage_usd": 37652000.0,
+        "gdp_usd": 2886781000.0,
+        "pct_of_gdp": 1.3
+      },
+      "2008": {
+        "flood_damage_usd": 30000000.0,
+        "gdp_usd": 2967505000.0,
+        "pct_of_gdp": 1.01
+      },
+      "2009": {
+        "flood_damage_usd": 56547000.0,
+        "gdp_usd": 2444210000.0,
+        "pct_of_gdp": 2.31
+      },
+      "2010": {
+        "flood_damage_usd": 39427000.0,
+        "gdp_usd": 2632581000.0,
+        "pct_of_gdp": 1.5
+      },
+      "2012": {
+        "flood_damage_usd": 97400000.0,
+        "gdp_usd": 3352200000.0,
+        "pct_of_gdp": 2.91
+      },
+      "2016": {
+        "flood_damage_usd": 600000000.0,
+        "gdp_usd": 4930252000.0,
+        "pct_of_gdp": 12.17
+      },
+      "2018": {
+        "flood_damage_usd": 60000000.0,
+        "gdp_usd": 5581781000.0,
+        "pct_of_gdp": 1.07
+      },
+      "2020": {
+        "flood_damage_usd": 14120000.0,
+        "gdp_usd": 4432626000.0,
+        "pct_of_gdp": 0.32
+      },
+      "2021": {
+        "flood_damage_usd": 10000000.0,
+        "gdp_usd": 4304639000.0,
+        "pct_of_gdp": 0.23
+      },
+      "2022": {
+        "flood_damage_usd": 25000000.0,
+        "gdp_usd": 4969997000.0,
+        "pct_of_gdp": 0.5
+      },
+      "_worst": {
+        "year": "2016",
+        "flood_damage_usd": 600000000.0,
+        "gdp_usd": 4930252000.0,
+        "pct_of_gdp": 12.17
+      }
+    },
+    "NC": {
+      "2003": {
+        "flood_damage_usd": 40000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      }
+    },
+    "NU": {
+      "2004": {
+        "flood_damage_usd": 40000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      }
+    },
+    "PF": {
+      "2010": {
+        "flood_damage_usd": 11000000.0,
+        "gdp_usd": 6081435000.0,
+        "pct_of_gdp": 0.18
+      },
+      "2017": {
+        "flood_damage_usd": 2000000.0,
+        "gdp_usd": 5853853000.0,
+        "pct_of_gdp": 0.03
+      },
+      "_worst": {
+        "year": "2010",
+        "flood_damage_usd": 11000000.0,
+        "gdp_usd": 6081435000.0,
+        "pct_of_gdp": 0.18
+      }
+    },
+    "PG": {
+      "2012": {
+        "flood_damage_usd": 27000000.0,
+        "gdp_usd": 21293948000.0,
+        "pct_of_gdp": 0.13
+      },
+      "2024": {
+        "flood_damage_usd": 60000000.0,
+        "gdp_usd": null,
+        "pct_of_gdp": null
+      },
+      "_worst": {
+        "year": "2012",
+        "flood_damage_usd": 27000000.0,
+        "gdp_usd": 21293948000.0,
+        "pct_of_gdp": 0.13
+      }
+    },
+    "SB": {
+      "2013": {
+        "flood_damage_usd": 2000000.0,
+        "gdp_usd": 1285477000.0,
+        "pct_of_gdp": 0.16
+      },
+      "2014": {
+        "flood_damage_usd": 24000000.0,
+        "gdp_usd": 1335701000.0,
+        "pct_of_gdp": 1.8
+      },
+      "2015": {
+        "flood_damage_usd": 2000000.0,
+        "gdp_usd": 1307420000.0,
+        "pct_of_gdp": 0.15
+      },
+      "_worst": {
+        "year": "2014",
+        "flood_damage_usd": 24000000.0,
+        "gdp_usd": 1335701000.0,
+        "pct_of_gdp": 1.8
+      }
+    },
+    "VU": {
+      "2014": {
+        "flood_damage_usd": 2000000.0,
+        "gdp_usd": 773592000.0,
+        "pct_of_gdp": 0.26
+      },
+      "2015": {
+        "flood_damage_usd": 449400000.0,
+        "gdp_usd": 761742000.0,
+        "pct_of_gdp": 59.0
+      },
+      "_worst": {
+        "year": "2015",
+        "flood_damage_usd": 449400000.0,
+        "gdp_usd": 761742000.0,
+        "pct_of_gdp": 59.0
+      }
+    }
+  },
+  "countries": {
+    "AS": {
+      "by_type": {
+        "Flood": {
+          "series_affected": {
+            "2003": 3
+          },
+          "series_deaths": {
+            "2003": 6
+          },
+          "series_damage_usd": {
+            "2003": 50000000.0
+          },
+          "total_affected": 3,
+          "total_damage_usd": 50000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2003,
+            "count": 3,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2004": 23060,
+            "2005": 0
+          },
+          "series_deaths": {
+            "2004": 0,
+            "2005": 0
+          },
+          "series_damage_usd": {
+            "2004": 150000000.0,
+            "2005": 0.0
+          },
+          "total_affected": 23060,
+          "total_damage_usd": 150000000.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2004,
+            "count": 23060,
+            "events": 1,
+            "pct_of_pop": 40.6
+          }
+        },
+        "Earthquake": {
+          "series_affected": {
+            "2009": 2500
+          },
+          "series_deaths": {
+            "2009": 34
+          },
+          "series_damage_usd": {
+            "2009": 0.0
+          },
+          "total_affected": 2500,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2009,
+            "count": 2500,
+            "events": 1,
+            "pct_of_pop": 4.5
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2003": 3,
+          "2004": 23060,
+          "2005": 0
+        },
+        "series_deaths": {
+          "2003": 6,
+          "2004": 0,
+          "2005": 0
+        },
+        "series_damage_usd": {
+          "2003": 50000000.0,
+          "2004": 150000000.0,
+          "2005": 0.0
+        },
+        "total_affected": 23063,
+        "total_damage_usd": 200000000.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2004,
+          "count": 23060,
+          "events": 1,
+          "pct_of_pop": 40.6
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2003": 3,
+          "2004": 23060,
+          "2005": 0,
+          "2009": 2500
+        },
+        "series_deaths": {
+          "2003": 6,
+          "2004": 0,
+          "2005": 0,
+          "2009": 34
+        },
+        "series_damage_usd": {
+          "2003": 50000000.0,
+          "2004": 150000000.0,
+          "2005": 0.0,
+          "2009": 0.0
+        },
+        "total_affected": 25563,
+        "total_damage_usd": 200000000.0,
+        "total_events": 4,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2004,
+          "count": 23060,
+          "events": 1,
+          "pct_of_pop": 40.6
+        }
+      },
+      "events": [
+        {
+          "year": 2003,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 3,
+          "deaths": 6,
+          "damage_usd": 50000000.0
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 23060,
+          "deaths": 0,
+          "damage_usd": 150000000.0
+        },
+        {
+          "year": 2009,
+          "type": "Earthquake",
+          "subtype": "Tsunami",
+          "events_count": 1,
+          "affected": 2500,
+          "deaths": 34,
+          "damage_usd": null
+        }
+      ]
+    },
+    "CK": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2001": 744,
+            "2005": 608,
+            "2010": 2202
+          },
+          "series_deaths": {
+            "2001": 0,
+            "2005": 0,
+            "2010": 0
+          },
+          "series_damage_usd": {
+            "2001": 0.0,
+            "2005": 0.0,
+            "2010": 0.0
+          },
+          "total_affected": 3554,
+          "total_damage_usd": 0.0,
+          "total_events": 3,
+          "years_reported": 3,
+          "biggest": {
+            "year": 2010,
+            "count": 2202,
+            "events": 1,
+            "pct_of_pop": 12.9
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2001": 744,
+          "2005": 608,
+          "2010": 2202
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2005": 0,
+          "2010": 0
+        },
+        "series_damage_usd": {
+          "2001": 0.0,
+          "2005": 0.0,
+          "2010": 0.0
+        },
+        "total_affected": 3554,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2010,
+          "count": 2202,
+          "events": 1,
+          "pct_of_pop": 12.9
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2001": 744,
+          "2005": 608,
+          "2010": 2202
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2005": 0,
+          "2010": 0
+        },
+        "series_damage_usd": {
+          "2001": 0.0,
+          "2005": 0.0,
+          "2010": 0.0
+        },
+        "total_affected": 3554,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2010,
+          "count": 2202,
+          "events": 1,
+          "pct_of_pop": 12.9
+        }
+      },
+      "events": [
+        {
+          "year": 2001,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 744,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 608,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2010,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 2202,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "FJ": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2003": 30000,
+            "2004": 5000,
+            "2006": 168,
+            "2007": 69,
+            "2008": 0,
+            "2009": 3845,
+            "2010": 39101,
+            "2012": 8400,
+            "2016": 545558,
+            "2018": 179200,
+            "2019": 7780,
+            "2020": 205115,
+            "2021": 82751,
+            "2022": 69564,
+            "2023": 230000,
+            "2026": 75000
+          },
+          "series_deaths": {
+            "2003": 17,
+            "2004": 16,
+            "2006": 0,
+            "2007": 1,
+            "2008": 7,
+            "2009": 2,
+            "2010": 2,
+            "2012": 2,
+            "2016": 47,
+            "2018": 7,
+            "2019": 1,
+            "2020": 8,
+            "2021": 6,
+            "2022": 1,
+            "2023": 0,
+            "2026": 1
+          },
+          "series_damage_usd": {
+            "2003": 30000000.0,
+            "2004": 4000000.0,
+            "2006": 0.0,
+            "2007": 652000.0,
+            "2008": 30000000.0,
+            "2009": 13300000.0,
+            "2010": 39427000.0,
+            "2012": 8400000.0,
+            "2016": 600000000.0,
+            "2018": 60000000.0,
+            "2019": 0.0,
+            "2020": 14120000.0,
+            "2021": 10000000.0,
+            "2022": 25000000.0,
+            "2023": 0.0,
+            "2026": 0.0
+          },
+          "total_affected": 1481551,
+          "total_damage_usd": 834899000.0,
+          "total_events": 21,
+          "years_reported": 16,
+          "biggest": {
+            "year": 2016,
+            "count": 545558,
+            "events": 2,
+            "pct_of_pop": 59.4
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2004": 600,
+            "2006": 224,
+            "2007": 900,
+            "2009": 10556,
+            "2012": 19545
+          },
+          "series_deaths": {
+            "2004": 0,
+            "2006": 4,
+            "2007": 6,
+            "2009": 12,
+            "2012": 15
+          },
+          "series_damage_usd": {
+            "2004": 0.0,
+            "2006": 500000.0,
+            "2007": 37000000.0,
+            "2009": 43247000.0,
+            "2012": 89000000.0
+          },
+          "total_affected": 31825,
+          "total_damage_usd": 169747000.0,
+          "total_events": 7,
+          "years_reported": 5,
+          "biggest": {
+            "year": 2012,
+            "count": 19545,
+            "events": 2,
+            "pct_of_pop": 2.1
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 67000
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 67000,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 67000,
+            "events": 1,
+            "pct_of_pop": 7.3
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2003": 30000,
+          "2004": 5600,
+          "2006": 392,
+          "2007": 969,
+          "2008": 0,
+          "2009": 14401,
+          "2010": 39101,
+          "2012": 27945,
+          "2016": 545558,
+          "2018": 179200,
+          "2019": 7780,
+          "2020": 205115,
+          "2021": 82751,
+          "2022": 69564,
+          "2023": 230000,
+          "2026": 75000
+        },
+        "series_deaths": {
+          "2003": 17,
+          "2004": 16,
+          "2006": 4,
+          "2007": 7,
+          "2008": 7,
+          "2009": 14,
+          "2010": 2,
+          "2012": 17,
+          "2016": 47,
+          "2018": 7,
+          "2019": 1,
+          "2020": 8,
+          "2021": 6,
+          "2022": 1,
+          "2023": 0,
+          "2026": 1
+        },
+        "series_damage_usd": {
+          "2003": 30000000.0,
+          "2004": 4000000.0,
+          "2006": 500000.0,
+          "2007": 37652000.0,
+          "2008": 30000000.0,
+          "2009": 56547000.0,
+          "2010": 39427000.0,
+          "2012": 97400000.0,
+          "2016": 600000000.0,
+          "2018": 60000000.0,
+          "2019": 0.0,
+          "2020": 14120000.0,
+          "2021": 10000000.0,
+          "2022": 25000000.0,
+          "2023": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 1513376,
+        "total_damage_usd": 1004646000.0,
+        "total_events": 28,
+        "years_reported": 16,
+        "biggest": {
+          "year": 2016,
+          "count": 545558,
+          "events": 2,
+          "pct_of_pop": 59.4
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2003": 30000,
+          "2004": 5600,
+          "2006": 392,
+          "2007": 969,
+          "2008": 0,
+          "2009": 14401,
+          "2010": 39101,
+          "2012": 27945,
+          "2015": 67000,
+          "2016": 545558,
+          "2018": 179200,
+          "2019": 7780,
+          "2020": 205115,
+          "2021": 82751,
+          "2022": 69564,
+          "2023": 230000,
+          "2026": 75000
+        },
+        "series_deaths": {
+          "2003": 17,
+          "2004": 16,
+          "2006": 4,
+          "2007": 7,
+          "2008": 7,
+          "2009": 14,
+          "2010": 2,
+          "2012": 17,
+          "2015": 0,
+          "2016": 47,
+          "2018": 7,
+          "2019": 1,
+          "2020": 8,
+          "2021": 6,
+          "2022": 1,
+          "2023": 0,
+          "2026": 1
+        },
+        "series_damage_usd": {
+          "2003": 30000000.0,
+          "2004": 4000000.0,
+          "2006": 500000.0,
+          "2007": 37652000.0,
+          "2008": 30000000.0,
+          "2009": 56547000.0,
+          "2010": 39427000.0,
+          "2012": 97400000.0,
+          "2015": 0.0,
+          "2016": 600000000.0,
+          "2018": 60000000.0,
+          "2019": 0.0,
+          "2020": 14120000.0,
+          "2021": 10000000.0,
+          "2022": 25000000.0,
+          "2023": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 1580376,
+        "total_damage_usd": 1004646000.0,
+        "total_events": 29,
+        "years_reported": 17,
+        "biggest": {
+          "year": 2016,
+          "count": 545558,
+          "events": 2,
+          "pct_of_pop": 59.4
+        }
+      },
+      "events": [
+        {
+          "year": 2003,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 30000,
+          "deaths": 17,
+          "damage_usd": 30000000.0
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 5000,
+          "deaths": 16,
+          "damage_usd": 4000000.0
+        },
+        {
+          "year": 2004,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 600,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2006,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 224,
+          "deaths": 4,
+          "damage_usd": 500000.0
+        },
+        {
+          "year": 2006,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 168,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2007,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 900,
+          "deaths": 1,
+          "damage_usd": 30000000.0
+        },
+        {
+          "year": 2007,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 69,
+          "deaths": 1,
+          "damage_usd": 652000.0
+        },
+        {
+          "year": 2007,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 5,
+          "damage_usd": 7000000.0
+        },
+        {
+          "year": 2008,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 7,
+          "damage_usd": 30000000.0
+        },
+        {
+          "year": 2009,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 10556,
+          "deaths": 12,
+          "damage_usd": 43247000.0
+        },
+        {
+          "year": 2009,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 3845,
+          "deaths": 2,
+          "damage_usd": 13300000.0
+        },
+        {
+          "year": 2010,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 39101,
+          "deaths": 2,
+          "damage_usd": 39427000.0
+        },
+        {
+          "year": 2012,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 2,
+          "affected": 19545,
+          "deaths": 15,
+          "damage_usd": 89000000.0
+        },
+        {
+          "year": 2012,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 8400,
+          "deaths": 2,
+          "damage_usd": 8400000.0
+        },
+        {
+          "year": 2015,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 67000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2016,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 545558,
+          "deaths": 47,
+          "damage_usd": 600000000.0
+        },
+        {
+          "year": 2018,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 179200,
+          "deaths": 7,
+          "damage_usd": 60000000.0
+        },
+        {
+          "year": 2019,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 7780,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 3,
+          "affected": 205115,
+          "deaths": 8,
+          "damage_usd": 14120000.0
+        },
+        {
+          "year": 2021,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 82751,
+          "deaths": 6,
+          "damage_usd": 10000000.0
+        },
+        {
+          "year": 2022,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 69564,
+          "deaths": 1,
+          "damage_usd": 25000000.0
+        },
+        {
+          "year": 2023,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 230000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2026,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 75000,
+          "deaths": 1,
+          "damage_usd": null
+        }
+      ]
+    },
+    "FM": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2002": 1623,
+            "2003": 1000,
+            "2004": 6008,
+            "2015": 35000,
+            "2019": 10000,
+            "2026": 34000
+          },
+          "series_deaths": {
+            "2002": 47,
+            "2003": 0,
+            "2004": 1,
+            "2015": 5,
+            "2019": 0,
+            "2026": 0
+          },
+          "series_damage_usd": {
+            "2002": 500000.0,
+            "2003": 0.0,
+            "2004": 0.0,
+            "2015": 11000000.0,
+            "2019": 0.0,
+            "2026": 0.0
+          },
+          "total_affected": 87631,
+          "total_damage_usd": 11500000.0,
+          "total_events": 7,
+          "years_reported": 6,
+          "biggest": {
+            "year": 2015,
+            "count": 35000,
+            "events": 1,
+            "pct_of_pop": 32.2
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2008": 0
+          },
+          "series_deaths": {
+            "2008": 0
+          },
+          "series_damage_usd": {
+            "2008": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2008,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2016": 100000,
+            "2023": 113401
+          },
+          "series_deaths": {
+            "2016": 0,
+            "2023": 0
+          },
+          "series_damage_usd": {
+            "2016": 0.0,
+            "2023": 0.0
+          },
+          "total_affected": 213401,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2023,
+            "count": 113401,
+            "events": 1,
+            "pct_of_pop": 100.7
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2002": 1623,
+          "2003": 1000,
+          "2004": 6008,
+          "2008": 0,
+          "2015": 35000,
+          "2019": 10000,
+          "2026": 34000
+        },
+        "series_deaths": {
+          "2002": 47,
+          "2003": 0,
+          "2004": 1,
+          "2008": 0,
+          "2015": 5,
+          "2019": 0,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 500000.0,
+          "2003": 0.0,
+          "2004": 0.0,
+          "2008": 0.0,
+          "2015": 11000000.0,
+          "2019": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 87631,
+        "total_damage_usd": 11500000.0,
+        "total_events": 8,
+        "years_reported": 7,
+        "biggest": {
+          "year": 2015,
+          "count": 35000,
+          "events": 1,
+          "pct_of_pop": 32.2
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {
+          "2008": 0
+        },
+        "series_deaths": {
+          "2008": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0
+        },
+        "total_affected": 0,
+        "total_damage_usd": 0.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2008,
+          "count": 0,
+          "events": 1,
+          "pct_of_pop": 0.0
+        }
+      },
+      "all_types": {
+        "series_affected": {
+          "2002": 1623,
+          "2003": 1000,
+          "2004": 6008,
+          "2008": 0,
+          "2015": 35000,
+          "2016": 100000,
+          "2019": 10000,
+          "2023": 113401,
+          "2026": 34000
+        },
+        "series_deaths": {
+          "2002": 47,
+          "2003": 0,
+          "2004": 1,
+          "2008": 0,
+          "2015": 5,
+          "2016": 0,
+          "2019": 0,
+          "2023": 0,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 500000.0,
+          "2003": 0.0,
+          "2004": 0.0,
+          "2008": 0.0,
+          "2015": 11000000.0,
+          "2016": 0.0,
+          "2019": 0.0,
+          "2023": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 301032,
+        "total_damage_usd": 11500000.0,
+        "total_events": 10,
+        "years_reported": 9,
+        "biggest": {
+          "year": 2023,
+          "count": 113401,
+          "events": 1,
+          "pct_of_pop": 100.7
+        }
+      },
+      "events": [
+        {
+          "year": 2002,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 1623,
+          "deaths": 47,
+          "damage_usd": 500000.0
+        },
+        {
+          "year": 2003,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 6008,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 35000,
+          "deaths": 5,
+          "damage_usd": 11000000.0
+        },
+        {
+          "year": 2016,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 100000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2019,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 10000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2023,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 113401,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2026,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 34000,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "GU": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2002": 15144,
+            "2004": 300,
+            "2023": 100000,
+            "2026": 0
+          },
+          "series_deaths": {
+            "2002": 1,
+            "2004": 1,
+            "2023": 2,
+            "2026": 0
+          },
+          "series_damage_usd": {
+            "2002": 130000000.0,
+            "2004": 1000000.0,
+            "2023": 4300000000.0,
+            "2026": 0.0
+          },
+          "total_affected": 115444,
+          "total_damage_usd": 4431000000.0,
+          "total_events": 6,
+          "years_reported": 4,
+          "biggest": {
+            "year": 2023,
+            "count": 100000,
+            "events": 1,
+            "pct_of_pop": 60.0
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2002": 15144,
+          "2004": 300,
+          "2023": 100000,
+          "2026": 0
+        },
+        "series_deaths": {
+          "2002": 1,
+          "2004": 1,
+          "2023": 2,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 130000000.0,
+          "2004": 1000000.0,
+          "2023": 4300000000.0,
+          "2026": 0.0
+        },
+        "total_affected": 115444,
+        "total_damage_usd": 4431000000.0,
+        "total_events": 6,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2023,
+          "count": 100000,
+          "events": 1,
+          "pct_of_pop": 60.0
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2002": 15144,
+          "2004": 300,
+          "2023": 100000,
+          "2026": 0
+        },
+        "series_deaths": {
+          "2002": 1,
+          "2004": 1,
+          "2023": 2,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 130000000.0,
+          "2004": 1000000.0,
+          "2023": 4300000000.0,
+          "2026": 0.0
+        },
+        "total_affected": 115444,
+        "total_damage_usd": 4431000000.0,
+        "total_events": 6,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2023,
+          "count": 100000,
+          "events": 1,
+          "pct_of_pop": 60.0
+        }
+      },
+      "events": [
+        {
+          "year": 2002,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 15144,
+          "deaths": 1,
+          "damage_usd": 130000000.0
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 300,
+          "deaths": 1,
+          "damage_usd": 1000000.0
+        },
+        {
+          "year": 2023,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 100000,
+          "deaths": 2,
+          "damage_usd": 4300000000.0
+        }
+      ]
+    },
+    "KI": {
+      "by_type": {
+        "Flood": {
+          "series_affected": {
+            "2008": 85,
+            "2014": 220
+          },
+          "series_deaths": {
+            "2008": 0,
+            "2014": 0
+          },
+          "series_damage_usd": {
+            "2008": 0.0,
+            "2014": 0.0
+          },
+          "total_affected": 305,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2014,
+            "count": 220,
+            "events": 1,
+            "pct_of_pop": 0.2
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2015": 1500
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 1500,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 1500,
+            "events": 1,
+            "pct_of_pop": 1.3
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2008": 85,
+          "2014": 220,
+          "2015": 1500
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2014": 0,
+          "2015": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2014": 0.0,
+          "2015": 0.0
+        },
+        "total_affected": 1805,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2015,
+          "count": 1500,
+          "events": 1,
+          "pct_of_pop": 1.3
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {
+          "2008": 85,
+          "2014": 220
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2014": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2014": 0.0
+        },
+        "total_affected": 305,
+        "total_damage_usd": 0.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2014,
+          "count": 220,
+          "events": 1,
+          "pct_of_pop": 0.2
+        }
+      },
+      "all_types": {
+        "series_affected": {
+          "2008": 85,
+          "2014": 220,
+          "2015": 1500
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2014": 0,
+          "2015": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2014": 0.0,
+          "2015": 0.0
+        },
+        "total_affected": 1805,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2015,
+          "count": 1500,
+          "events": 1,
+          "pct_of_pop": 1.3
+        }
+      },
+      "events": [
+        {
+          "year": 2008,
+          "type": "Flood",
+          "subtype": "Coastal flood",
+          "events_count": 1,
+          "affected": 85,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Flood",
+          "subtype": "Coastal flood",
+          "events_count": 1,
+          "affected": 220,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1500,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "MH": {
+      "by_type": {
+        "Flood": {
+          "series_affected": {
+            "2008": 600,
+            "2014": 360
+          },
+          "series_deaths": {
+            "2008": 0,
+            "2014": 0
+          },
+          "series_damage_usd": {
+            "2008": 0.0,
+            "2014": 0.0
+          },
+          "total_affected": 960,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2008,
+            "count": 600,
+            "events": 1,
+            "pct_of_pop": 1.2
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2013": 6384,
+            "2015": 21000,
+            "2022": 4480,
+            "2024": 13924
+          },
+          "series_deaths": {
+            "2013": 0,
+            "2015": 0,
+            "2022": 0,
+            "2024": 0
+          },
+          "series_damage_usd": {
+            "2013": 0.0,
+            "2015": 4900000.0,
+            "2022": 0.0,
+            "2024": 0.0
+          },
+          "total_affected": 45788,
+          "total_damage_usd": 4900000.0,
+          "total_events": 4,
+          "years_reported": 4,
+          "biggest": {
+            "year": 2015,
+            "count": 21000,
+            "events": 1,
+            "pct_of_pop": 43.0
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2019": 0,
+            "2024": 19532
+          },
+          "series_deaths": {
+            "2019": 0,
+            "2024": 0
+          },
+          "series_damage_usd": {
+            "2019": 0.0,
+            "2024": 0.0
+          },
+          "total_affected": 19532,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2024,
+            "count": 19532,
+            "events": 1,
+            "pct_of_pop": 51.2
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2008": 600,
+          "2014": 360,
+          "2019": 0,
+          "2024": 19532
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2014": 0,
+          "2019": 0,
+          "2024": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2014": 0.0,
+          "2019": 0.0,
+          "2024": 0.0
+        },
+        "total_affected": 20492,
+        "total_damage_usd": 0.0,
+        "total_events": 4,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2024,
+          "count": 19532,
+          "events": 1,
+          "pct_of_pop": 51.2
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {
+          "2008": 600,
+          "2014": 360,
+          "2024": 19532
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2014": 0,
+          "2024": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2014": 0.0,
+          "2024": 0.0
+        },
+        "total_affected": 20492,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2024,
+          "count": 19532,
+          "events": 1,
+          "pct_of_pop": 51.2
+        }
+      },
+      "all_types": {
+        "series_affected": {
+          "2008": 600,
+          "2013": 6384,
+          "2014": 360,
+          "2015": 21000,
+          "2019": 0,
+          "2022": 4480,
+          "2024": 33456
+        },
+        "series_deaths": {
+          "2008": 0,
+          "2013": 0,
+          "2014": 0,
+          "2015": 0,
+          "2019": 0,
+          "2022": 0,
+          "2024": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0,
+          "2013": 0.0,
+          "2014": 0.0,
+          "2015": 4900000.0,
+          "2019": 0.0,
+          "2022": 0.0,
+          "2024": 0.0
+        },
+        "total_affected": 66280,
+        "total_damage_usd": 4900000.0,
+        "total_events": 8,
+        "years_reported": 7,
+        "biggest": {
+          "year": 2024,
+          "count": 33456,
+          "events": 2,
+          "pct_of_pop": 87.6
+        }
+      },
+      "events": [
+        {
+          "year": 2008,
+          "type": "Flood",
+          "subtype": "Coastal flood",
+          "events_count": 1,
+          "affected": 600,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2013,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 6384,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Flood",
+          "subtype": "Coastal flood",
+          "events_count": 1,
+          "affected": 360,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 21000,
+          "deaths": 0,
+          "damage_usd": 4900000.0
+        },
+        {
+          "year": 2022,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 4480,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2024,
+          "type": "Storm",
+          "subtype": "Storm surge",
+          "events_count": 1,
+          "affected": 19532,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2024,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 13924,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "MP": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2002": 300,
+            "2004": 200,
+            "2015": 360,
+            "2018": 0,
+            "2026": 0
+          },
+          "series_deaths": {
+            "2002": 0,
+            "2004": 3,
+            "2015": 0,
+            "2018": 2,
+            "2026": 0
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2004": 0.0,
+            "2015": 0.0,
+            "2018": 0.0,
+            "2026": 0.0
+          },
+          "total_affected": 860,
+          "total_damage_usd": 0.0,
+          "total_events": 5,
+          "years_reported": 5,
+          "biggest": {
+            "year": 2015,
+            "count": 360,
+            "events": 1,
+            "pct_of_pop": 0.7
+          }
+        },
+        "Volcanic activity": {
+          "series_affected": {
+            "2003": 0
+          },
+          "series_deaths": {
+            "2003": 0
+          },
+          "series_damage_usd": {
+            "2003": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2003,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2002": 300,
+          "2004": 200,
+          "2015": 360,
+          "2018": 0,
+          "2026": 0
+        },
+        "series_deaths": {
+          "2002": 0,
+          "2004": 3,
+          "2015": 0,
+          "2018": 2,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 0.0,
+          "2004": 0.0,
+          "2015": 0.0,
+          "2018": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 860,
+        "total_damage_usd": 0.0,
+        "total_events": 5,
+        "years_reported": 5,
+        "biggest": {
+          "year": 2015,
+          "count": 360,
+          "events": 1,
+          "pct_of_pop": 0.7
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2002": 300,
+          "2003": 0,
+          "2004": 200,
+          "2015": 360,
+          "2018": 0,
+          "2026": 0
+        },
+        "series_deaths": {
+          "2002": 0,
+          "2003": 0,
+          "2004": 3,
+          "2015": 0,
+          "2018": 2,
+          "2026": 0
+        },
+        "series_damage_usd": {
+          "2002": 0.0,
+          "2003": 0.0,
+          "2004": 0.0,
+          "2015": 0.0,
+          "2018": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 860,
+        "total_damage_usd": 0.0,
+        "total_events": 6,
+        "years_reported": 6,
+        "biggest": {
+          "year": 2015,
+          "count": 360,
+          "events": 1,
+          "pct_of_pop": 0.7
+        }
+      },
+      "events": [
+        {
+          "year": 2002,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 300,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 200,
+          "deaths": 3,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 360,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2018,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 2,
+          "damage_usd": null
+        }
+      ]
+    },
+    "NC": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2003": 1100,
+            "2021": 0
+          },
+          "series_deaths": {
+            "2003": 2,
+            "2021": 0
+          },
+          "series_damage_usd": {
+            "2003": 40000000.0,
+            "2021": 0.0
+          },
+          "total_affected": 1100,
+          "total_damage_usd": 40000000.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2003,
+            "count": 1100,
+            "events": 1,
+            "pct_of_pop": 0.5
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2003": 1100,
+          "2021": 0
+        },
+        "series_deaths": {
+          "2003": 2,
+          "2021": 0
+        },
+        "series_damage_usd": {
+          "2003": 40000000.0,
+          "2021": 0.0
+        },
+        "total_affected": 1100,
+        "total_damage_usd": 40000000.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2003,
+          "count": 1100,
+          "events": 1,
+          "pct_of_pop": 0.5
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2003": 1100,
+          "2021": 0
+        },
+        "series_deaths": {
+          "2003": 2,
+          "2021": 0
+        },
+        "series_damage_usd": {
+          "2003": 40000000.0,
+          "2021": 0.0
+        },
+        "total_affected": 1100,
+        "total_damage_usd": 40000000.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2003,
+          "count": 1100,
+          "events": 1,
+          "pct_of_pop": 0.5
+        }
+      },
+      "events": [
+        {
+          "year": 2003,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1100,
+          "deaths": 2,
+          "damage_usd": 40000000.0
+        }
+      ]
+    },
+    "NU": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2004": 702
+          },
+          "series_deaths": {
+            "2004": 1
+          },
+          "series_damage_usd": {
+            "2004": 40000000.0
+          },
+          "total_affected": 702,
+          "total_damage_usd": 40000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2004,
+            "count": 702,
+            "events": 1,
+            "pct_of_pop": 36.7
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2004": 702
+        },
+        "series_deaths": {
+          "2004": 1
+        },
+        "series_damage_usd": {
+          "2004": 40000000.0
+        },
+        "total_affected": 702,
+        "total_damage_usd": 40000000.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2004,
+          "count": 702,
+          "events": 1,
+          "pct_of_pop": 36.7
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2004": 702
+        },
+        "series_deaths": {
+          "2004": 1
+        },
+        "series_damage_usd": {
+          "2004": 40000000.0
+        },
+        "total_affected": 702,
+        "total_damage_usd": 40000000.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2004,
+          "count": 702,
+          "events": 1,
+          "pct_of_pop": 36.7
+        }
+      },
+      "events": [
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 702,
+          "deaths": 1,
+          "damage_usd": 40000000.0
+        }
+      ]
+    },
+    "PF": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2010": 3411
+          },
+          "series_deaths": {
+            "2010": 1
+          },
+          "series_damage_usd": {
+            "2010": 11000000.0
+          },
+          "total_affected": 3411,
+          "total_damage_usd": 11000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2010,
+            "count": 3411,
+            "events": 1,
+            "pct_of_pop": 1.3
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2017": 5004
+          },
+          "series_deaths": {
+            "2017": 0
+          },
+          "series_damage_usd": {
+            "2017": 2000000.0
+          },
+          "total_affected": 5004,
+          "total_damage_usd": 2000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2017,
+            "count": 5004,
+            "events": 1,
+            "pct_of_pop": 1.8
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2010": 3411,
+          "2017": 5004
+        },
+        "series_deaths": {
+          "2010": 1,
+          "2017": 0
+        },
+        "series_damage_usd": {
+          "2010": 11000000.0,
+          "2017": 2000000.0
+        },
+        "total_affected": 8415,
+        "total_damage_usd": 13000000.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2017,
+          "count": 5004,
+          "events": 1,
+          "pct_of_pop": 1.8
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2010": 3411,
+          "2017": 5004
+        },
+        "series_deaths": {
+          "2010": 1,
+          "2017": 0
+        },
+        "series_damage_usd": {
+          "2010": 11000000.0,
+          "2017": 2000000.0
+        },
+        "total_affected": 8415,
+        "total_damage_usd": 13000000.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2017,
+          "count": 5004,
+          "events": 1,
+          "pct_of_pop": 1.8
+        }
+      },
+      "events": [
+        {
+          "year": 2010,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 3411,
+          "deaths": 1,
+          "damage_usd": 11000000.0
+        },
+        {
+          "year": 2017,
+          "type": "Flood",
+          "subtype": "Flood (General)",
+          "events_count": 1,
+          "affected": 5004,
+          "deaths": 0,
+          "damage_usd": 2000000.0
+        }
+      ]
+    },
+    "PG": {
+      "by_type": {
+        "Earthquake": {
+          "series_affected": {
+            "2000": 5000,
+            "2001": 201,
+            "2002": 5470,
+            "2005": 200,
+            "2018": 544300,
+            "2019": 651,
+            "2022": 1969,
+            "2023": 16274,
+            "2024": 5002
+          },
+          "series_deaths": {
+            "2000": 2,
+            "2001": 0,
+            "2002": 5,
+            "2005": 1,
+            "2018": 181,
+            "2019": 0,
+            "2022": 7,
+            "2023": 8,
+            "2024": 5
+          },
+          "series_damage_usd": {
+            "2000": 0.0,
+            "2001": 0.0,
+            "2002": 0.0,
+            "2005": 0.0,
+            "2018": 61000000.0,
+            "2019": 0.0,
+            "2022": 0.0,
+            "2023": 0.0,
+            "2024": 0.0
+          },
+          "total_affected": 579067,
+          "total_damage_usd": 61000000.0,
+          "total_events": 12,
+          "years_reported": 9,
+          "biggest": {
+            "year": 2018,
+            "count": 544300,
+            "events": 3,
+            "pct_of_pop": 5.8
+          }
+        },
+        "Volcanic activity": {
+          "series_affected": {
+            "2002": 13000,
+            "2004": 9600,
+            "2005": 15000,
+            "2006": 3299,
+            "2014": 1380,
+            "2018": 736,
+            "2019": 15800
+          },
+          "series_deaths": {
+            "2002": 0,
+            "2004": 0,
+            "2005": 0,
+            "2006": 0,
+            "2014": 0,
+            "2018": 0,
+            "2019": 0
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2004": 0.0,
+            "2005": 0.0,
+            "2006": 0.0,
+            "2014": 0.0,
+            "2018": 0.0,
+            "2019": 0.0
+          },
+          "total_affected": 58815,
+          "total_damage_usd": 0.0,
+          "total_events": 8,
+          "years_reported": 7,
+          "biggest": {
+            "year": 2019,
+            "count": 15800,
+            "events": 1,
+            "pct_of_pop": 0.2
+          }
+        },
+        "Mass movement (wet)": {
+          "series_affected": {
+            "2002": 174,
+            "2003": 621,
+            "2006": 10300,
+            "2009": 0,
+            "2012": 0,
+            "2019": 0,
+            "2020": 100,
+            "2024": 7849,
+            "2025": 0
+          },
+          "series_deaths": {
+            "2002": 36,
+            "2003": 13,
+            "2006": 15,
+            "2009": 19,
+            "2012": 60,
+            "2019": 10,
+            "2020": 23,
+            "2024": 693,
+            "2025": 21
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2003": 0.0,
+            "2006": 0.0,
+            "2009": 0.0,
+            "2012": 0.0,
+            "2019": 0.0,
+            "2020": 0.0,
+            "2024": 60000000.0,
+            "2025": 0.0
+          },
+          "total_affected": 19044,
+          "total_damage_usd": 60000000.0,
+          "total_events": 13,
+          "years_reported": 9,
+          "biggest": {
+            "year": 2006,
+            "count": 10300,
+            "events": 2,
+            "pct_of_pop": 0.2
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2004": 10000,
+            "2005": 2493,
+            "2006": 12400,
+            "2008": 75300,
+            "2012": 200000,
+            "2013": 35000,
+            "2014": 27000,
+            "2015": 20000,
+            "2016": 6600,
+            "2019": 350,
+            "2020": 60900
+          },
+          "series_deaths": {
+            "2004": 0,
+            "2005": 1,
+            "2006": 1,
+            "2008": 0,
+            "2012": 5,
+            "2013": 0,
+            "2014": 0,
+            "2015": 0,
+            "2016": 0,
+            "2019": 2,
+            "2020": 19
+          },
+          "series_damage_usd": {
+            "2004": 0.0,
+            "2005": 0.0,
+            "2006": 0.0,
+            "2008": 0.0,
+            "2012": 27000000.0,
+            "2013": 0.0,
+            "2014": 0.0,
+            "2015": 0.0,
+            "2016": 0.0,
+            "2019": 0.0,
+            "2020": 0.0
+          },
+          "total_affected": 450043,
+          "total_damage_usd": 27000000.0,
+          "total_events": 15,
+          "years_reported": 11,
+          "biggest": {
+            "year": 2012,
+            "count": 200000,
+            "events": 1,
+            "pct_of_pop": 2.5
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2007": 162140,
+            "2011": 0,
+            "2014": 12346,
+            "2015": 9199,
+            "2026": 200007
+          },
+          "series_deaths": {
+            "2007": 172,
+            "2011": 0,
+            "2014": 0,
+            "2015": 0,
+            "2026": 23
+          },
+          "series_damage_usd": {
+            "2007": 0.0,
+            "2011": 0.0,
+            "2014": 0.0,
+            "2015": 0.0,
+            "2026": 0.0
+          },
+          "total_affected": 383692,
+          "total_damage_usd": 0.0,
+          "total_events": 5,
+          "years_reported": 5,
+          "biggest": {
+            "year": 2026,
+            "count": 200007,
+            "events": 1,
+            "pct_of_pop": 1.8
+          }
+        },
+        "Mass movement (dry)": {
+          "series_affected": {
+            "2008": 0
+          },
+          "series_deaths": {
+            "2008": 10
+          },
+          "series_damage_usd": {
+            "2008": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2008,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 2520000
+          },
+          "series_deaths": {
+            "2015": 24
+          },
+          "series_damage_usd": {
+            "2015": 60000000.0
+          },
+          "total_affected": 2520000,
+          "total_damage_usd": 60000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 2520000,
+            "events": 1,
+            "pct_of_pop": 28.8
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2002": 174,
+          "2003": 621,
+          "2004": 10000,
+          "2005": 2493,
+          "2006": 22700,
+          "2007": 162140,
+          "2008": 75300,
+          "2009": 0,
+          "2011": 0,
+          "2012": 200000,
+          "2013": 35000,
+          "2014": 39346,
+          "2015": 29199,
+          "2016": 6600,
+          "2019": 350,
+          "2020": 61000,
+          "2024": 7849,
+          "2025": 0,
+          "2026": 200007
+        },
+        "series_deaths": {
+          "2002": 36,
+          "2003": 13,
+          "2004": 0,
+          "2005": 1,
+          "2006": 16,
+          "2007": 172,
+          "2008": 0,
+          "2009": 19,
+          "2011": 0,
+          "2012": 65,
+          "2013": 0,
+          "2014": 0,
+          "2015": 0,
+          "2016": 0,
+          "2019": 12,
+          "2020": 42,
+          "2024": 693,
+          "2025": 21,
+          "2026": 23
+        },
+        "series_damage_usd": {
+          "2002": 0.0,
+          "2003": 0.0,
+          "2004": 0.0,
+          "2005": 0.0,
+          "2006": 0.0,
+          "2007": 0.0,
+          "2008": 0.0,
+          "2009": 0.0,
+          "2011": 0.0,
+          "2012": 27000000.0,
+          "2013": 0.0,
+          "2014": 0.0,
+          "2015": 0.0,
+          "2016": 0.0,
+          "2019": 0.0,
+          "2020": 0.0,
+          "2024": 60000000.0,
+          "2025": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 852779,
+        "total_damage_usd": 87000000.0,
+        "total_events": 33,
+        "years_reported": 19,
+        "biggest": {
+          "year": 2026,
+          "count": 200007,
+          "events": 1,
+          "pct_of_pop": 1.8
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {
+          "2008": 75300
+        },
+        "series_deaths": {
+          "2008": 0
+        },
+        "series_damage_usd": {
+          "2008": 0.0
+        },
+        "total_affected": 75300,
+        "total_damage_usd": 0.0,
+        "total_events": 2,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2008,
+          "count": 75300,
+          "events": 2,
+          "pct_of_pop": 1.0
+        }
+      },
+      "all_types": {
+        "series_affected": {
+          "2000": 5000,
+          "2001": 201,
+          "2002": 18644,
+          "2003": 621,
+          "2004": 19600,
+          "2005": 17693,
+          "2006": 25999,
+          "2007": 162140,
+          "2008": 75300,
+          "2009": 0,
+          "2011": 0,
+          "2012": 200000,
+          "2013": 35000,
+          "2014": 40726,
+          "2015": 2549199,
+          "2016": 6600,
+          "2018": 545036,
+          "2019": 16801,
+          "2020": 61000,
+          "2022": 1969,
+          "2023": 16274,
+          "2024": 12851,
+          "2025": 0,
+          "2026": 200007
+        },
+        "series_deaths": {
+          "2000": 2,
+          "2001": 0,
+          "2002": 41,
+          "2003": 13,
+          "2004": 0,
+          "2005": 2,
+          "2006": 16,
+          "2007": 172,
+          "2008": 10,
+          "2009": 19,
+          "2011": 0,
+          "2012": 65,
+          "2013": 0,
+          "2014": 0,
+          "2015": 24,
+          "2016": 0,
+          "2018": 181,
+          "2019": 12,
+          "2020": 42,
+          "2022": 7,
+          "2023": 8,
+          "2024": 698,
+          "2025": 21,
+          "2026": 23
+        },
+        "series_damage_usd": {
+          "2000": 0.0,
+          "2001": 0.0,
+          "2002": 0.0,
+          "2003": 0.0,
+          "2004": 0.0,
+          "2005": 0.0,
+          "2006": 0.0,
+          "2007": 0.0,
+          "2008": 0.0,
+          "2009": 0.0,
+          "2011": 0.0,
+          "2012": 27000000.0,
+          "2013": 0.0,
+          "2014": 0.0,
+          "2015": 60000000.0,
+          "2016": 0.0,
+          "2018": 61000000.0,
+          "2019": 0.0,
+          "2020": 0.0,
+          "2022": 0.0,
+          "2023": 0.0,
+          "2024": 60000000.0,
+          "2025": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 4010661,
+        "total_damage_usd": 208000000.0,
+        "total_events": 55,
+        "years_reported": 24,
+        "biggest": {
+          "year": 2015,
+          "count": 2549199,
+          "events": 3,
+          "pct_of_pop": 29.2
+        }
+      },
+      "events": [
+        {
+          "year": 2000,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 5000,
+          "deaths": 2,
+          "damage_usd": null
+        },
+        {
+          "year": 2001,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 201,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2002,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 13000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2002,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 2,
+          "affected": 5470,
+          "deaths": 5,
+          "damage_usd": null
+        },
+        {
+          "year": 2002,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 174,
+          "deaths": 36,
+          "damage_usd": null
+        },
+        {
+          "year": 2003,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 2,
+          "affected": 621,
+          "deaths": 13,
+          "damage_usd": null
+        },
+        {
+          "year": 2004,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 10000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2004,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 9600,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 15000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 2493,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 200,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2006,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 2,
+          "affected": 12400,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2006,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 10000,
+          "deaths": 14,
+          "damage_usd": null
+        },
+        {
+          "year": 2006,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 2,
+          "affected": 3299,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2006,
+          "type": "Mass movement (wet)",
+          "subtype": "Mudslide",
+          "events_count": 1,
+          "affected": 300,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2007,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 162140,
+          "deaths": 172,
+          "damage_usd": null
+        },
+        {
+          "year": 2008,
+          "type": "Flood",
+          "subtype": "Coastal flood",
+          "events_count": 2,
+          "affected": 75300,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2008,
+          "type": "Mass movement (dry)",
+          "subtype": "Landslide (dry)",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 10,
+          "damage_usd": null
+        },
+        {
+          "year": 2009,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 19,
+          "damage_usd": null
+        },
+        {
+          "year": 2012,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 200000,
+          "deaths": 5,
+          "damage_usd": 27000000.0
+        },
+        {
+          "year": 2012,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 60,
+          "damage_usd": null
+        },
+        {
+          "year": 2013,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 35000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 27000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 12346,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 1380,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 2520000,
+          "deaths": 24,
+          "damage_usd": 60000000.0
+        },
+        {
+          "year": 2015,
+          "type": "Flood",
+          "subtype": "Flood (General)",
+          "events_count": 1,
+          "affected": 20000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 9199,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2016,
+          "type": "Flood",
+          "subtype": "Flood (General)",
+          "events_count": 1,
+          "affected": 6600,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2018,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 3,
+          "affected": 544300,
+          "deaths": 181,
+          "damage_usd": 61000000.0
+        },
+        {
+          "year": 2018,
+          "type": "Volcanic activity",
+          "subtype": "Volcanic activity (General)",
+          "events_count": 1,
+          "affected": 736,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2019,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 15800,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2019,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 651,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2019,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 350,
+          "deaths": 2,
+          "damage_usd": null
+        },
+        {
+          "year": 2019,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 10,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 60000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Flood",
+          "subtype": "Flood (General)",
+          "events_count": 1,
+          "affected": 700,
+          "deaths": 12,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 200,
+          "deaths": 7,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 2,
+          "affected": 100,
+          "deaths": 23,
+          "damage_usd": null
+        },
+        {
+          "year": 2022,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 1969,
+          "deaths": 7,
+          "damage_usd": null
+        },
+        {
+          "year": 2023,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 16274,
+          "deaths": 8,
+          "damage_usd": null
+        },
+        {
+          "year": 2024,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 2,
+          "affected": 7849,
+          "deaths": 693,
+          "damage_usd": 60000000.0
+        },
+        {
+          "year": 2024,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 5002,
+          "deaths": 5,
+          "damage_usd": null
+        },
+        {
+          "year": 2025,
+          "type": "Mass movement (wet)",
+          "subtype": "Landslide (wet)",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 21,
+          "damage_usd": null
+        },
+        {
+          "year": 2026,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 200007,
+          "deaths": 23,
+          "damage_usd": null
+        }
+      ]
+    },
+    "PW": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2012": 1250,
+            "2013": 0,
+            "2021": 7288
+          },
+          "series_deaths": {
+            "2012": 0,
+            "2013": 0,
+            "2021": 0
+          },
+          "series_damage_usd": {
+            "2012": 0.0,
+            "2013": 0.0,
+            "2021": 0.0
+          },
+          "total_affected": 8538,
+          "total_damage_usd": 0.0,
+          "total_events": 3,
+          "years_reported": 3,
+          "biggest": {
+            "year": 2021,
+            "count": 7288,
+            "events": 1,
+            "pct_of_pop": 40.9
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 14200
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 14200,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 14200,
+            "events": 1,
+            "pct_of_pop": 79.7
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2012": 1250,
+          "2013": 0,
+          "2021": 7288
+        },
+        "series_deaths": {
+          "2012": 0,
+          "2013": 0,
+          "2021": 0
+        },
+        "series_damage_usd": {
+          "2012": 0.0,
+          "2013": 0.0,
+          "2021": 0.0
+        },
+        "total_affected": 8538,
+        "total_damage_usd": 0.0,
+        "total_events": 3,
+        "years_reported": 3,
+        "biggest": {
+          "year": 2021,
+          "count": 7288,
+          "events": 1,
+          "pct_of_pop": 40.9
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2012": 1250,
+          "2013": 0,
+          "2015": 14200,
+          "2021": 7288
+        },
+        "series_deaths": {
+          "2012": 0,
+          "2013": 0,
+          "2015": 0,
+          "2021": 0
+        },
+        "series_damage_usd": {
+          "2012": 0.0,
+          "2013": 0.0,
+          "2015": 0.0,
+          "2021": 0.0
+        },
+        "total_affected": 22738,
+        "total_damage_usd": 0.0,
+        "total_events": 4,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2015,
+          "count": 14200,
+          "events": 1,
+          "pct_of_pop": 79.7
+        }
+      },
+      "events": [
+        {
+          "year": 2012,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1250,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2015,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 14200,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2021,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 7288,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "SB": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2002": 1110,
+            "2003": 425,
+            "2010": 795,
+            "2011": 0,
+            "2015": 44496,
+            "2018": 1000,
+            "2020": 150000,
+            "2023": 22319,
+            "2026": 340641
+          },
+          "series_deaths": {
+            "2002": 0,
+            "2003": 0,
+            "2010": 0,
+            "2011": 0,
+            "2015": 9,
+            "2018": 0,
+            "2020": 48,
+            "2023": 0,
+            "2026": 8
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2003": 0.0,
+            "2010": 0.0,
+            "2011": 0.0,
+            "2015": 2000000.0,
+            "2018": 0.0,
+            "2020": 0.0,
+            "2023": 0.0,
+            "2026": 0.0
+          },
+          "total_affected": 560786,
+          "total_damage_usd": 2000000.0,
+          "total_events": 11,
+          "years_reported": 9,
+          "biggest": {
+            "year": 2026,
+            "count": 340641,
+            "events": 1,
+            "pct_of_pop": 40.1
+          }
+        },
+        "Earthquake": {
+          "series_affected": {
+            "2007": 2384,
+            "2010": 1126,
+            "2013": 3329,
+            "2016": 9770
+          },
+          "series_deaths": {
+            "2007": 52,
+            "2010": 0,
+            "2013": 10,
+            "2016": 0
+          },
+          "series_damage_usd": {
+            "2007": 0.0,
+            "2010": 0.0,
+            "2013": 2000000.0,
+            "2016": 0.0
+          },
+          "total_affected": 16609,
+          "total_damage_usd": 2000000.0,
+          "total_events": 4,
+          "years_reported": 4,
+          "biggest": {
+            "year": 2016,
+            "count": 9770,
+            "events": 1,
+            "pct_of_pop": 1.5
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2009": 7000,
+            "2010": 16017,
+            "2012": 4836,
+            "2013": 10227,
+            "2014": 52000
+          },
+          "series_deaths": {
+            "2009": 21,
+            "2010": 2,
+            "2012": 0,
+            "2013": 0,
+            "2014": 47
+          },
+          "series_damage_usd": {
+            "2009": 0.0,
+            "2010": 0.0,
+            "2012": 0.0,
+            "2013": 2000000.0,
+            "2014": 24000000.0
+          },
+          "total_affected": 90080,
+          "total_damage_usd": 26000000.0,
+          "total_events": 5,
+          "years_reported": 5,
+          "biggest": {
+            "year": 2014,
+            "count": 52000,
+            "events": 1,
+            "pct_of_pop": 8.4
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 0
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2002": 1110,
+          "2003": 425,
+          "2009": 7000,
+          "2010": 16812,
+          "2011": 0,
+          "2012": 4836,
+          "2013": 10227,
+          "2014": 52000,
+          "2015": 44496,
+          "2018": 1000,
+          "2020": 150000,
+          "2023": 22319,
+          "2026": 340641
+        },
+        "series_deaths": {
+          "2002": 0,
+          "2003": 0,
+          "2009": 21,
+          "2010": 2,
+          "2011": 0,
+          "2012": 0,
+          "2013": 0,
+          "2014": 47,
+          "2015": 9,
+          "2018": 0,
+          "2020": 48,
+          "2023": 0,
+          "2026": 8
+        },
+        "series_damage_usd": {
+          "2002": 0.0,
+          "2003": 0.0,
+          "2009": 0.0,
+          "2010": 0.0,
+          "2011": 0.0,
+          "2012": 0.0,
+          "2013": 2000000.0,
+          "2014": 24000000.0,
+          "2015": 2000000.0,
+          "2018": 0.0,
+          "2020": 0.0,
+          "2023": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 650866,
+        "total_damage_usd": 28000000.0,
+        "total_events": 16,
+        "years_reported": 13,
+        "biggest": {
+          "year": 2026,
+          "count": 340641,
+          "events": 1,
+          "pct_of_pop": 40.1
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2002": 1110,
+          "2003": 425,
+          "2007": 2384,
+          "2009": 7000,
+          "2010": 17938,
+          "2011": 0,
+          "2012": 4836,
+          "2013": 13556,
+          "2014": 52000,
+          "2015": 44496,
+          "2016": 9770,
+          "2018": 1000,
+          "2020": 150000,
+          "2023": 22319,
+          "2026": 340641
+        },
+        "series_deaths": {
+          "2002": 0,
+          "2003": 0,
+          "2007": 52,
+          "2009": 21,
+          "2010": 2,
+          "2011": 0,
+          "2012": 0,
+          "2013": 10,
+          "2014": 47,
+          "2015": 9,
+          "2016": 0,
+          "2018": 0,
+          "2020": 48,
+          "2023": 0,
+          "2026": 8
+        },
+        "series_damage_usd": {
+          "2002": 0.0,
+          "2003": 0.0,
+          "2007": 0.0,
+          "2009": 0.0,
+          "2010": 0.0,
+          "2011": 0.0,
+          "2012": 0.0,
+          "2013": 4000000.0,
+          "2014": 24000000.0,
+          "2015": 2000000.0,
+          "2016": 0.0,
+          "2018": 0.0,
+          "2020": 0.0,
+          "2023": 0.0,
+          "2026": 0.0
+        },
+        "total_affected": 667475,
+        "total_damage_usd": 30000000.0,
+        "total_events": 21,
+        "years_reported": 15,
+        "biggest": {
+          "year": 2026,
+          "count": 340641,
+          "events": 1,
+          "pct_of_pop": 40.1
+        }
+      },
+      "events": [
+        {
+          "year": 2002,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1110,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2003,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 425,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2007,
+          "type": "Earthquake",
+          "subtype": "Tsunami",
+          "events_count": 1,
+          "affected": 2384,
+          "deaths": 52,
+          "damage_usd": null
+        },
+        {
+          "year": 2009,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 7000,
+          "deaths": 21,
+          "damage_usd": null
+        },
+        {
+          "year": 2010,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 16017,
+          "deaths": 2,
+          "damage_usd": null
+        },
+        {
+          "year": 2010,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 1126,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2010,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 795,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2012,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 4836,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2013,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 10227,
+          "deaths": 0,
+          "damage_usd": 2000000.0
+        },
+        {
+          "year": 2013,
+          "type": "Earthquake",
+          "subtype": "Tsunami",
+          "events_count": 1,
+          "affected": 3329,
+          "deaths": 10,
+          "damage_usd": 2000000.0
+        },
+        {
+          "year": 2014,
+          "type": "Flood",
+          "subtype": "Flash flood",
+          "events_count": 1,
+          "affected": 52000,
+          "deaths": 47,
+          "damage_usd": 24000000.0
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 44496,
+          "deaths": 9,
+          "damage_usd": 2000000.0
+        },
+        {
+          "year": 2016,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 9770,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2018,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 150000,
+          "deaths": 48,
+          "damage_usd": null
+        },
+        {
+          "year": 2023,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 22319,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2026,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 340641,
+          "deaths": 8,
+          "damage_usd": null
+        }
+      ]
+    },
+    "TK": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2005": 26
+          },
+          "series_deaths": {
+            "2005": 0
+          },
+          "series_damage_usd": {
+            "2005": 0.0
+          },
+          "total_affected": 26,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2005,
+            "count": 26,
+            "events": 1,
+            "pct_of_pop": 1.6
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2005": 26
+        },
+        "series_deaths": {
+          "2005": 0
+        },
+        "series_damage_usd": {
+          "2005": 0.0
+        },
+        "total_affected": 26,
+        "total_damage_usd": 0.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2005,
+          "count": 26,
+          "events": 1,
+          "pct_of_pop": 1.6
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2005": 26
+        },
+        "series_deaths": {
+          "2005": 0
+        },
+        "series_damage_usd": {
+          "2005": 0.0
+        },
+        "total_affected": 26,
+        "total_damage_usd": 0.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2005,
+          "count": 26,
+          "events": 1,
+          "pct_of_pop": 1.6
+        }
+      },
+      "events": [
+        {
+          "year": 2005,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 26,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "TO": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2001": 16500,
+            "2004": 0,
+            "2011": 7600,
+            "2014": 4014,
+            "2016": 392,
+            "2018": 87000,
+            "2020": 25000
+          },
+          "series_deaths": {
+            "2001": 0,
+            "2004": 0,
+            "2011": 3,
+            "2014": 1,
+            "2016": 0,
+            "2018": 0,
+            "2020": 0
+          },
+          "series_damage_usd": {
+            "2001": 51300000.0,
+            "2004": 0.0,
+            "2011": 3000000.0,
+            "2014": 31000000.0,
+            "2016": 0.0,
+            "2018": 0.0,
+            "2020": 111000000.0
+          },
+          "total_affected": 140506,
+          "total_damage_usd": 196300000.0,
+          "total_events": 9,
+          "years_reported": 7,
+          "biggest": {
+            "year": 2018,
+            "count": 87000,
+            "events": 1,
+            "pct_of_pop": 82.4
+          }
+        },
+        "Earthquake": {
+          "series_affected": {
+            "2009": 507
+          },
+          "series_deaths": {
+            "2009": 9
+          },
+          "series_damage_usd": {
+            "2009": 9500000.0
+          },
+          "total_affected": 507,
+          "total_damage_usd": 9500000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2009,
+            "count": 507,
+            "events": 1,
+            "pct_of_pop": 0.5
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 0
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        },
+        "Volcanic activity": {
+          "series_affected": {
+            "2022": 84176
+          },
+          "series_deaths": {
+            "2022": 4
+          },
+          "series_damage_usd": {
+            "2022": 118000000.0
+          },
+          "total_affected": 84176,
+          "total_damage_usd": 118000000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2022,
+            "count": 84176,
+            "events": 1,
+            "pct_of_pop": 80.1
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2001": 16500,
+          "2004": 0,
+          "2011": 7600,
+          "2014": 4014,
+          "2016": 392,
+          "2018": 87000,
+          "2020": 25000
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2004": 0,
+          "2011": 3,
+          "2014": 1,
+          "2016": 0,
+          "2018": 0,
+          "2020": 0
+        },
+        "series_damage_usd": {
+          "2001": 51300000.0,
+          "2004": 0.0,
+          "2011": 3000000.0,
+          "2014": 31000000.0,
+          "2016": 0.0,
+          "2018": 0.0,
+          "2020": 111000000.0
+        },
+        "total_affected": 140506,
+        "total_damage_usd": 196300000.0,
+        "total_events": 9,
+        "years_reported": 7,
+        "biggest": {
+          "year": 2018,
+          "count": 87000,
+          "events": 1,
+          "pct_of_pop": 82.4
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2001": 16500,
+          "2004": 0,
+          "2009": 507,
+          "2011": 7600,
+          "2014": 4014,
+          "2015": 0,
+          "2016": 392,
+          "2018": 87000,
+          "2020": 25000,
+          "2022": 84176
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2004": 0,
+          "2009": 9,
+          "2011": 3,
+          "2014": 1,
+          "2015": 0,
+          "2016": 0,
+          "2018": 0,
+          "2020": 0,
+          "2022": 4
+        },
+        "series_damage_usd": {
+          "2001": 51300000.0,
+          "2004": 0.0,
+          "2009": 9500000.0,
+          "2011": 3000000.0,
+          "2014": 31000000.0,
+          "2015": 0.0,
+          "2016": 0.0,
+          "2018": 0.0,
+          "2020": 111000000.0,
+          "2022": 118000000.0
+        },
+        "total_affected": 225189,
+        "total_damage_usd": 323800000.0,
+        "total_events": 12,
+        "years_reported": 10,
+        "biggest": {
+          "year": 2018,
+          "count": 87000,
+          "events": 1,
+          "pct_of_pop": 82.4
+        }
+      },
+      "events": [
+        {
+          "year": 2001,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 16500,
+          "deaths": 0,
+          "damage_usd": 51300000.0
+        },
+        {
+          "year": 2009,
+          "type": "Earthquake",
+          "subtype": "Tsunami",
+          "events_count": 1,
+          "affected": 507,
+          "deaths": 9,
+          "damage_usd": 9500000.0
+        },
+        {
+          "year": 2011,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 7600,
+          "deaths": 3,
+          "damage_usd": 3000000.0
+        },
+        {
+          "year": 2014,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 4014,
+          "deaths": 1,
+          "damage_usd": 31000000.0
+        },
+        {
+          "year": 2016,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 3,
+          "affected": 392,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2018,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 87000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 25000,
+          "deaths": 0,
+          "damage_usd": 111000000.0
+        },
+        {
+          "year": 2022,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 84176,
+          "deaths": 4,
+          "damage_usd": 118000000.0
+        }
+      ]
+    },
+    "TV": {
+      "by_type": {
+        "Drought": {
+          "series_affected": {
+            "2011": 0,
+            "2021": 10204
+          },
+          "series_deaths": {
+            "2011": 0,
+            "2021": 0
+          },
+          "series_damage_usd": {
+            "2011": 0.0,
+            "2021": 0.0
+          },
+          "total_affected": 10204,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2021,
+            "count": 10204,
+            "events": 1,
+            "pct_of_pop": 99.6
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2015": 4613,
+            "2020": 5500
+          },
+          "series_deaths": {
+            "2015": 0,
+            "2020": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0,
+            "2020": 0.0
+          },
+          "total_affected": 10113,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2020,
+            "count": 5500,
+            "events": 1,
+            "pct_of_pop": 52.7
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2015": 4613,
+          "2020": 5500
+        },
+        "series_deaths": {
+          "2015": 0,
+          "2020": 0
+        },
+        "series_damage_usd": {
+          "2015": 0.0,
+          "2020": 0.0
+        },
+        "total_affected": 10113,
+        "total_damage_usd": 0.0,
+        "total_events": 2,
+        "years_reported": 2,
+        "biggest": {
+          "year": 2020,
+          "count": 5500,
+          "events": 1,
+          "pct_of_pop": 52.7
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2011": 0,
+          "2015": 4613,
+          "2020": 5500,
+          "2021": 10204
+        },
+        "series_deaths": {
+          "2011": 0,
+          "2015": 0,
+          "2020": 0,
+          "2021": 0
+        },
+        "series_damage_usd": {
+          "2011": 0.0,
+          "2015": 0.0,
+          "2020": 0.0,
+          "2021": 0.0
+        },
+        "total_affected": 20317,
+        "total_damage_usd": 0.0,
+        "total_events": 4,
+        "years_reported": 4,
+        "biggest": {
+          "year": 2021,
+          "count": 10204,
+          "events": 1,
+          "pct_of_pop": 99.6
+        }
+      },
+      "events": [
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 4613,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 5500,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2021,
+          "type": "Drought",
+          "subtype": "Drought",
+          "events_count": 1,
+          "affected": 10204,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "VU": {
+      "by_type": {
+        "Volcanic activity": {
+          "series_affected": {
+            "2001": 4500,
+            "2005": 5000,
+            "2006": 0,
+            "2008": 9000,
+            "2009": 400,
+            "2017": 11000,
+            "2018": 13586,
+            "2021": 3383
+          },
+          "series_deaths": {
+            "2001": 0,
+            "2005": 0,
+            "2006": 0,
+            "2008": 0,
+            "2009": 0,
+            "2017": 0,
+            "2018": 0,
+            "2021": 0
+          },
+          "series_damage_usd": {
+            "2001": 0.0,
+            "2005": 0.0,
+            "2006": 0.0,
+            "2008": 0.0,
+            "2009": 0.0,
+            "2017": 0.0,
+            "2018": 0.0,
+            "2021": 0.0
+          },
+          "total_affected": 46869,
+          "total_damage_usd": 0.0,
+          "total_events": 9,
+          "years_reported": 8,
+          "biggest": {
+            "year": 2018,
+            "count": 13586,
+            "events": 2,
+            "pct_of_pop": 4.8
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2001": 800,
+            "2004": 54008,
+            "2011": 32000,
+            "2014": 20006,
+            "2015": 188000,
+            "2017": 2564,
+            "2020": 130120,
+            "2023": 593702
+          },
+          "series_deaths": {
+            "2001": 2,
+            "2004": 2,
+            "2011": 0,
+            "2014": 12,
+            "2015": 11,
+            "2017": 0,
+            "2020": 3,
+            "2023": 0
+          },
+          "series_damage_usd": {
+            "2001": 0.0,
+            "2004": 0.0,
+            "2011": 0.0,
+            "2014": 2000000.0,
+            "2015": 449400000.0,
+            "2017": 0.0,
+            "2020": 0.0,
+            "2023": 0.0
+          },
+          "total_affected": 1021200,
+          "total_damage_usd": 451400000.0,
+          "total_events": 12,
+          "years_reported": 8,
+          "biggest": {
+            "year": 2023,
+            "count": 593702,
+            "events": 3,
+            "pct_of_pop": 185.3
+          }
+        },
+        "Earthquake": {
+          "series_affected": {
+            "2002": 1003,
+            "2024": 80265
+          },
+          "series_deaths": {
+            "2002": 0,
+            "2024": 14
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2024": 100000000.0
+          },
+          "total_affected": 81268,
+          "total_damage_usd": 100000000.0,
+          "total_events": 3,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2024,
+            "count": 80265,
+            "events": 1,
+            "pct_of_pop": 24.8
+          }
+        },
+        "Flood": {
+          "series_affected": {
+            "2002": 3001,
+            "2009": 950
+          },
+          "series_deaths": {
+            "2002": 0,
+            "2009": 0
+          },
+          "series_damage_usd": {
+            "2002": 0.0,
+            "2009": 0.0
+          },
+          "total_affected": 3951,
+          "total_damage_usd": 0.0,
+          "total_events": 2,
+          "years_reported": 2,
+          "biggest": {
+            "year": 2002,
+            "count": 3001,
+            "events": 1,
+            "pct_of_pop": 1.5
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2001": 800,
+          "2002": 3001,
+          "2004": 54008,
+          "2009": 950,
+          "2011": 32000,
+          "2014": 20006,
+          "2015": 188000,
+          "2017": 2564,
+          "2020": 130120,
+          "2023": 593702
+        },
+        "series_deaths": {
+          "2001": 2,
+          "2002": 0,
+          "2004": 2,
+          "2009": 0,
+          "2011": 0,
+          "2014": 12,
+          "2015": 11,
+          "2017": 0,
+          "2020": 3,
+          "2023": 0
+        },
+        "series_damage_usd": {
+          "2001": 0.0,
+          "2002": 0.0,
+          "2004": 0.0,
+          "2009": 0.0,
+          "2011": 0.0,
+          "2014": 2000000.0,
+          "2015": 449400000.0,
+          "2017": 0.0,
+          "2020": 0.0,
+          "2023": 0.0
+        },
+        "total_affected": 1025151,
+        "total_damage_usd": 451400000.0,
+        "total_events": 14,
+        "years_reported": 10,
+        "biggest": {
+          "year": 2023,
+          "count": 593702,
+          "events": 3,
+          "pct_of_pop": 185.3
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2001": 5300,
+          "2002": 4004,
+          "2004": 54008,
+          "2005": 5000,
+          "2006": 0,
+          "2008": 9000,
+          "2009": 1350,
+          "2011": 32000,
+          "2014": 20006,
+          "2015": 188000,
+          "2017": 13564,
+          "2018": 13586,
+          "2020": 130120,
+          "2021": 3383,
+          "2023": 593702,
+          "2024": 80265
+        },
+        "series_deaths": {
+          "2001": 2,
+          "2002": 0,
+          "2004": 2,
+          "2005": 0,
+          "2006": 0,
+          "2008": 0,
+          "2009": 0,
+          "2011": 0,
+          "2014": 12,
+          "2015": 11,
+          "2017": 0,
+          "2018": 0,
+          "2020": 3,
+          "2021": 0,
+          "2023": 0,
+          "2024": 14
+        },
+        "series_damage_usd": {
+          "2001": 0.0,
+          "2002": 0.0,
+          "2004": 0.0,
+          "2005": 0.0,
+          "2006": 0.0,
+          "2008": 0.0,
+          "2009": 0.0,
+          "2011": 0.0,
+          "2014": 2000000.0,
+          "2015": 449400000.0,
+          "2017": 0.0,
+          "2018": 0.0,
+          "2020": 0.0,
+          "2021": 0.0,
+          "2023": 0.0,
+          "2024": 100000000.0
+        },
+        "total_affected": 1153288,
+        "total_damage_usd": 551400000.0,
+        "total_events": 26,
+        "years_reported": 16,
+        "biggest": {
+          "year": 2023,
+          "count": 593702,
+          "events": 3,
+          "pct_of_pop": 185.3
+        }
+      },
+      "events": [
+        {
+          "year": 2001,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 4500,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2001,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 800,
+          "deaths": 2,
+          "damage_usd": null
+        },
+        {
+          "year": 2002,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 3001,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2002,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 2,
+          "affected": 1003,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 54008,
+          "deaths": 2,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 5000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2008,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 9000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2009,
+          "type": "Flood",
+          "subtype": "Riverine flood",
+          "events_count": 1,
+          "affected": 950,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2009,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 400,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2011,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 2,
+          "affected": 32000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2014,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 20006,
+          "deaths": 12,
+          "damage_usd": 2000000.0
+        },
+        {
+          "year": 2015,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 188000,
+          "deaths": 11,
+          "damage_usd": 449400000.0
+        },
+        {
+          "year": 2017,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 11000,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2017,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 2564,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2018,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 2,
+          "affected": 13586,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2020,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 130120,
+          "deaths": 3,
+          "damage_usd": null
+        },
+        {
+          "year": 2021,
+          "type": "Volcanic activity",
+          "subtype": "Ash fall",
+          "events_count": 1,
+          "affected": 3383,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2023,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 3,
+          "affected": 593702,
+          "deaths": 0,
+          "damage_usd": null
+        },
+        {
+          "year": 2024,
+          "type": "Earthquake",
+          "subtype": "Ground movement",
+          "events_count": 1,
+          "affected": 80265,
+          "deaths": 14,
+          "damage_usd": 100000000.0
+        }
+      ]
+    },
+    "WF": {
+      "by_type": {
+        "Storm": {
+          "series_affected": {
+            "2012": 1252
+          },
+          "series_deaths": {
+            "2012": 0
+          },
+          "series_damage_usd": {
+            "2012": 0.0
+          },
+          "total_affected": 1252,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2012,
+            "count": 1252,
+            "events": 1,
+            "pct_of_pop": 9.8
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2012": 1252
+        },
+        "series_deaths": {
+          "2012": 0
+        },
+        "series_damage_usd": {
+          "2012": 0.0
+        },
+        "total_affected": 1252,
+        "total_damage_usd": 0.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2012,
+          "count": 1252,
+          "events": 1,
+          "pct_of_pop": 9.8
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2012": 1252
+        },
+        "series_deaths": {
+          "2012": 0
+        },
+        "series_damage_usd": {
+          "2012": 0.0
+        },
+        "total_affected": 1252,
+        "total_damage_usd": 0.0,
+        "total_events": 1,
+        "years_reported": 1,
+        "biggest": {
+          "year": 2012,
+          "count": 1252,
+          "events": 1,
+          "pct_of_pop": 9.8
+        }
+      },
+      "events": [
+        {
+          "year": 2012,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 1252,
+          "deaths": 0,
+          "damage_usd": null
+        }
+      ]
+    },
+    "WS": {
+      "by_type": {
+        "Flood": {
+          "series_affected": {
+            "2001": 0
+          },
+          "series_deaths": {
+            "2001": 0
+          },
+          "series_damage_usd": {
+            "2001": 1500000.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 1500000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2001,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        },
+        "Storm": {
+          "series_affected": {
+            "2004": 0,
+            "2005": 0,
+            "2012": 12703,
+            "2018": 0
+          },
+          "series_deaths": {
+            "2004": 1,
+            "2005": 9,
+            "2012": 12,
+            "2018": 0
+          },
+          "series_damage_usd": {
+            "2004": 0.0,
+            "2005": 0.0,
+            "2012": 133000000.0,
+            "2018": 0.0
+          },
+          "total_affected": 12703,
+          "total_damage_usd": 133000000.0,
+          "total_events": 4,
+          "years_reported": 4,
+          "biggest": {
+            "year": 2012,
+            "count": 12703,
+            "events": 1,
+            "pct_of_pop": 6.5
+          }
+        },
+        "Earthquake": {
+          "series_affected": {
+            "2009": 5584
+          },
+          "series_deaths": {
+            "2009": 148
+          },
+          "series_damage_usd": {
+            "2009": 124040000.0
+          },
+          "total_affected": 5584,
+          "total_damage_usd": 124040000.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2009,
+            "count": 5584,
+            "events": 1,
+            "pct_of_pop": 2.9
+          }
+        },
+        "Drought": {
+          "series_affected": {
+            "2015": 0
+          },
+          "series_deaths": {
+            "2015": 0
+          },
+          "series_damage_usd": {
+            "2015": 0.0
+          },
+          "total_affected": 0,
+          "total_damage_usd": 0.0,
+          "total_events": 1,
+          "years_reported": 1,
+          "biggest": {
+            "year": 2015,
+            "count": 0,
+            "events": 1,
+            "pct_of_pop": 0.0
+          }
+        }
+      },
+      "flood_relevant": {
+        "series_affected": {
+          "2001": 0,
+          "2004": 0,
+          "2005": 0,
+          "2012": 12703,
+          "2018": 0
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2004": 1,
+          "2005": 9,
+          "2012": 12,
+          "2018": 0
+        },
+        "series_damage_usd": {
+          "2001": 1500000.0,
+          "2004": 0.0,
+          "2005": 0.0,
+          "2012": 133000000.0,
+          "2018": 0.0
+        },
+        "total_affected": 12703,
+        "total_damage_usd": 134500000.0,
+        "total_events": 5,
+        "years_reported": 5,
+        "biggest": {
+          "year": 2012,
+          "count": 12703,
+          "events": 1,
+          "pct_of_pop": 6.5
+        }
+      },
+      "coastal_flood_only": {
+        "series_affected": {},
+        "series_deaths": {},
+        "series_damage_usd": {},
+        "total_affected": 0,
+        "total_damage_usd": 0,
+        "total_events": 0,
+        "years_reported": 0,
+        "biggest": null
+      },
+      "all_types": {
+        "series_affected": {
+          "2001": 0,
+          "2004": 0,
+          "2005": 0,
+          "2009": 5584,
+          "2012": 12703,
+          "2015": 0,
+          "2018": 0
+        },
+        "series_deaths": {
+          "2001": 0,
+          "2004": 1,
+          "2005": 9,
+          "2009": 148,
+          "2012": 12,
+          "2015": 0,
+          "2018": 0
+        },
+        "series_damage_usd": {
+          "2001": 1500000.0,
+          "2004": 0.0,
+          "2005": 0.0,
+          "2009": 124040000.0,
+          "2012": 133000000.0,
+          "2015": 0.0,
+          "2018": 0.0
+        },
+        "total_affected": 18287,
+        "total_damage_usd": 258540000.0,
+        "total_events": 7,
+        "years_reported": 7,
+        "biggest": {
+          "year": 2012,
+          "count": 12703,
+          "events": 1,
+          "pct_of_pop": 6.5
+        }
+      },
+      "events": [
+        {
+          "year": 2004,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 1,
+          "damage_usd": null
+        },
+        {
+          "year": 2005,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 0,
+          "deaths": 9,
+          "damage_usd": null
+        },
+        {
+          "year": 2009,
+          "type": "Earthquake",
+          "subtype": "Tsunami",
+          "events_count": 1,
+          "affected": 5584,
+          "deaths": 148,
+          "damage_usd": 124040000.0
+        },
+        {
+          "year": 2012,
+          "type": "Storm",
+          "subtype": "Tropical cyclone",
+          "events_count": 1,
+          "affected": 12703,
+          "deaths": 12,
+          "damage_usd": 133000000.0
+        }
+      ]
+    }
+  }
+}

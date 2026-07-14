@@ -1,7 +1,7 @@
 ## History of violence
 Explore historical patterns in armed conflict and violence using geospatial data. This could be split into several sub projects grouped by region or conflict.
 
-The underlying data is vast, so meaningful visualizations will likely need to focus on small slices.  The first project I would like to do is a history of violence between Israel and its neighbors since at least the Great March of Return. A similar idea would be the history of ceasefires in Palestine, and how much violence is actually taking place during the supposed ceasefires.
+The underlying data is vast, so meaningful visualizations will likely need to focus on small slices.  The first project I would like to do is a history of violence between Israel and its neighbors since at least the Great March of Return up to the present. A similar idea would be the history of ceasefires in Palestine, and how much violence is actually taking place during the supposed ceasefires.
 
 ### Data sources
 * ACLED 

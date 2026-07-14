@@ -687,6 +687,13 @@ spine's vulnerability profile.
   richest-quintile food gap, 13 PICTs (P0g; survey snapshot, no year)
 - `remittances_renewables.json` — remittances %GDP / renewable energy % /
   electricity access %, per-year series + latest, 20 PICTs (P0g)
+- `disaster_emdat_by_type.json` — ⭐ EM-DAT events preserving disaster
+  type/subtype (2000–2026, 20 PICTs, 177 rows). Per-country panels by type with
+  affected/deaths/damage series; pre-aggregated `flood_relevant` (Storm+Flood+Mass
+  movement wet = 54% of all affected) and strict `coastal_flood_only` (Coastal
+  flood + Storm surge = 1%, ~96k). Flood-relevant damage joined to same-year USD
+  GDP -> pct_of_gdp (worst: VU 2015 Pam = 59% of GDP, TO 2020 = 22.6%, WS 2012 =
+  16.6%, FJ 2016 Winston = 12.2%). Per-event detail for annotation. (P0h)
 - `disaster_affected_merged.json` — ⭐ `VC_DSR_AFFCT` merged with EM-DAT gap fills;
   UNDRR primary with EM-DAT-supplemented zeros and new years; every value tagged
   with source provenance (P0h)
