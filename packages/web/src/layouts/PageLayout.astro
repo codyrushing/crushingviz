@@ -1,6 +1,18 @@
 ---
 import '../styles/global.css';
-import SiteHeader from "../components/SiteHeader.astro";
+import SiteHeader from "./structures/SiteHeader.astro";
+
+export type ColorScheme = "light" | "dark";
+export type ColorSchemeManager = {
+  getColorScheme: () => ColorScheme
+  setPreference: (pref: ColorScheme | null) => void
+  subscribe: (cb: ((arg0: ColorScheme | null) => void)) => void
+  unsubscribe: (cb: ((arg0: ColorScheme | null) => void)) => void
+}
+export type WindowExtended = Window & {
+  colorSchemeManager: ColorSchemeManager
+}
+
 ---
 
 <!DOCTYPE html>
@@ -14,6 +26,60 @@ import SiteHeader from "../components/SiteHeader.astro";
 		<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Inconsolata:wght@200..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <!-- DARK MODE MANAGEMENT -->
+    <script is:inline>
+    window.colorSchemeManager = (function _colorSchemeManager(){
+      let subscribers = [];
+      function init() {
+        document.documentElement.classList.toggle(
+          "dark",
+          localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+        );
+      }
+
+      /**
+      * @returns {"light" | "dark"}
+      */
+      function getColorScheme() {
+        return localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+      }
+
+      /**
+      * @param {"light" | "dark" | null}
+      */
+      function setPreference(preference) {
+        if (preference === null) {
+          localStorage.removeItem("theme");
+        }
+        else {
+          localStorage.theme = preference;
+        }
+        init();
+        for (const sub of subscribers) {
+          if (typeof sub === "function") {
+            sub(preference);
+          }
+        }
+      }
+
+      function subscribe(cb) {
+        subscribers.push(cb);
+      }
+
+      function unsubscribe(cb) {
+        subscribers = subscribers.filter(_cb => _cb !== cb);
+      }
+
+      init();
+      return {
+        getColorScheme,
+        setPreference,
+        subscribe,
+        unsubscribe
+      };
+    }());
+    </script>
 	</head>
 	<body class="min-h-screen flex flex-col">
 	  <SiteHeader />
@@ -22,9 +88,9 @@ import SiteHeader from "../components/SiteHeader.astro";
 			<slot />
 		</main>
 
-		<footer class="bg-gray-800 text-white p-4">
-			<div class="container mx-auto text-center text-sm">
-				<p>&copy; {new Date().getFullYear()} Astro. All rights reserved.</p>
+		<footer class="p-4">
+			<div class="container mx-auto text-center text-xs text-muted">
+				<p>&copy; {new Date().getFullYear()} crushingviz. All rights reserved.</p>
 			</div>
 		</footer>
 	</body>

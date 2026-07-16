@@ -1,16 +1,113 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Use class-based dark mode (.dark on <html>) to match colorSchemeManager. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                      */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Typography */
+  --font-serif: "Lora", serif;
+  --font-sans: "Cabin", sans-serif;
+  --font-mono: "Inconsolata", monospace;
+
+  /* Neutral palette — warm stone (approachable, not clinical) */
+  --color-sand-50:  #fafaf9;
+  --color-sand-100: #f5f5f4;
+  --color-sand-200: #e7e5e4;
+  --color-sand-300: #d6d3d1;
+  --color-sand-400: #a8a29e;
+  --color-sand-500: #78716c;
+  --color-sand-600: #57534e;
+  --color-sand-700: #44403c;
+  --color-sand-800: #292524;
+  --color-sand-900: #1c1917;
+  --color-sand-950: #0c0a09;
+
+  /* Accent — authoritative deep blue, used sparingly */
+  --color-accent-50:  #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-300: #93c5fd;
+  --color-accent-400: #60a5fa;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
+  --color-accent-950: #172554;
+
+  /* Data-viz palette — muted, perceptually distinct, mode-safe */
+  --color-viz-blue:   #3b82f6;
+  --color-viz-blue-soft:   color-mix(in oklch, var(--color-viz-blue)   55%, white);
+  --color-viz-blue-deep:   color-mix(in oklch, var(--color-viz-blue)   75%, black);
+
+  --color-viz-amber:  #d97706;
+  --color-viz-amber-soft:   color-mix(in oklch, var(--color-viz-amber)   55%, white);
+  --color-viz-amber-deep:   color-mix(in oklch, var(--color-viz-amber)   75%, black);
+
+  --color-viz-teal:   #0d9488;
+  --color-viz-teal-soft:   color-mix(in oklch, var(--color-viz-teal)   55%, white);
+  --color-viz-teal-deep:   color-mix(in oklch, var(--color-viz-teal)   75%, black);
+
+  --color-viz-rose:   #e11d48;
+  --color-viz-rose-soft:   color-mix(in oklch, var(--color-viz-rose)   55%, white);
+  --color-viz-rose-deep:   color-mix(in oklch, var(--color-viz-rose)   75%, black);
+
+  --color-viz-violet: #7c3aed;
+  --color-viz-violet-soft:   color-mix(in oklch, var(--color-viz-violet)   55%, white);
+  --color-viz-violet-deep:   color-mix(in oklch, var(--color-viz-violet)   75%, black);
+
+  /* Semantic tokens — mapped to CSS vars that flip with color scheme.
+     Using these (bg-surface, text-foreground, border-border, etc.)
+     keeps components mode-agnostic. */
+  --color-background: var(--background);
+  --color-surface:    var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted:      var(--muted);
+  --color-border:     var(--border);
+  --color-accent:     var(--accent);
+  --color-accent-fg:  var(--accent-fg);
+}
+
+/* Light mode (default) */
+:root {
+  --background: var(--color-sand-50);
+  --surface:    var(--color-sand-100);
+  --foreground: var(--color-sand-800);
+  --muted:      var(--color-sand-500);
+  --border:     var(--color-sand-300);
+  --accent:     var(--color-accent-700);
+  --accent-fg:  #ffffff;
+}
+
+/* Dark mode */
+.dark {
+  --background: var(--color-sand-900);
+  --surface:    var(--color-sand-800);
+  --foreground: var(--color-sand-200);
+  --muted:      var(--color-sand-400);
+  --border:     var(--color-sand-700);
+  --accent:     var(--color-accent-400);
+  --accent-fg:  var(--color-sand-950);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
 
 .font-heading {
-  font-family: "Lora", serif;
+  @apply font-serif;
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
 }
 
 .font-body {
-  font-family: "Cabin", sans-serif;
+  @apply font-sans;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -18,8 +115,8 @@
     "wdth" 100;
 }
 
-.font-mono {
-  font-family: "Inconsolata", monospace;
+.font-monospace {
+  @apply font-mono;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
