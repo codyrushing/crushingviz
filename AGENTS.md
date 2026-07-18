@@ -42,5 +42,6 @@ Use `./run_with_env <command>` to load .env (dotenvx) before running data script
 ## Quirks
 
 - `packages/web` uses npm, not bun. Do not `bun install` there.
+- `packages/web` is NOT in root npm workspaces (it has its own `package-lock.json`). Run `npm install` inside `packages/web/`, never from root.
 - `Bun.SQL()` is used for Postgres in data scripts (not the `pg` npm package).
 - No tests, lint, or typecheck scripts configured yet.

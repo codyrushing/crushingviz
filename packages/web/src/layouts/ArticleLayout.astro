@@ -1,0 +1,15 @@
+---
+import PageLayout from "./PageLayout.astro";
+---
+<PageLayout>
+  <article>
+    <slot />
+  </article>
+</PageLayout>
+
+<style>
+@reference "../styles/global.css";
+article {
+  @apply py-6;
+}
+</style>

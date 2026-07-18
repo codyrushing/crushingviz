@@ -4,8 +4,7 @@
   "type": "module",
   "workspaces": [
     "packages/data",
-    "packages/types",
-    "packages/web"
+    "packages/types"
   ],
   "scripts": {
     "secrets:pull": "dotenv-vault pull",
@@ -22,8 +21,5 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "astro": "^5.16.6"
   }
 }

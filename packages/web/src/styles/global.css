@@ -123,3 +123,12 @@ body {
   font-variation-settings:
     "wdth" 100;
 }
+
+/* MAIN */
+h1 {
+  /*@apply text-6xl;*/
+  @apply font-serif;
+  @apply leading-tight;
+  font-size: clamp(2rem,9vw,5.5rem);
+  /*font-size: clamp(56px,9vw,128px);*/
+}
