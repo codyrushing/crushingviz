@@ -737,6 +737,13 @@ spine's vulnerability profile.
   Key gap fills: VU 2015 Cyclone Pam $449M (59% of GDP), TO 2020/2022 $111M/$118M
   (22.6%/26.9% of GDP), WS 2009/2012 $124M/$133M (21.3%/16.6% of GDP), PG drought
   $60M. Pre-2005 years normalized against 2005 GDP. Script: `analysis/merge_emdat_loss.py` (P0h)
+- `flood_loss_pct_gdp.json` — EM-DAT `flood_relevant` (Storm + Flood + Mass movement
+  wet) damage joined to same-year USD GDP, per-country per-year. 12 PICTs,
+  EM-DAT-only (UNDRR does not break down loss by disaster type). Identical structure
+  to `disaster_loss_pct_gdp_merged.json` for direct overplotting (all-disasters vs
+  flood). Pre-2005 years normalized against 2005 GDP. Worst: VU 2015 Cyclone Pam
+  59.0% of GDP, TO 2020 Cyclone Harold 22.6%, WS 2012 Cyclone Evan 16.6%,
+  FJ 2016 Cyclone Winston 12.2%. Script: `analysis/build_flood_loss.py` (P0h)
 - `raw/emdat-country-profiles.xlsx` — EM-DAT HDX Country Profiles (downloaded
   2026-06-23, 6,509 rows, all countries 2000–2026)
 - `raw/DF_POP_LECZ_1.0.csv`, `raw/DF_POP_COAST_2.0.csv` — raw SDMX pulls

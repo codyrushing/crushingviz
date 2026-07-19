@@ -1,0 +1,392 @@
+{
+  "indicator": "Flood-relevant damage as % of GDP (EM-DAT)",
+  "label": "Direct economic loss from flood-relevant disasters (% of GDP)",
+  "source": "EM-DAT (CRED/UCLouvain)",
+  "flood_definition": "Storm + Flood + Mass movement (wet) -- events where coastal flooding / storm surge is a component. Tropical cyclone 'affected' includes wind/crop/displacement damage too, not only flood victims.",
+  "year_span": [
+    2001,
+    2024
+  ],
+  "emdat_threshold": "EM-DAT includes disasters with >=10 deaths, >=100 affected, emergency declaration, or international appeal. Smaller events may not appear.",
+  "pre_2005_note": "Pre-2005 loss years normalized against 2005 GDP (earliest available GDP year for most PICTs). See README for details.",
+  "countries": {
+    "AS": {
+      "by_year": {
+        "2003": {
+          "loss_usd": 50000000.0,
+          "gdp_usd": 500000000.0,
+          "pct_of_gdp": 10.0
+        },
+        "2004": {
+          "loss_usd": 150000000.0,
+          "gdp_usd": 500000000.0,
+          "pct_of_gdp": 30.0
+        }
+      },
+      "sources": {
+        "2003": "EM-DAT (flood_relevant)",
+        "2004": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 200000000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2004",
+        "pct_of_gdp": 30.0,
+        "loss_usd": 150000000.0
+      }
+    },
+    "FJ": {
+      "by_year": {
+        "2003": {
+          "loss_usd": 30000000.0,
+          "gdp_usd": 2558743000.0,
+          "pct_of_gdp": 1.1724506916091222
+        },
+        "2004": {
+          "loss_usd": 4000000.0,
+          "gdp_usd": 2558743000.0,
+          "pct_of_gdp": 0.15632675888121628
+        },
+        "2006": {
+          "loss_usd": 500000.0,
+          "gdp_usd": 2625175000.0,
+          "pct_of_gdp": 0.019046349290999645
+        },
+        "2007": {
+          "loss_usd": 37652000.0,
+          "gdp_usd": 2886781000.0,
+          "pct_of_gdp": 1.304290141856968
+        },
+        "2008": {
+          "loss_usd": 30000000.0,
+          "gdp_usd": 2967505000.0,
+          "pct_of_gdp": 1.0109502764106548
+        },
+        "2009": {
+          "loss_usd": 56547000.0,
+          "gdp_usd": 2444210000.0,
+          "pct_of_gdp": 2.3135082501094426
+        },
+        "2010": {
+          "loss_usd": 39427000.0,
+          "gdp_usd": 2632581000.0,
+          "pct_of_gdp": 1.4976557226539278
+        },
+        "2012": {
+          "loss_usd": 97400000.0,
+          "gdp_usd": 3352200000.0,
+          "pct_of_gdp": 2.9055545611837004
+        },
+        "2016": {
+          "loss_usd": 600000000.0,
+          "gdp_usd": 4930252000.0,
+          "pct_of_gdp": 12.169763330555924
+        },
+        "2018": {
+          "loss_usd": 60000000.0,
+          "gdp_usd": 5581781000.0,
+          "pct_of_gdp": 1.074925727111114
+        },
+        "2020": {
+          "loss_usd": 14120000.0,
+          "gdp_usd": 4432626000.0,
+          "pct_of_gdp": 0.3185470644263694
+        },
+        "2021": {
+          "loss_usd": 10000000.0,
+          "gdp_usd": 4304639000.0,
+          "pct_of_gdp": 0.23230751754095988
+        },
+        "2022": {
+          "loss_usd": 25000000.0,
+          "gdp_usd": 4969997000.0,
+          "pct_of_gdp": 0.503018412284756
+        }
+      },
+      "sources": {
+        "2003": "EM-DAT (flood_relevant)",
+        "2004": "EM-DAT (flood_relevant)",
+        "2006": "EM-DAT (flood_relevant)",
+        "2007": "EM-DAT (flood_relevant)",
+        "2008": "EM-DAT (flood_relevant)",
+        "2009": "EM-DAT (flood_relevant)",
+        "2010": "EM-DAT (flood_relevant)",
+        "2012": "EM-DAT (flood_relevant)",
+        "2016": "EM-DAT (flood_relevant)",
+        "2018": "EM-DAT (flood_relevant)",
+        "2020": "EM-DAT (flood_relevant)",
+        "2021": "EM-DAT (flood_relevant)",
+        "2022": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 1004646000.0,
+      "n_years": 13,
+      "worst": {
+        "year": "2016",
+        "pct_of_gdp": 12.169763330555924,
+        "loss_usd": 600000000.0
+      }
+    },
+    "FM": {
+      "by_year": {
+        "2002": {
+          "loss_usd": 500000.0,
+          "gdp_usd": 250048000.0,
+          "pct_of_gdp": 0.1999616073713847
+        },
+        "2015": {
+          "loss_usd": 11000000.0,
+          "gdp_usd": 316500000.0,
+          "pct_of_gdp": 3.4755134281200633
+        }
+      },
+      "sources": {
+        "2002": "EM-DAT (flood_relevant)",
+        "2015": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 11500000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2015",
+        "pct_of_gdp": 3.4755134281200633,
+        "loss_usd": 11000000.0
+      }
+    },
+    "GU": {
+      "by_year": {
+        "2002": {
+          "loss_usd": 130000000.0,
+          "gdp_usd": 4197000000.0,
+          "pct_of_gdp": 3.097450559923755
+        },
+        "2004": {
+          "loss_usd": 1000000.0,
+          "gdp_usd": 4197000000.0,
+          "pct_of_gdp": 0.02382654276864427
+        },
+        "2023": {
+          "loss_usd": 4300000000.0,
+          "gdp_usd": null,
+          "pct_of_gdp": null
+        }
+      },
+      "sources": {
+        "2002": "EM-DAT (flood_relevant)",
+        "2004": "EM-DAT (flood_relevant)",
+        "2023": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 4431000000.0,
+      "n_years": 3,
+      "worst": {
+        "year": "2002",
+        "pct_of_gdp": 3.097450559923755,
+        "loss_usd": 130000000.0
+      }
+    },
+    "NC": {
+      "by_year": {
+        "2003": {
+          "loss_usd": 40000000.0,
+          "gdp_usd": 6223382000.0,
+          "pct_of_gdp": 0.6427373412077227
+        }
+      },
+      "sources": {
+        "2003": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 40000000.0,
+      "n_years": 1,
+      "worst": {
+        "year": "2003",
+        "pct_of_gdp": 0.6427373412077227,
+        "loss_usd": 40000000.0
+      }
+    },
+    "NU": {
+      "by_year": {
+        "2004": {
+          "loss_usd": 40000000.0,
+          "gdp_usd": 15901000.0,
+          "pct_of_gdp": 251.55650588013333
+        }
+      },
+      "sources": {
+        "2004": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 40000000.0,
+      "n_years": 1,
+      "worst": {
+        "year": "2004",
+        "pct_of_gdp": 251.55650588013333,
+        "loss_usd": 40000000.0
+      }
+    },
+    "PF": {
+      "by_year": {
+        "2010": {
+          "loss_usd": 11000000.0,
+          "gdp_usd": 6081435000.0,
+          "pct_of_gdp": 0.18087836176823396
+        },
+        "2017": {
+          "loss_usd": 2000000.0,
+          "gdp_usd": 5853853000.0,
+          "pct_of_gdp": 0.034165531659233674
+        }
+      },
+      "sources": {
+        "2010": "EM-DAT (flood_relevant)",
+        "2017": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 13000000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2010",
+        "pct_of_gdp": 0.18087836176823396,
+        "loss_usd": 11000000.0
+      }
+    },
+    "PG": {
+      "by_year": {
+        "2012": {
+          "loss_usd": 27000000.0,
+          "gdp_usd": 21293948000.0,
+          "pct_of_gdp": 0.1267965902800176
+        },
+        "2024": {
+          "loss_usd": 60000000.0,
+          "gdp_usd": null,
+          "pct_of_gdp": null
+        }
+      },
+      "sources": {
+        "2012": "EM-DAT (flood_relevant)",
+        "2024": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 87000000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2012",
+        "pct_of_gdp": 0.1267965902800176,
+        "loss_usd": 27000000.0
+      }
+    },
+    "SB": {
+      "by_year": {
+        "2013": {
+          "loss_usd": 2000000.0,
+          "gdp_usd": 1285477000.0,
+          "pct_of_gdp": 0.15558426949684825
+        },
+        "2014": {
+          "loss_usd": 24000000.0,
+          "gdp_usd": 1335701000.0,
+          "pct_of_gdp": 1.7968093158573661
+        },
+        "2015": {
+          "loss_usd": 2000000.0,
+          "gdp_usd": 1307420000.0,
+          "pct_of_gdp": 0.15297303085466032
+        }
+      },
+      "sources": {
+        "2013": "EM-DAT (flood_relevant)",
+        "2014": "EM-DAT (flood_relevant)",
+        "2015": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 28000000.0,
+      "n_years": 3,
+      "worst": {
+        "year": "2014",
+        "pct_of_gdp": 1.7968093158573661,
+        "loss_usd": 24000000.0
+      }
+    },
+    "TO": {
+      "by_year": {
+        "2001": {
+          "loss_usd": 51300000.0,
+          "gdp_usd": 263822000.0,
+          "pct_of_gdp": 19.444928777736504
+        },
+        "2011": {
+          "loss_usd": 3000000.0,
+          "gdp_usd": 439265000.0,
+          "pct_of_gdp": 0.6829590338406202
+        },
+        "2014": {
+          "loss_usd": 31000000.0,
+          "gdp_usd": 431679000.0,
+          "pct_of_gdp": 7.181262002552822
+        },
+        "2020": {
+          "loss_usd": 111000000.0,
+          "gdp_usd": 491109000.0,
+          "pct_of_gdp": 22.601907112270393
+        }
+      },
+      "sources": {
+        "2001": "EM-DAT (flood_relevant)",
+        "2011": "EM-DAT (flood_relevant)",
+        "2014": "EM-DAT (flood_relevant)",
+        "2020": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 196300000.0,
+      "n_years": 4,
+      "worst": {
+        "year": "2020",
+        "pct_of_gdp": 22.601907112270393,
+        "loss_usd": 111000000.0
+      }
+    },
+    "VU": {
+      "by_year": {
+        "2014": {
+          "loss_usd": 2000000.0,
+          "gdp_usd": 773592000.0,
+          "pct_of_gdp": 0.25853421441793606
+        },
+        "2015": {
+          "loss_usd": 449400000.0,
+          "gdp_usd": 761742000.0,
+          "pct_of_gdp": 58.99635309593012
+        }
+      },
+      "sources": {
+        "2014": "EM-DAT (flood_relevant)",
+        "2015": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 451400000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2015",
+        "pct_of_gdp": 58.99635309593012,
+        "loss_usd": 449400000.0
+      }
+    },
+    "WS": {
+      "by_year": {
+        "2001": {
+          "loss_usd": 1500000.0,
+          "gdp_usd": 407745000.0,
+          "pct_of_gdp": 0.36787698193724017
+        },
+        "2012": {
+          "loss_usd": 133000000.0,
+          "gdp_usd": 799981000.0,
+          "pct_of_gdp": 16.625394853127762
+        }
+      },
+      "sources": {
+        "2001": "EM-DAT (flood_relevant)",
+        "2012": "EM-DAT (flood_relevant)"
+      },
+      "total_loss_usd": 134500000.0,
+      "n_years": 2,
+      "worst": {
+        "year": "2012",
+        "pct_of_gdp": 16.625394853127762,
+        "loss_usd": 133000000.0
+      }
+    }
+  }
+}

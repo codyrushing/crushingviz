@@ -32,14 +32,20 @@ Verdict: The PICTs with the highest percentage of population living in low lying
   * The most exposed atolls also have the smallest remittances as a percent of GDP compared to other high islands, adding to their economic precarity. The outlier is Marshall Islands, but that is explained by the COFA exception. This data currently lives in [remittances_renewables.json](../../../../data/pacific-dataviz-challenge-2026/derived/remittances_renewables.json).
 
 ### Visualizations
-* Demonstrate the correlation between disaster exposure and population/elevation/gdp 
+* Viz 1: Demonstrate the correlation between disaster exposure and GDP 
   * `disaster_affected_merged.json` - use the primary per country yearly series of disaster affected people.
+    * Stacked area or line graph w/ each country. This are 20 countries...
+      * Crazy idea, maybe a legend that runs along either side of the graph w/ flags + names.
+        * Need color scale for countries. Maybe use per-capita GDP to visually encode poor to rich (red => yellow => green).
+      * This should probably be the only graph that includes all 20 countries. After this, we zoom in on the most impacted countries only.
     * Probably don't use `cumulative_per_capita` or `pct_of_pop`. Those are based on only 2014 population. We have the per-year population in `population_by_country.json`, so we should apply that dimension.
     * Allow the user to change the Y-axis unit between these units:
       * affected persons (`disaster_affected_merged.json`)
       * affected % of population (`disaster_affected_merged.json` / population in `population_by_country.json`)
       * economic loss as percent GDP. TODO - how to get the numerator here.
-* Break down disasters by type 
+    * Find a way to annotate disaster events, which are defined per-country per-year in `disaster_emdat_by_type.json`. This might be too much to show on the full regional graph, so maybe only show them on PICT highlight.
+* Zoom in on flooding. Only EM-DAT data is broken down by disaster type, but the overall shape and proportion are what we are interested in. Use the `flood_relevant` category which includes all relevant flooding sub-categories. Ignore `coastal_flood_only`, too small to be relevant.
+  * Maybe here is where to introduce LECZ population bands and max elevation.
 
 
 ## Story 2: Future projection of flood risk
