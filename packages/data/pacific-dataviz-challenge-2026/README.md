@@ -83,6 +83,15 @@ PG, PN, PW, SB, TK, TO, TV, VU, WF, WS.
 The `*,filtered,*` and `dataflow,*,complete,*` CSVs are subsets / metadata of
 the same dataflow; the `complete` one above is the primary source.
 
+### 3. Disaster impacts — `SPC,DF_SDG_11,3.0,complete,*.csv`
+
+SDG 11 (disaster impacts) sourced from SPC, but the underlying indicators
+(`VC_DSR_AFFCT` — directly affected persons, `VC_DSR_AALT` — direct economic
+loss) originate from **UNDRR (Sendai Framework / DesInventar)**. SPC aggregates
+member-state reporting to the Sendai Framework and publishes it via the
+Pacific Data Hub as SDG 11 indicators. There is no standalone UNDRR CSV in this
+directory — the UNDRR data enters the pipeline through this SPC SDG 11 file.
+
 ## Architecture — Path C (hybrid), no fighting the tiling
 
 Decided approach: **MapLibre + PMTiles for geography, d3 for analytics/UI.**
@@ -438,6 +447,30 @@ back to the coast, and the numbers are stark:
 - Optional tie-in to coastline data: erosion hotspots (PF, KI, VU) vs coastal
   population exposure.
 
+#### EM-DAT gap fill for economic loss (2026-07-19)
+
+Same merge strategy applied to `disaster_loss_pct_gdp.json`:
+`analysis/merge_emdat_loss.py` → `disaster_loss_pct_gdp_merged.json`.
+
+Key fills:
+- **VU 2015 Cyclone Pam: $449M (59% of GDP)** — UNDRR had no 2015 loss for VU;
+  this becomes VU's worst year (replacing 2016 Winston at 9.4%).
+- **TO 2020/2022: $111M/$118M (22.6%/26.9% of GDP)** — Tonga's worst year shifts
+  from 2014 (4.3%) to 2022 (26.9%, Hunga Tonga-related).
+- **WS 2009/2012: $124M/$133M (21.3%/16.6% of GDP)** — Samoa's worst year shifts
+  from 2016 (2.5%) to 2009.
+- **GU 2023 (Typhoon Mawar): $4.3B** — entirely new country; dwarfs all other
+  loss in the region.
+- **PG 2015 El Niño drought: $60M** — PNG jumps from $14M to $195M total.
+- **AS/GP/NU added** — 3 entirely new countries (AS $200M, GU $4.43B, NU $40M).
+
+**Pre-2005 GDP normalization:** Pre-2005 EM-DAT fills use the country's 2005 GDP
+(earliest available year for most PICTs in `DF_NATIONAL_ACCOUNTS`). The resulting
+`pct_of_gdp` for these years approximates the loss-to-economy ratio but does not
+account for 2001–2004 GDP changes. Affected countries/years: TO 2001, WS 2001,
+FM 2002, GU 2002/2004, AS 2003/2004, FJ 2003/2004, NC 2003, NU 2004. These
+approximations are flagged in the JSON's `pre_2005_note` metadata field.
+
 ### LEAD 2 — Disasters → food security
 
 The one human correlation that survived fixed-effects:
@@ -697,6 +730,13 @@ spine's vulnerability profile.
 - `disaster_affected_merged.json` — ⭐ `VC_DSR_AFFCT` merged with EM-DAT gap fills;
   UNDRR primary with EM-DAT-supplemented zeros and new years; every value tagged
   with source provenance (P0h)
+- `disaster_loss_pct_gdp_merged.json` — `VC_DSR_AALT` merged with EM-DAT economic
+  damage gap fills, same strategy as affected merge (UNDRR primary, EM-DAT fills
+  zeros/missing years). 15 countries (3 new: AS, GU, NU), 34 fills across 13
+  countries. Total loss $958.8M → $7,197.6M (dominated by GU 2023 Mawar $4.3B).
+  Key gap fills: VU 2015 Cyclone Pam $449M (59% of GDP), TO 2020/2022 $111M/$118M
+  (22.6%/26.9% of GDP), WS 2009/2012 $124M/$133M (21.3%/16.6% of GDP), PG drought
+  $60M. Pre-2005 years normalized against 2005 GDP. Script: `analysis/merge_emdat_loss.py` (P0h)
 - `raw/emdat-country-profiles.xlsx` — EM-DAT HDX Country Profiles (downloaded
   2026-06-23, 6,509 rows, all countries 2000–2026)
 - `raw/DF_POP_LECZ_1.0.csv`, `raw/DF_POP_COAST_2.0.csv` — raw SDMX pulls
