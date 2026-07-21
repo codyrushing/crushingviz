@@ -45,7 +45,7 @@ Verdict: The PICTs with the highest percentage of population living in low lying
       * economic loss as percent GDP. TODO - how to get the numerator here.
     * Find a way to annotate disaster events, which are defined per-country per-year in `disaster_emdat_by_type.json`. This might be too much to show on the full regional graph, so maybe only show them on PICT highlight.
 * Zoom in on flooding. Only EM-DAT data is broken down by disaster type, but the overall shape and proportion are what we are interested in. Use the `flood_relevant` category which includes all relevant flooding sub-categories. Ignore `coastal_flood_only`, too small to be relevant.
-  * Maybe here is where to introduce LECZ population bands and max elevation.
+  * Maybe here is where to introduce LECZ population bands and max elevation since those are more relevant to flooding.
 
 
 ## Story 2: Future projection of flood risk

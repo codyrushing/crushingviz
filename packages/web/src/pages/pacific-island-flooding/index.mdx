@@ -1,4 +1,14 @@
 ---
 layout: ../../layouts/ArticleLayout.astro
 ---
+import { FullScreenComponent } from '../../components/FullScreenComponent';
+import { ScrollActiveElement } from '../../components/ScrollActiveElement';
+
 # Flooding in the Pacific Islands
+<FullScreenComponent client:load>
+  ## hello friend
+</FullScreenComponent>
+
+<ScrollActiveElement client:load>
+  This is scroll active
+</ScrollActiveElement>
