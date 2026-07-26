@@ -1,14 +1,16 @@
 ---
 layout: ../../layouts/ArticleLayout.astro
 ---
-import { FullScreenComponent } from '../../components/FullScreenComponent';
-import { ScrollActiveElement } from '../../components/ScrollActiveElement';
+import { DisasterImpactViz } from "./DisasterImpactViz";
 
 # Flooding in the Pacific Islands
-<FullScreenComponent client:load>
-  ## hello friend
-</FullScreenComponent>
 
-<ScrollActiveElement client:load>
-  This is scroll active
-</ScrollActiveElement>
+<div class="h-screen">stuff</div>
+<div class="h-screen">more stuff</div>
+<div class="h-screen">stuff</div>
+
+<DisasterImpactViz client:load />
+
+<div class="h-screen">stuff</div>
+<div class="h-screen">more stuff</div>
+<div class="h-screen">stuff</div>

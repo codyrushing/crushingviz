@@ -1,0 +1,894 @@
+{
+  "indicator": "VC_DSR_AFFCT (merged with EM-DAT)",
+  "label": "Number of directly affected persons attributed to disasters",
+  "source": "UNDRR (Sendai/DesInventar) + EM-DAT (CRED/UCLouvain) gap fills",
+  "year_span": [
+    2000,
+    2026
+  ],
+  "merge_note": "UNDRR zeros that correspond to known disasters were replaced with EM-DAT values. UNDRR non-zero values retained as primary. EM-DAT-only years appended where UNDRR has no reporting.",
+  "emdat_threshold": "EM-DAT includes disasters with >=10 deaths, >=100 affected, emergency declaration, or international appeal. Smaller events (captured in UNDRR) may not appear here.",
+  "fills_summary": {
+    "AS": {
+      "2003": 3,
+      "2004": 23060,
+      "2009": 2500
+    },
+    "CK": {
+      "2001": 744
+    },
+    "FJ": {
+      "2003": 30000,
+      "2004": 5600,
+      "2015": 67000,
+      "2023": 230000,
+      "2026": 75000
+    },
+    "FM": {
+      "2002": 1623,
+      "2003": 1000,
+      "2004": 6008,
+      "2016": 100000,
+      "2023": 113401,
+      "2026": 34000
+    },
+    "GU": {
+      "2002": 15144,
+      "2004": 300,
+      "2023": 100000
+    },
+    "MH": {
+      "2013": 6384,
+      "2015": 21000,
+      "2024": 33456
+    },
+    "MP": {
+      "2002": 300,
+      "2004": 200,
+      "2015": 360
+    },
+    "NC": {
+      "2003": 1100
+    },
+    "NU": {
+      "2004": 702
+    },
+    "PF": {
+      "2010": 3411,
+      "2017": 5004
+    },
+    "PG": {
+      "2000": 5000,
+      "2001": 201,
+      "2002": 18644,
+      "2003": 621,
+      "2004": 19600,
+      "2014": 40726,
+      "2015": 2549199,
+      "2016": 6600,
+      "2018": 545036,
+      "2022": 1969,
+      "2023": 16274,
+      "2024": 12851,
+      "2026": 200007
+    },
+    "PW": {
+      "2015": 14200
+    },
+    "SB": {
+      "2002": 1110,
+      "2003": 425,
+      "2023": 22319,
+      "2026": 340641
+    },
+    "TK": {
+      "2005": 26
+    },
+    "TO": {
+      "2001": 16500,
+      "2016": 392,
+      "2022": 84176
+    },
+    "TV": {
+      "2015": 4613
+    },
+    "VU": {
+      "2001": 5300,
+      "2002": 4004,
+      "2004": 54008,
+      "2005": 5000,
+      "2015": 188000,
+      "2023": 593702,
+      "2024": 80265
+    },
+    "WF": {
+      "2012": 1252
+    },
+    "WS": {
+      "2012": 12703
+    }
+  },
+  "countries": {
+    "AS": {
+      "series": {
+        "2003": 3,
+        "2004": 23060,
+        "2009": 2500,
+        "2014": 0,
+        "2015": 0,
+        "2018": 3800,
+        "2019": 12,
+        "2020": 232
+      },
+      "sources": {
+        "2003": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2009": "EM-DAT (gap fill)",
+        "2014": "UNDRR",
+        "2015": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR"
+      },
+      "years_reported": 8,
+      "cumulative": 29607,
+      "pop_ref_2014": 53511,
+      "cumulative_per_capita": 0.553,
+      "biggest": {
+        "year": 2004,
+        "count": 23060,
+        "pct_of_pop": 40.6
+      }
+    },
+    "CK": {
+      "series": {
+        "2001": 744,
+        "2005": 1121,
+        "2007": 0,
+        "2009": 0,
+        "2010": 4443,
+        "2020": 0
+      },
+      "sources": {
+        "2001": "EM-DAT (new year)",
+        "2005": "UNDRR",
+        "2007": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2020": "UNDRR"
+      },
+      "years_reported": 6,
+      "cumulative": 6308,
+      "pop_ref_2014": 17578,
+      "cumulative_per_capita": 0.359,
+      "biggest": {
+        "year": 2010,
+        "count": 4443,
+        "pct_of_pop": 26.1
+      }
+    },
+    "FJ": {
+      "series": {
+        "2003": 30000,
+        "2004": 5600,
+        "2005": 0,
+        "2006": 60,
+        "2007": 12,
+        "2008": 804,
+        "2009": 12692,
+        "2010": 6644,
+        "2011": 344,
+        "2012": 37085,
+        "2013": 0,
+        "2014": 0,
+        "2015": 67000,
+        "2016": 633584,
+        "2017": 0,
+        "2018": 155726,
+        "2019": 78045,
+        "2020": 235921,
+        "2021": 78030,
+        "2022": 1787,
+        "2023": 230000,
+        "2026": 75000
+      },
+      "sources": {
+        "2003": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2005": "UNDRR",
+        "2006": "UNDRR",
+        "2007": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2013": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "EM-DAT (gap fill)",
+        "2016": "UNDRR",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR",
+        "2023": "EM-DAT (new year)",
+        "2026": "EM-DAT (new year)"
+      },
+      "years_reported": 22,
+      "cumulative": 1648334,
+      "pop_ref_2014": 917601,
+      "cumulative_per_capita": 1.796,
+      "biggest": {
+        "year": 2016,
+        "count": 633584,
+        "pct_of_pop": 68.9
+      }
+    },
+    "FM": {
+      "series": {
+        "2002": 1623,
+        "2003": 1000,
+        "2004": 6008,
+        "2006": 0,
+        "2008": 0,
+        "2009": 0,
+        "2011": 0,
+        "2015": 7600,
+        "2016": 100000,
+        "2017": 0,
+        "2018": 1266,
+        "2019": 20732,
+        "2020": 0,
+        "2021": 15010,
+        "2023": 113401,
+        "2026": 34000
+      },
+      "sources": {
+        "2002": "EM-DAT (new year)",
+        "2003": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2006": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2011": "UNDRR",
+        "2015": "UNDRR",
+        "2016": "EM-DAT (gap fill)",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2023": "EM-DAT (new year)",
+        "2026": "EM-DAT (new year)"
+      },
+      "years_reported": 16,
+      "cumulative": 300640,
+      "pop_ref_2014": 108430,
+      "cumulative_per_capita": 2.773,
+      "biggest": {
+        "year": 2023,
+        "count": 113401,
+        "pct_of_pop": 100.7
+      }
+    },
+    "GU": {
+      "series": {
+        "2002": 15144,
+        "2004": 300,
+        "2015": 0,
+        "2023": 100000
+      },
+      "sources": {
+        "2002": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2015": "UNDRR",
+        "2023": "EM-DAT (new year)"
+      },
+      "years_reported": 4,
+      "cumulative": 115444,
+      "pop_ref_2014": 165509,
+      "cumulative_per_capita": 0.698,
+      "biggest": {
+        "year": 2023,
+        "count": 100000,
+        "pct_of_pop": 60.0
+      }
+    },
+    "KI": {
+      "series": {
+        "2008": 85,
+        "2014": 44,
+        "2015": 2507,
+        "2016": 0,
+        "2018": 0,
+        "2019": 3,
+        "2020": 15,
+        "2021": 333
+      },
+      "sources": {
+        "2008": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "UNDRR",
+        "2016": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR"
+      },
+      "years_reported": 8,
+      "cumulative": 2987,
+      "pop_ref_2014": 115359,
+      "cumulative_per_capita": 0.026,
+      "biggest": {
+        "year": 2015,
+        "count": 2507,
+        "pct_of_pop": 2.1
+      }
+    },
+    "MH": {
+      "series": {
+        "2006": 0,
+        "2008": 96,
+        "2011": 0,
+        "2013": 6384,
+        "2014": 280,
+        "2015": 21000,
+        "2016": 27452,
+        "2017": 7029,
+        "2018": 0,
+        "2019": 35844,
+        "2020": 56718,
+        "2021": 0,
+        "2022": 52914,
+        "2024": 33456
+      },
+      "sources": {
+        "2006": "UNDRR",
+        "2008": "UNDRR",
+        "2011": "UNDRR",
+        "2013": "EM-DAT (gap fill)",
+        "2014": "UNDRR",
+        "2015": "EM-DAT (gap fill)",
+        "2016": "UNDRR",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR",
+        "2024": "EM-DAT (new year)"
+      },
+      "years_reported": 14,
+      "cumulative": 241173,
+      "pop_ref_2014": 49834,
+      "cumulative_per_capita": 4.84,
+      "biggest": {
+        "year": 2020,
+        "count": 56718,
+        "pct_of_pop": 132.7
+      }
+    },
+    "MP": {
+      "series": {
+        "2002": 300,
+        "2004": 200,
+        "2014": 0,
+        "2015": 360
+      },
+      "sources": {
+        "2002": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2014": "UNDRR",
+        "2015": "EM-DAT (gap fill)"
+      },
+      "years_reported": 4,
+      "cumulative": 860,
+      "pop_ref_2014": 52219,
+      "cumulative_per_capita": 0.016,
+      "biggest": {
+        "year": 2015,
+        "count": 360,
+        "pct_of_pop": 0.7
+      }
+    },
+    "NC": {
+      "series": {
+        "2003": 1100,
+        "2009": 0,
+        "2011": 0,
+        "2017": 4,
+        "2018": 0,
+        "2019": 1,
+        "2020": 2
+      },
+      "sources": {
+        "2003": "EM-DAT (new year)",
+        "2009": "UNDRR",
+        "2011": "UNDRR",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR"
+      },
+      "years_reported": 7,
+      "cumulative": 1107,
+      "pop_ref_2014": 281250,
+      "cumulative_per_capita": 0.004,
+      "biggest": {
+        "year": 2003,
+        "count": 1100,
+        "pct_of_pop": 0.5
+      }
+    },
+    "NR": {
+      "series": {
+        "2019": 63,
+        "2020": 1133,
+        "2021": 4,
+        "2022": 5393
+      },
+      "sources": {
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR"
+      },
+      "years_reported": 4,
+      "cumulative": 6593,
+      "pop_ref_2014": 10789,
+      "cumulative_per_capita": 0.611,
+      "biggest": {
+        "year": 2022,
+        "count": 5393,
+        "pct_of_pop": 45.5
+      }
+    },
+    "NU": {
+      "series": {
+        "2004": 702,
+        "2012": 0,
+        "2020": 0
+      },
+      "sources": {
+        "2004": "EM-DAT (new year)",
+        "2012": "UNDRR",
+        "2020": "UNDRR"
+      },
+      "years_reported": 3,
+      "cumulative": 702,
+      "pop_ref_2014": 1811,
+      "cumulative_per_capita": 0.388,
+      "biggest": {
+        "year": 2004,
+        "count": 702,
+        "pct_of_pop": 36.7
+      }
+    },
+    "PF": {
+      "series": {
+        "2007": 0,
+        "2010": 3411,
+        "2017": 5004
+      },
+      "sources": {
+        "2007": "UNDRR",
+        "2010": "EM-DAT (new year)",
+        "2017": "EM-DAT (new year)"
+      },
+      "years_reported": 3,
+      "cumulative": 8415,
+      "pop_ref_2014": 276405,
+      "cumulative_per_capita": 0.03,
+      "biggest": {
+        "year": 2017,
+        "count": 5004,
+        "pct_of_pop": 1.8
+      }
+    },
+    "PG": {
+      "series": {
+        "2000": 5000,
+        "2001": 201,
+        "2002": 18644,
+        "2003": 621,
+        "2004": 19600,
+        "2005": 2,
+        "2006": 216,
+        "2007": 56284,
+        "2008": 36393,
+        "2009": 580,
+        "2010": 0,
+        "2011": 0,
+        "2012": 172,
+        "2013": 264,
+        "2014": 40726,
+        "2015": 2549199,
+        "2016": 6600,
+        "2018": 545036,
+        "2019": 2100,
+        "2020": 3297,
+        "2022": 1969,
+        "2023": 16274,
+        "2024": 12851,
+        "2026": 200007
+      },
+      "sources": {
+        "2000": "EM-DAT (new year)",
+        "2001": "EM-DAT (new year)",
+        "2002": "EM-DAT (new year)",
+        "2003": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2005": "UNDRR",
+        "2006": "UNDRR",
+        "2007": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2013": "UNDRR",
+        "2014": "EM-DAT (gap fill)",
+        "2015": "EM-DAT (gap fill)",
+        "2016": "EM-DAT (new year)",
+        "2018": "EM-DAT (new year)",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2022": "EM-DAT (new year)",
+        "2023": "EM-DAT (new year)",
+        "2024": "EM-DAT (new year)",
+        "2026": "EM-DAT (new year)"
+      },
+      "years_reported": 24,
+      "cumulative": 3516036,
+      "pop_ref_2014": 8523447,
+      "cumulative_per_capita": 0.413,
+      "biggest": {
+        "year": 2015,
+        "count": 2549199,
+        "pct_of_pop": 29.2
+      }
+    },
+    "PW": {
+      "series": {
+        "2009": 0,
+        "2011": 0,
+        "2012": 1528,
+        "2015": 14200,
+        "2016": 11009,
+        "2021": 24220,
+        "2022": 780
+      },
+      "sources": {
+        "2009": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2015": "EM-DAT (gap fill)",
+        "2016": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR"
+      },
+      "years_reported": 7,
+      "cumulative": 51737,
+      "pop_ref_2014": 17757,
+      "cumulative_per_capita": 2.914,
+      "biggest": {
+        "year": 2021,
+        "count": 24220,
+        "pct_of_pop": 135.8
+      }
+    },
+    "SB": {
+      "series": {
+        "2002": 1110,
+        "2003": 425,
+        "2006": 0,
+        "2007": 21343,
+        "2008": 0,
+        "2009": 68,
+        "2010": 1456,
+        "2011": 36,
+        "2012": 216,
+        "2013": 7577,
+        "2014": 14831,
+        "2015": 185886,
+        "2016": 60858,
+        "2017": 51465,
+        "2018": 194155,
+        "2019": 1834,
+        "2020": 2339,
+        "2021": 240,
+        "2022": 20080,
+        "2023": 22319,
+        "2026": 340641
+      },
+      "sources": {
+        "2002": "EM-DAT (new year)",
+        "2003": "EM-DAT (new year)",
+        "2006": "UNDRR",
+        "2007": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2013": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "UNDRR",
+        "2016": "UNDRR",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR",
+        "2023": "EM-DAT (new year)",
+        "2026": "EM-DAT (new year)"
+      },
+      "years_reported": 21,
+      "cumulative": 926879,
+      "pop_ref_2014": 616925,
+      "cumulative_per_capita": 1.502,
+      "biggest": {
+        "year": 2026,
+        "count": 340641,
+        "pct_of_pop": 40.1
+      }
+    },
+    "TK": {
+      "series": {
+        "2005": 26,
+        "2009": 0,
+        "2011": 0
+      },
+      "sources": {
+        "2005": "EM-DAT (gap fill)",
+        "2009": "UNDRR",
+        "2011": "UNDRR"
+      },
+      "years_reported": 3,
+      "cumulative": 26,
+      "pop_ref_2014": 1772,
+      "cumulative_per_capita": 0.015,
+      "biggest": {
+        "year": 2005,
+        "count": 26,
+        "pct_of_pop": 1.6
+      }
+    },
+    "TO": {
+      "series": {
+        "2001": 16500,
+        "2005": 0,
+        "2006": 0,
+        "2007": 0,
+        "2008": 0,
+        "2009": 7,
+        "2010": 0,
+        "2011": 345,
+        "2012": 0,
+        "2013": 0,
+        "2014": 4520,
+        "2015": 0,
+        "2016": 392,
+        "2017": 0,
+        "2018": 84311,
+        "2019": 640,
+        "2020": 68,
+        "2022": 84176
+      },
+      "sources": {
+        "2001": "EM-DAT (new year)",
+        "2005": "UNDRR",
+        "2006": "UNDRR",
+        "2007": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2013": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "UNDRR",
+        "2016": "EM-DAT (gap fill)",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2022": "EM-DAT (new year)"
+      },
+      "years_reported": 18,
+      "cumulative": 190959,
+      "pop_ref_2014": 106652,
+      "cumulative_per_capita": 1.79,
+      "biggest": {
+        "year": 2018,
+        "count": 84311,
+        "pct_of_pop": 79.8
+      }
+    },
+    "TV": {
+      "series": {
+        "2011": 0,
+        "2015": 4613,
+        "2016": 1003,
+        "2017": 0,
+        "2018": 0,
+        "2019": 0,
+        "2020": 2266,
+        "2021": 6,
+        "2022": 7748
+      },
+      "sources": {
+        "2011": "UNDRR",
+        "2015": "EM-DAT (gap fill)",
+        "2016": "UNDRR",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR"
+      },
+      "years_reported": 9,
+      "cumulative": 15636,
+      "pop_ref_2014": 11027,
+      "cumulative_per_capita": 1.418,
+      "biggest": {
+        "year": 2022,
+        "count": 7748,
+        "pct_of_pop": 77.2
+      }
+    },
+    "VU": {
+      "series": {
+        "2001": 5300,
+        "2002": 4004,
+        "2004": 54008,
+        "2005": 5000,
+        "2006": 0,
+        "2007": 4,
+        "2008": 60,
+        "2009": 422,
+        "2010": 500,
+        "2011": 248,
+        "2012": 28,
+        "2013": 0,
+        "2014": 152,
+        "2015": 188000,
+        "2017": 920,
+        "2018": 23286,
+        "2019": 18,
+        "2020": 246802,
+        "2021": 1400,
+        "2023": 593702,
+        "2024": 80265
+      },
+      "sources": {
+        "2001": "EM-DAT (new year)",
+        "2002": "EM-DAT (new year)",
+        "2004": "EM-DAT (new year)",
+        "2005": "EM-DAT (gap fill)",
+        "2006": "UNDRR",
+        "2007": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2010": "UNDRR",
+        "2011": "UNDRR",
+        "2012": "UNDRR",
+        "2013": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "EM-DAT (gap fill)",
+        "2017": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2023": "EM-DAT (new year)",
+        "2024": "EM-DAT (new year)"
+      },
+      "years_reported": 21,
+      "cumulative": 1204119,
+      "pop_ref_2014": 260262,
+      "cumulative_per_capita": 4.627,
+      "biggest": {
+        "year": 2023,
+        "count": 593702,
+        "pct_of_pop": 185.3
+      }
+    },
+    "WF": {
+      "series": {
+        "2012": 1252,
+        "2020": 0
+      },
+      "sources": {
+        "2012": "EM-DAT (new year)",
+        "2020": "UNDRR"
+      },
+      "years_reported": 2,
+      "cumulative": 1252,
+      "pop_ref_2014": 12351,
+      "cumulative_per_capita": 0.101,
+      "biggest": {
+        "year": 2012,
+        "count": 1252,
+        "pct_of_pop": 9.8
+      }
+    },
+    "WS": {
+      "series": {
+        "2005": 0,
+        "2006": 0,
+        "2008": 0,
+        "2009": 6332,
+        "2012": 12703,
+        "2013": 0,
+        "2014": 0,
+        "2015": 0,
+        "2016": 0,
+        "2018": 383,
+        "2019": 5700,
+        "2020": 195,
+        "2021": 15,
+        "2022": 16607,
+        "2023": 138
+      },
+      "sources": {
+        "2005": "UNDRR",
+        "2006": "UNDRR",
+        "2008": "UNDRR",
+        "2009": "UNDRR",
+        "2012": "EM-DAT (gap fill)",
+        "2013": "UNDRR",
+        "2014": "UNDRR",
+        "2015": "UNDRR",
+        "2016": "UNDRR",
+        "2018": "UNDRR",
+        "2019": "UNDRR",
+        "2020": "UNDRR",
+        "2021": "UNDRR",
+        "2022": "UNDRR",
+        "2023": "UNDRR"
+      },
+      "years_reported": 15,
+      "cumulative": 42073,
+      "pop_ref_2014": 200073,
+      "cumulative_per_capita": 0.21,
+      "biggest": {
+        "year": 2022,
+        "count": 16607,
+        "pct_of_pop": 7.7
+      }
+    }
+  },
+  "regional_by_year": {
+    "2000": 5000,
+    "2001": 22745,
+    "2002": 40825,
+    "2003": 33149,
+    "2004": 109478,
+    "2005": 6149,
+    "2006": 276,
+    "2007": 77643,
+    "2008": 37438,
+    "2009": 22601,
+    "2010": 16454,
+    "2011": 973,
+    "2012": 52984,
+    "2013": 14225,
+    "2014": 60553,
+    "2015": 3040365,
+    "2016": 840898,
+    "2017": 64422,
+    "2018": 1007963,
+    "2019": 144992,
+    "2020": 548988,
+    "2021": 119258,
+    "2022": 191454,
+    "2023": 1075834,
+    "2024": 126572,
+    "2026": 649648
+  }
+}
