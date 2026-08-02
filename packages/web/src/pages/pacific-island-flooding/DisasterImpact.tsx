@@ -21,7 +21,6 @@ export function DisasterImpact() {
 
   return (
     <div class="h-screen flex font-monospace" ref={ref}>
-      <h2>Disaster Impact</h2>
       <div class="chart-container flex-1" ref={chartContainer}></div>
       <CountriesKey />
     </div>
