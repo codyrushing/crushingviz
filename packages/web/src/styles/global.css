@@ -75,7 +75,7 @@
 /* Light mode (default) */
 :root {
   --background: var(--color-sand-50);
-  --surface:    var(--color-sand-100);
+  --surface:    var(--color-sand-200);
   --foreground: var(--color-sand-800);
   --muted:      var(--color-sand-500);
   --border:     var(--color-sand-300);
