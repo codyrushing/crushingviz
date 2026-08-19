@@ -44,6 +44,21 @@ Verdict: The PICTs with the highest percentage of population living in low lying
       * affected % of population (`disaster_affected_merged.json` / population in `population_by_country.json`)
       * economic loss as percent GDP. TODO - how to get the numerator here.
     * Find a way to annotate disaster events, which are defined per-country per-year in `disaster_emdat_by_type.json`. This might be too much to show on the full regional graph, so maybe only show them on PICT highlight.
+    * Bar chart approach
+      * One of the goals should be to show that how most of the disaster impact is clustered at the bottom of the per-capita GDP scale.
+      * Plotting per-year shows movement through time along the per-capita GDP scale, which is not really helpful and possibly confounding. The rich countries stay near the top and the poor countries stay near the bottom.  Avg per-capita GDP would be better.
+      * Per year plotting misses the big picture, which is more apparent with the cumulative values, not the per-year. Also, large per-year values distort the scale. Per year does help illustrate the impact of major events (eg. this year there was a typhoon and that created a huge spike), but we can use a supplemental small-multiples circular bar chart to show that.
+      * How to visualize the per-capita GDP scale?
+        * Using a linear scale clusters all of the poor countries together, with a large-ish gap between them and the rich. Maybe that's ok, but it feels space inefficient.
+        * Just sort by name? That hides just how much poorer the poor countries are compared to the rich.
+        * Using a color scale was interesting, but harder to read honestly. 
+        * Compromise w/ linear and sort and just fixed bins probably.
+      * How to visualize the cumulative impact scale?
+        * Binned bar chart is most straightforward
+          * Could even visualize event types within bars
+          * Still allow metric change
+        * Maybe small multiple circular bars w/ connecting line to the per capita GDP scale?
+        * A stacked area or streamgraph would provide a nice region-wide view, and it looks nice. You would have to use color scale for per capita GDP, which isn't perfect. But that relationship and per-country trends could be explored in a separate visualization.
 * Zoom in on flooding. Only EM-DAT data is broken down by disaster type, but the overall shape and proportion are what we are interested in. Use the `flood_relevant` category which includes all relevant flooding sub-categories. Ignore `coastal_flood_only`, too small to be relevant.
   * Maybe here is where to introduce LECZ population bands and max elevation since those are more relevant to flooding.
 

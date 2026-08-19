@@ -25,6 +25,10 @@ Root `go.work` includes `./packages/api`.
 
 This must run before building the web app (`npm run build` and `npm run dev:web` auto-run it).
 
+## Dependencies
+
+Use `bun` to install dependencies in packages. Do not use npm.
+
 ## Database
 
 - Postgres 18 via Docker Compose (`compose.yml`).
@@ -45,3 +49,7 @@ Use `./run_with_env <command>` to load .env (dotenvx) before running data script
 - `packages/web` is NOT in root npm workspaces (it has its own `package-lock.json`). Run `npm install` inside `packages/web/`, never from root.
 - `Bun.SQL()` is used for Postgres in data scripts (not the `pg` npm package).
 - No tests, lint, or typecheck scripts configured yet.
+
+## Coding conventions
+
+- When writing sufficiently complex code, it is helpful to add a brief comment explaining its purpose. Not every change requires a comment.
