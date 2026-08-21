@@ -1,7 +1,7 @@
 import { createEffect, createSignal, For } from "solid-js";
 import { select, type Selection } from "d3-selection";
 import "d3-transition";
-import { scaleLinear, scaleSequential, type ScaleLinear, type ScaleSequential } from "d3-scale";
+import { scaleLinear, scaleSequential, type ScaleLinear } from "d3-scale";
 import { interpolateRdYlGn } from "d3-scale-chromatic";
 import { axisBottom, axisLeft } from "d3-axis";
 import { area, curveBumpX, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
@@ -54,70 +54,45 @@ export function DisasterImpact() {
               options={METRICS}
             />
           </div>
-          <GDPLegend />
+          <CountriesKey />
         </div>
         <div class="chart-container flex-1" ref={chartContainer}></div>
       </div>
-      <CountriesSmallMultiples />
     </div>
   );
 }
 
-export function GDPLegend() {
-  const rows = buildRows();
-  const avgGdpPc = rows.map(row => {
-    const vals = Object.values(row.gdpPc);
-    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : NaN;
-  });
-  const finite = avgGdpPc.filter(Number.isFinite);
-  const min = Math.min(...finite);
-  const max = Math.max(...finite);
-  const color = scaleSequential(interpolateRdYlGn).domain([min, max]);
+function CountriesKey() {
+  const items = rows
+    .map((row, i) => ({ code: row.code, name: row.name, flag: row.flag, avg: avgGdpPc[i] }))
+    .sort((a, b) => (Number.isFinite(a.avg) ? a.avg : -Infinity) - (Number.isFinite(b.avg) ? b.avg : -Infinity));
 
-  const width = 240;
-  const barHeight = 16;
-  const gradientId = "gdp-legend-gradient";
-  const nStops = 20;
-  const gradientStops = Array.from({ length: nStops + 1 }, (_, i) => {
-    const value = min + (max - min) * (i / nStops);
-    return { offset: `${(i / nStops) * 100}%`, color: color(value) };
-  });
 
-  return (
-    <div class="flex flex-col items-start font-monospace">
-      <span class="text-[10px] leading-tight opacity-80">GDP per capita</span>
-      <svg width={width} height={barHeight}>
-        <defs>
-          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-            <For each={gradientStops}>
-              {stop => <stop offset={stop.offset} stop-color={stop.color} />}
-            </For>
-          </linearGradient>
-        </defs>
-        <rect
-          x={0}
-          y={0}
-          width={width}
-          height={barHeight}
-          fill={`url(#${gradientId})`}
-          stroke="currentColor"
-          stroke-opacity={0.15}
-          stroke-width={0.5}
-        />
-      </svg>
+  return (<div class="flex flex-row">
+    <div class="grid grid-cols-22 justify-center h-10 md:h-12">
+      <For each={items}>
+        {({ code, name, flag, avg }, i) => {
+          const even = i() % 2 === 0;
+          return (
+            <Tooltip
+              class="mx-auto odd:justify-start odd:self-start even:justify-end even:self-end"
+              position="top"
+              content={`${name} · GDP/capita $${Number.isFinite(avg) ? Math.round(avg).toLocaleString() : "—"}`}
+            >
+              <button
+                type="button"
+                class="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] md:text-xs leading-tight text-black font-medium cursor-pointer border border-black/20 hover:opacity-90"
+                style={{ background: Number.isFinite(avg) ? color(avg) : "#999" }}
+              >
+                <span>{flag}</span>
+                <span>{code}</span>
+              </button>
+            </Tooltip>
+          )
+        }}
+      </For>
     </div>
-  );
-}
-
-export function DateRangeSlider() {
-  return <div class="flex gap-1 items-center">
-    <input class="text-lg bg-surface p-1 rounded-sm appearance-none" value={selectedYear()} type="number" min={minYear} max={maxYear} step={1} onInput={e => setSelectedYear(Number(e.currentTarget?.value))} />
-    <Range class="grow" value={selectedYear()} min={minYear} max={maxYear} step={1} onChange={value => setSelectedYear(value)} />
-  </div>
-}
-
-function CountriesSmallMultiples() {
-  return <></>
+  </div>);
 }
 
 type CountryRow = {
@@ -175,6 +150,20 @@ function buildRows(): CountryRow[] {
   return rows;
 }
 
+const rows = buildRows();
+
+// Average per capita GDP over the full dataset, used to color each country's area.
+const avgGdpPc: number[] = [];
+for (const row of rows) {
+  const vals = Object.values(row.gdpPc);
+  avgGdpPc.push(vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : NaN);
+}
+
+const color = scaleSequential(interpolateRdYlGn).domain([
+  Math.min(...avgGdpPc.filter(Number.isFinite)),
+  Math.max(...avgGdpPc.filter(Number.isFinite))
+]);
+
 // Wiggle offset centers the stream's baseline to minimize slope changes, but the
 // baseline can drift away from zero. This wrapper applies the standard wiggle and
 // then shifts each x-column so the stream's vertical midpoint sits exactly at 0.
@@ -202,22 +191,14 @@ function stackOffsetWiggleCentered(
 
 function DisasterImpactChart(container: HTMLElement) {
   const root = select(container);
-  const rows = buildRows();
-
-  // Average per capita GDP over the full dataset, used to color each country's area.
-  const avgGdpPc: number[] = [];
-  for (const row of rows) {
-    const vals = Object.values(row.gdpPc);
-    avgGdpPc.push(vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : NaN);
-  }
 
   let svg: Selection<SVGSVGElement, unknown, null, undefined>;
   let plot: Selection<SVGGElement, unknown, null, undefined>;
   let xAxisG: Selection<SVGGElement, unknown, null, undefined>;
   let yAxisG: Selection<SVGGElement, unknown, null, undefined>;
+  let gdpLegendG: Selection<SVGGElement, unknown, null, undefined>;
   let x: ScaleLinear<number, number>;
   let y: ScaleLinear<number, number>;
-  let color: ScaleSequential<string>;
   let areaPaths: Selection<SVGPathElement, unknown, null, undefined>[] = [];
   let initialized = false;
 
@@ -226,7 +207,7 @@ function DisasterImpactChart(container: HTMLElement) {
 
   function init() {
     const { clientWidth: width, clientHeight: height } = container;
-    const margin = { top: 30, right: 20, bottom: 40, left: 100 };
+    const margin = { top: 30, right: 20, bottom: 40, left: 40 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -240,14 +221,57 @@ function DisasterImpactChart(container: HTMLElement) {
     x = scaleLinear().domain([minYear, maxYear]).range([0, innerWidth]);
     y = scaleLinear().range([innerHeight, 0]);
 
-    const finite = avgGdpPc.filter(v => Number.isFinite(v));
-    color = scaleSequential(interpolateRdYlGn).domain([
-      Math.min(...finite),
-      Math.max(...finite)
-    ]);
     xAxisG = plot.append("g");
 
     yAxisG = plot.append("g")
+
+    // GDP per capita legend, top-left of the chart.
+    const legendGradientId = "gdp-legend-gradient";
+    const legendWidth = 160;
+    const legendBarHeight = 16;
+    const legendMin = Math.min(...avgGdpPc.filter(Number.isFinite));
+    const legendMax = Math.max(...avgGdpPc.filter(Number.isFinite));
+
+    gdpLegendG = plot.append("g").attr("transform", `translate(8,4)`);
+
+    gdpLegendG
+      .append("text")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("dy", "1em")
+      .attr("fill", "currentColor")
+      .attr("opacity", 0.8)
+      .style("font-size", "10px")
+      .text("GDP per capita");
+
+    const legendGradient = gdpLegendG
+      .append("defs")
+      .append("linearGradient")
+      .attr("id", legendGradientId)
+      .attr("x1", "0%")
+      .attr("y1", "0%")
+      .attr("x2", "100%")
+      .attr("y2", "0%");
+
+    const nStops = 20;
+    for (let i = 0; i <= nStops; i++) {
+      const t = i / nStops;
+      legendGradient
+        .append("stop")
+        .attr("offset", `${t * 100}%`)
+        .attr("stop-color", color(legendMin + (legendMax - legendMin) * t));
+    }
+
+    gdpLegendG
+      .append("rect")
+      .attr("x", 0)
+      .attr("y", 14)
+      .attr("width", legendWidth)
+      .attr("height", legendBarHeight)
+      .attr("fill", `url(#${legendGradientId})`)
+      .attr("stroke", "currentColor")
+      .attr("stroke-opacity", 0.15)
+      .attr("stroke-width", 0.5);
 
     initialized = true;
   }
@@ -273,11 +297,9 @@ function DisasterImpactChart(container: HTMLElement) {
 
     // y-axis
     y.domain([-maxAbs, maxAbs]);
-    yAxisG.call(axisLeft(y).ticks(5));
-    yAxisG.select(".domain").remove();
 
-    yAxisG.call(axisLeft(y).ticks(5));
-    yAxisG.select(".domain").remove();
+    // yAxisG.call(axisLeft(y).ticks(5));
+    // yAxisG.select(".domain").remove();
 
     // x-axis
     const gridTicks = years.filter(yr => yr % 5 === 0);

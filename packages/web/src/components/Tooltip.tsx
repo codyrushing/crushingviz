@@ -1,11 +1,11 @@
 import { createSignal, Show } from "solid-js";
-import type { JSX } from "solid-js";
+import type { JSX, ComponentProps } from "solid-js";
 
-interface TooltipProps {
+type TooltipProps = {
   content: JSX.Element;
   children: JSX.Element;
   position?: "left" | "right" | "top" | "bottom";
-}
+} & Pick<ComponentProps<'span'>, "class" | "classList">
 
 const positionClasses: Record<NonNullable<TooltipProps["position"]>, string> = {
   left: "right-full mr-2 top-1/2 -translate-y-1/2",
@@ -17,9 +17,11 @@ const positionClasses: Record<NonNullable<TooltipProps["position"]>, string> = {
 export function Tooltip(props: TooltipProps) {
   const [isOpen, setIsOpen] = createSignal(false);
 
+  const wrapperClasses = ["relative inline-flex", ...(props.class ? [props.class] : [])].join(" ");
   return (
     <span
-      class="relative inline-flex"
+      classList={props.classList}
+      class={wrapperClasses}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
