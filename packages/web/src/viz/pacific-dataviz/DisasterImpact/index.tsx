@@ -4,13 +4,20 @@ import "d3-transition";
 import { scaleLinear, scaleSequential, type ScaleLinear } from "d3-scale";
 import { interpolateRdYlGn } from "d3-scale-chromatic";
 import { axisBottom, axisLeft } from "d3-axis";
-import { area, curveBumpX, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
+import { area, curveBumpX, curveMonotoneX, line, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
 import { countries, GDPByCountry, disasterAffected, populationByCountry, disasterLossPctGDP } from "../data";
-import type { GDPData } from "../data";
 import { Tooltip } from "../../../components/Tooltip";
 import { ButtonGroup } from "../../../components/ButtonGroup";
-import { Range } from "../../../components/Range";
+import { XCircle } from "../../../icons/XCircle";
+
+// remove countries whose population is too statistically small
+// and could confound per-capita values
+disasterAffected.countries = Object.fromEntries(
+  Object.entries(disasterAffected.countries)
+    .filter(([k, v]) => v.pop_ref_2014 > 10000)
+    .map(([k, v]) => [k, v])
+);
 
 type Metric = "affected" | "affectedPctPop" | "lossPctGDP";
 
@@ -23,8 +30,23 @@ const METRICS: { value: Metric; label: string; title?: string }[] = [
 ];
 
 const minYear = Math.min(disasterAffected.year_span[0], disasterLossPctGDP.year_span[0]);
-const maxYear = Math.max(disasterAffected.year_span[1], disasterLossPctGDP.year_span[1]);
+// there is incomplete 2026 data in the dataset, let's only show full years
+const maxYear = Math.min(Math.max(disasterAffected.year_span[1], disasterLossPctGDP.year_span[1]), 2025);
 export const [selectedYear, setSelectedYear] = createSignal<number>(minYear);
+export const [selectedCountry, setSelectedCountry] = createSignal<string | null>(null);
+const [hoveredCountry, setHoveredCountry] = createSignal<string | null>(null);
+
+function toggleSelectedCountry(code: string) {
+  if (selectedCountry() === code) {
+    setHoveredCountry(null);
+  }
+  setSelectedCountry(prev => (prev === code ? null : code));
+}
+
+// Which country is currently highlighted: a locked selection wins, else the hovered one.
+function activeCountry() {
+  return selectedCountry() ?? hoveredCountry();
+}
 
 export function DisasterImpact() {
   const { isVisible, intersectionRatio, hiddenAbove, hiddenBelow, ref } =
@@ -37,52 +59,53 @@ export function DisasterImpact() {
   createEffect(
     () => {
       chart = chart ?? DisasterImpactChart(chartContainer);
-
-
       chart.render(metric());
     }
   );
 
   return (
     <div class="h-screen flex font-monospace gap-1" ref={ref}>
-      <div class="flex flex-col flex-1 min-w-0">
-        <div class="flex flex-col w-full gap-2">
-          <div class="max-w-sm mx-auto">
-            <ButtonGroup
-              value={metric()}
-              onChange={setMetric}
-              options={METRICS}
-            />
-          </div>
-          <CountriesKey />
+      <div class="flex flex-col flex-1 gap-4 min-w-0">
+        <div class="max-w-sm mx-auto">
+          <ButtonGroup
+            value={metric()}
+            onChange={setMetric}
+            options={METRICS}
+          />
         </div>
+        <CountriesKey metric={metric} />
         <div class="chart-container flex-1" ref={chartContainer}></div>
       </div>
     </div>
   );
 }
 
-function CountriesKey() {
+function CountriesKey(props: { metric: () => Metric }) {
   const items = rows
     .map((row, i) => ({ code: row.code, name: row.name, flag: row.flag, avg: avgGdpPc[i] }))
     .sort((a, b) => (Number.isFinite(a.avg) ? a.avg : -Infinity) - (Number.isFinite(b.avg) ? b.avg : -Infinity));
 
+  const nCols = Object.keys(disasterAffected.countries).length;
 
-  return (<div class="flex flex-row">
-    <div class="grid grid-cols-22 justify-center h-10 md:h-12">
+  return (<div style={{ "grid-template-columns": `repeat(${nCols}, minmax(0, 1fr))` } as Record<string, string>} class="grid justify-center h-10 md:h-12">
       <For each={items}>
-        {({ code, name, flag, avg }, i) => {
-          const even = i() % 2 === 0;
+        {({ code, name, flag, avg }) => {
           return (
             <Tooltip
               class="mx-auto odd:justify-start odd:self-start even:justify-end even:self-end"
-              position="top"
-              content={`${name} · GDP/capita $${Number.isFinite(avg) ? Math.round(avg).toLocaleString() : "—"}`}
+              position="bottom"
+              disabled={!!selectedCountry() && selectedCountry() !== code}
+              forceOpen={activeCountry() === code}
+              content={<CountryTooltipContent code={code} metric={props.metric} />}
             >
               <button
                 type="button"
                 class="flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] md:text-xs leading-tight text-black font-medium cursor-pointer border border-black/20 hover:opacity-90"
+                classList={{ "ring-2 ring-black/60": selectedCountry() === code, "opacity-40": activeCountry() != null && activeCountry() !== code }}
                 style={{ background: Number.isFinite(avg) ? color(avg) : "#999" }}
+                onClick={() => toggleSelectedCountry(code)}
+                onMouseEnter={() => setHoveredCountry(code)}
+                onMouseLeave={() => setHoveredCountry(null)}
               >
                 <span>{flag}</span>
                 <span>{code}</span>
@@ -91,8 +114,73 @@ function CountriesKey() {
           )
         }}
       </For>
+    </div>);
+}
+
+function CountryTooltipContent(props: { code: string; metric: () => Metric }) {
+  const row = rows.find(r => r.code === props.code)!;
+  const idx = rows.indexOf(row);
+  const avgGdp = avgGdpPc[idx];
+  const sparklineColor = Number.isFinite(avgGdp) ? color(avgGdp) : "#999";
+
+  let avgPopText = "—";
+  const popData = populationByCountry[props.code];
+  if (popData) {
+    const popVals = Object.values(popData).filter(Number.isFinite);
+    const avgPop = popVals.length ? popVals.reduce<number>((a, b) => a + b, 0) / popVals.length : 0;
+    if (avgPop) avgPopText = Math.round(avgPop).toLocaleString();
+  }
+
+  const sparklineW = 200;
+  const sparklineH = 25;
+  const sx = scaleLinear().domain([minYear, maxYear]).range([0, sparklineW]);
+
+  return (
+    <div class="text-xs whitespace-nowrap relative">
+      <div class="flex items-center justify-between gap-3">
+        <div class="font-semibold text-sm mb-0.5">{row.flag} {row.name}</div>
+        <button
+          type="button"
+          class="text-foreground hover:text-muted cursor-pointer"
+          title="Clear selection"
+          onClick={() => {
+            setHoveredCountry(null);
+            setSelectedCountry(null);
+          }}
+        >
+          <XCircle class="size-6" />
+        </button>
+      </div>
+      <div class="opacity-70">GDP per capita ${Number.isFinite(avgGdp) ? Math.round(avgGdp).toLocaleString() : "—"}</div>
+      <div class="opacity-70 mb-1">Avg. population {avgPopText}</div>
+      <div class="opacity-90 mb-1">
+        {(() => {
+          const m = props.metric();
+          const def = METRICS.find(d => d.value === m);
+          const cumulative = Object.values(row.series[m]).filter(Number.isFinite).reduce((a, b) => a + b, 0);
+          const val = m === "affected" ? cumulative.toLocaleString() : `${cumulative.toFixed(1)}%`;
+          return `${def?.label}: ${val}`;
+        })()}
+      </div>
+      <svg width={sparklineW} height={sparklineH}>
+        {(() => {
+          const m = props.metric();
+          const [rMin, rMax] = metricRanges[m];
+          const sy = scaleLinear().domain([rMin, rMax]).range([sparklineH, 0]);
+          const gen = line<[number, number]>()
+            .x(d => sx(d[0]))
+            .y(d => sy(d[1]))
+            .curve(curveMonotoneX);
+          const pts: [number, number][] = [];
+          for (const yr of years) {
+            const v = row.series[m][String(yr)];
+            if (v != null && Number.isFinite(v)) pts.push([yr, v]);
+          }
+          return <path d={gen(pts) ?? ""} fill="none" stroke={sparklineColor} stroke-width="1.5" />;
+        })()}
+      </svg>
     </div>
-  </div>);
+  );
 }
 
 type CountryRow = {
@@ -152,6 +240,21 @@ function buildRows(): CountryRow[] {
 
 const rows = buildRows();
 
+const years: number[] = [];
+for (let yr = minYear; yr <= maxYear; yr++) years.push(yr);
+
+const metricRanges: Record<Metric, [number, number]> = { affected: [Infinity, -Infinity], affectedPctPop: [Infinity, -Infinity], lossPctGDP: [Infinity, -Infinity] };
+for (const row of rows) {
+  for (const m of ["affected", "affectedPctPop", "lossPctGDP"] as Metric[]) {
+    for (const v of Object.values(row.series[m])) {
+      if (Number.isFinite(v)) {
+        if (v < metricRanges[m][0]) metricRanges[m][0] = v;
+        if (v > metricRanges[m][1]) metricRanges[m][1] = v;
+      }
+    }
+  }
+}
+
 // Average per capita GDP over the full dataset, used to color each country's area.
 const avgGdpPc: number[] = [];
 for (const row of rows) {
@@ -202,12 +305,9 @@ function DisasterImpactChart(container: HTMLElement) {
   let areaPaths: Selection<SVGPathElement, unknown, null, undefined>[] = [];
   let initialized = false;
 
-  const years: number[] = [];
-  for (let yr = minYear; yr <= maxYear; yr++) years.push(yr);
-
   function init() {
     const { clientWidth: width, clientHeight: height } = container;
-    const margin = { top: 30, right: 20, bottom: 40, left: 40 };
+    const margin = { top: 0, right: 20, bottom: 0, left: 20 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -217,22 +317,21 @@ function DisasterImpactChart(container: HTMLElement) {
 
     svg = root.append("svg").attr("width", width).attr("height", height);
     plot = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
+    const yScalePadding = 10;
     x = scaleLinear().domain([minYear, maxYear]).range([0, innerWidth]);
-    y = scaleLinear().range([innerHeight, 0]);
+    y = scaleLinear().range([innerHeight - yScalePadding/2, yScalePadding/2]);
 
     xAxisG = plot.append("g");
 
     yAxisG = plot.append("g")
 
-    // GDP per capita legend, top-left of the chart.
     const legendGradientId = "gdp-legend-gradient";
-    const legendWidth = 160;
+    const legendWidth = innerWidth/5/2;
     const legendBarHeight = 16;
     const legendMin = Math.min(...avgGdpPc.filter(Number.isFinite));
     const legendMax = Math.max(...avgGdpPc.filter(Number.isFinite));
 
-    gdpLegendG = plot.append("g").attr("transform", `translate(8,4)`);
+    gdpLegendG = plot.append("g").attr("transform", `translate(10,0)`);
 
     gdpLegendG
       .append("text")
@@ -342,13 +441,26 @@ function DisasterImpactChart(container: HTMLElement) {
     areaPaths.forEach((path, i) => {
       const avg = avgGdpPc[i];
       const fill = Number.isFinite(avg) ? color(avg) : "#999";
+      const code = rows[i].code;
+      const active = activeCountry();
+      const dimmed = active != null && active !== code;
       path
         .datum(series[i])
         .attr("fill", fill)
-        .attr("fill-opacity", 0.85)
-        .attr("stroke", fill)
-        .attr("stroke-opacity", 1)
+        .attr("fill-opacity", dimmed ? 0.1 : 0.85)
+        .attr("stroke", active === code ? fill : "none")
         .attr("stroke-width", 1)
+        .attr("cursor", "pointer")
+        .style("pointer-events", "all")
+        .on("mouseenter", () => {
+          if (selectedCountry()) return;
+          setHoveredCountry(code)
+        })
+        .on("mouseleave", () => {
+          if (selectedCountry()) return;
+          setHoveredCountry(null)
+        })
+        .on("click", () => toggleSelectedCountry(code))
         .transition("streamgraph-update")
         .attr("d", areaGen)
     });

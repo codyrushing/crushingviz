@@ -1,10 +1,12 @@
-import { createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import type { JSX, ComponentProps } from "solid-js";
 
 type TooltipProps = {
   content: JSX.Element;
   children: JSX.Element;
   position?: "left" | "right" | "top" | "bottom";
+  forceOpen?: boolean;
+  disabled?: boolean;
 } & Pick<ComponentProps<'span'>, "class" | "classList">
 
 const positionClasses: Record<NonNullable<TooltipProps["position"]>, string> = {
@@ -17,6 +19,12 @@ const positionClasses: Record<NonNullable<TooltipProps["position"]>, string> = {
 export function Tooltip(props: TooltipProps) {
   const [isOpen, setIsOpen] = createSignal(false);
 
+  // When a forceOpen lock is released (e.g. a selection is cleared), close the
+  // tooltip even if the cursor is still hovering it.
+  createEffect(() => {
+    if (!props.forceOpen) setIsOpen(false);
+  });
+
   const wrapperClasses = ["relative inline-flex", ...(props.class ? [props.class] : [])].join(" ");
   return (
     <span
@@ -26,7 +34,7 @@ export function Tooltip(props: TooltipProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       {props.children}
-      <Show when={isOpen()}>
+      <Show when={!props.disabled && (props.forceOpen || isOpen())}>
         <span
           class={`absolute z-10 whitespace-nowrap text-xs bg-black text-white px-2 py-1 rounded ${positionClasses[props.position ?? "left"]}`}
         >

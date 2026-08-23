@@ -11,6 +11,7 @@ export const countries = countriesJSON as {
   }
 };
 
+
 type CountryCode = Extract<keyof typeof countries, string>;
 type YearSeries = {
   [year: string]: number
