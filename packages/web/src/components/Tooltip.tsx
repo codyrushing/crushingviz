@@ -36,7 +36,7 @@ export function Tooltip(props: TooltipProps) {
       {props.children}
       <Show when={!props.disabled && (props.forceOpen || isOpen())}>
         <span
-          class={`absolute z-10 whitespace-nowrap text-xs bg-black text-white px-2 py-1 rounded ${positionClasses[props.position ?? "left"]}`}
+          class={`absolute z-10 text-xs bg-black text-white px-2 py-1 rounded ${positionClasses[props.position ?? "left"]}`}
         >
           {props.content}
         </span>
