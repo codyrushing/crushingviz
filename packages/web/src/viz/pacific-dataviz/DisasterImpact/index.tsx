@@ -3,7 +3,7 @@ import { select, type Selection } from "d3-selection";
 import "d3-transition";
 import { scaleLinear, scaleSequential, type ScaleLinear } from "d3-scale";
 import { interpolateRdYlGn } from "d3-scale-chromatic";
-import { axisBottom, axisLeft } from "d3-axis";
+import { axisBottom, axisLeft, axisTop } from "d3-axis";
 import { area, curveBumpX, curveMonotoneX, line, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
 import { countries, GDPByCountry, disasterAffected, populationByCountry, disasterLossPctGDP } from "../data";
@@ -69,7 +69,7 @@ export function DisasterImpact() {
 
   return (
     <div class="h-screen flex font-monospace gap-1" ref={ref}>
-      <div class="flex flex-col flex-1 gap-4 min-w-0">
+      <div class="flex flex-col flex-1 gap-0 min-w-0">
         <div class="max-w-sm mx-auto">
           <ButtonGroup
             value={metric()}
@@ -77,11 +77,33 @@ export function DisasterImpact() {
             options={METRICS}
           />
         </div>
-        <CountriesKey metric={metric} />
         <div class="chart-container flex-1" ref={chartContainer}></div>
+        <div class="countries flex-1"><CountryLollipops /></div>
       </div>
     </div>
   );
+}
+
+/*
+The purpose of this component:
+* Demonstrate relationship between GDP per-capita and disaster exposure, both in absolute and per-capita terms
+* Show which countries have the greatest disaster exposure (will be used later)
+* Show avg and peak disaster exposure
+Not needed:
+* Per-year historical data
+
+Strategy:
+* Dual bars - GDP in one direction, disaster exposure in the other.
+* Boxplot - shows mean and ma    * color is unclear
+x, but better for showing a more continuous distribution. this data is mostly peaks and valleys
+* Lollipop - two heads (mean and max)
+  * but how to show GDP?
+    * color is unclear
+    * ordering obscures the relative values
+    * do another lollipop for GDP in opposite direction
+*/
+function CountryLollipops() {
+  return <></>
 }
 
 function CountriesKey(props: { metric: () => Metric }) {
@@ -134,15 +156,6 @@ function CountryTooltipContent(props: { code: string; }) {
     const avgPop = popVals.length ? popVals.reduce<number>((a, b) => a + b, 0) / popVals.length : 0;
     if (avgPop) avgPopText = Math.round(avgPop).toLocaleString();
   }
-
-  const gdpBarWidthScale = scaleLinear()
-    .domain(color.domain())
-    .range([5, 100]);
-
-  const sparklineW = 200;
-  const sparklineH = 25;
-  const sx = scaleLinear().domain([minYear, maxYear]).range([0, sparklineW]);
-
   return (
     <div class="text-xs relative min-w-48 sm:max-w-3xs flex flex-col gap-2">
       <div class="flex items-center justify-between gap-3">
@@ -159,17 +172,13 @@ function CountryTooltipContent(props: { code: string; }) {
           <XCircle class="size-6" />
         </button>
       </div>
-      <div class="font-bold">{minYear} ― {maxYear}</div>
+      <div class="font-bold text-lg">{minYear} ― {maxYear}</div>
       <Show when={Number.isFinite(avgGdp)}>
-        <div class="flex flex-col gap-0">
-          <div>GDP per capita (avg):</div>
-          <div class="flex items-center">
-            <div class="h-3" style={{
-              "background-color": color(avgGdp),
-              "width": `${gdpBarWidthScale(avgGdp)}%`
-            }}>
-            </div>
-            <div class="w-10 pl-0.5 text-base font-bold">{format("$.2s")(avgGdp)}</div>
+        <div class="flex items-start">
+          <div class="w-3/4">Yearly GDP per capita:</div>
+          <div>
+            <div class="flex-1 text-base font-bold relative">{format("$.2s")(avgGdp)}</div>
+            <div class="-mt-1 text-[12px]">(avg)</div>
           </div>
         </div>
       </Show>
@@ -178,7 +187,7 @@ function CountryTooltipContent(props: { code: string; }) {
           const m = "affected"
           const def = METRICS_BY_VALUE[m];
           let cumulative = Object.values(row.series[m]).filter(Number.isFinite).reduce((a, b) => a + b, 0);
-          return <div class="flex items-center">
+          return <div class="flex items-start">
             <div class="w-3/4">
               {def?.title}:
             </div>
@@ -360,7 +369,7 @@ function DisasterImpactChart(container: HTMLElement) {
 
   function init() {
     const { clientWidth: width, clientHeight: height } = container;
-    const margin = { top: 0, right: 20, bottom: 0, left: 20 };
+    const margin = { top: 30, right: 20, bottom: 16, left: 20 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -375,8 +384,7 @@ function DisasterImpactChart(container: HTMLElement) {
     y = scaleLinear().range([innerHeight - yScalePadding/2, yScalePadding/2]);
 
     xAxisG = plot.append("g");
-
-    yAxisG = plot.append("g")
+    yAxisG = plot.append("g");
 
     const legendGradientId = "gdp-legend-gradient";
     const legendWidth = Math.max(innerWidth/10, 100);
@@ -384,7 +392,7 @@ function DisasterImpactChart(container: HTMLElement) {
     const legendMin = Math.min(...avgGdpPc.filter(Number.isFinite));
     const legendMax = Math.max(...avgGdpPc.filter(Number.isFinite));
 
-    gdpLegendG = plot.append("g").attr("transform", `translate(10,0)`);
+    gdpLegendG = plot.append("g").attr("transform", `translate(${innerWidth/2 - legendWidth/2},${innerHeight - legendBarHeight - 10})`);
 
     gdpLegendG
       .append("text")
@@ -441,7 +449,7 @@ function DisasterImpactChart(container: HTMLElement) {
       .attr("fill", "currentColor")
       .attr("opacity", 0.8)
       .style("font-size", "10px")
-      .text("Hi")
+      .text("Hi");
 
     initialized = true;
   }
@@ -475,11 +483,10 @@ function DisasterImpactChart(container: HTMLElement) {
     const gridTicks = years.filter(yr => yr % 5 === 0);
     xAxisG
       .call(
-        axisBottom(x)
+        axisTop(x)
           .tickValues(gridTicks)
           .tickFormat(d => String(Number(d)))
-          .tickSizeOuter(-50)
-          .tickSize(innerHeight)
+          .tickSize(-innerHeight)
     );
     xAxisG.select(".domain").remove();
     xAxisG
@@ -491,11 +498,8 @@ function DisasterImpactChart(container: HTMLElement) {
 
     xAxisG
       .selectAll(".tick text")
-      .attr("y", 0)
-      .attr("dy", "-1em")
-      .attr("x", 0)
-      .attr("dx", "0em")
       .attr("color", "var(--muted)")
+      .attr("font-size", "1.2em")
 
     const areaGen = area<SeriesPoint<RowData>>()
       .x(d => x((d.data as RowData).year))
