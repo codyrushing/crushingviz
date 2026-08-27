@@ -1,9 +1,9 @@
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For, Show, onCleanup } from "solid-js";
 import { select, type Selection } from "d3-selection";
 import "d3-transition";
 import { scaleLinear, scaleSequential, type ScaleLinear } from "d3-scale";
-import { interpolateRdYlGn } from "d3-scale-chromatic";
-import { axisBottom, axisLeft, axisTop } from "d3-axis";
+import { interpolateBlues, interpolateRdYlGn } from "d3-scale-chromatic";
+import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import { area, curveBumpX, curveMonotoneX, line, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
 import { countries, GDPByCountry, disasterAffected, populationByCountry, disasterLossPctGDP } from "../data";
@@ -78,7 +78,7 @@ export function DisasterImpact() {
           />
         </div>
         <div class="chart-container flex-1" ref={chartContainer}></div>
-        <div class="countries flex-1"><CountryLollipops /></div>
+        <div class="countries flex-1"><CountryLollipops metric={metric} /></div>
       </div>
     </div>
   );
@@ -102,8 +102,286 @@ x, but better for showing a more continuous distribution. this data is mostly pe
     * ordering obscures the relative values
     * do another lollipop for GDP in opposite direction
 */
-function CountryLollipops() {
-  return <></>
+function CountryLollipops(props: { metric: () => Metric }) {
+  let container!: HTMLDivElement;
+  let svgHost!: HTMLDivElement;
+  const [size, setSize] = createSignal({ width: 0, height: 0 });
+  const [sortBy, setSortBy] = createSignal<"metric" | "gdp">("metric");
+  const [metricAgg, setMetricAgg] = createSignal<"mean" | "max">("mean");
+
+  // Measure the SVG host so geometry matches the drawable area (excluding the
+  // sort button row above it).
+  createEffect(() => {
+    const el = svgHost;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      setSize({ width: el.clientWidth, height: el.clientHeight });
+    });
+    ro.observe(el);
+    onCleanup(() => ro.disconnect());
+  });
+
+  // Per-country mean/max of the active metric plus mean GDP per capita.
+  // Mirrors the computations in CountryTooltipContent.
+  const stats = createMemo(() => {
+    const m = props.metric();
+    return rows.map((row, i) => {
+      const vals = Object.values(row.series[m]).filter(Number.isFinite);
+      const mean = vals.length ? vals.reduce<number>((a, b) => a + b, 0) / vals.length : NaN;
+      const max = vals.length ? Math.max(...vals) : NaN;
+      return { code: row.code, name: row.name, flag: row.flag, mean, max, gdp: avgGdpPc[i] };
+    });
+  });
+
+  const sorted = createMemo(() => {
+    const key = sortBy();
+    return [...stats()].sort((a, b) => {
+      const av = key === "metric" ? a.mean : a.gdp;
+      const bv = key === "metric" ? b.mean : b.gdp;
+      return (Number.isFinite(av) ? av : Infinity) - (Number.isFinite(bv) ? bv : Infinity);
+    });
+  });
+
+  // The metric lollipop plots only one aggregation at a time (mean OR max),
+  // each fit to its own scale so the smaller mean values aren't drowned out
+  // by peaks. GDP stays a single mean-per-capita lollipop in the other direction.
+  const globalMaxMetric = createMemo(() => {
+    const agg = metricAgg();
+    return Math.max(...stats().map(s => (agg === "mean" ? s.mean : s.max)).filter(Number.isFinite), 0);
+  });
+  const globalMaxGdp = Math.max(...avgGdpPc.filter(Number.isFinite), 0);
+
+  // Two side-by-side bars per country (metric + GDP) growing the same
+  // direction. Flags label each band along the longer axis. The shorter axis
+  // has two y-axes: metric on one side, GDP on the other.
+  const layout = createMemo(() => {
+    const { width, height } = size();
+    if (!width || !height) return null;
+    const n = sorted().length;
+    if (!n) return null;
+    const horizontal = width >= height;
+    // padding for flag strip + axis ticks/labels
+    const flagPad = 28;
+    const axisPad = 44;
+    if (horizontal) {
+      const band = width / n;
+      const baselineY = height - flagPad;
+      const plotTop = axisPad / 2;
+      const plotH = baselineY - plotTop;
+      const flagY = height - flagPad / 2;
+      return {
+        horizontal: true as const,
+        band, baselineY, plotTop, plotH, flagY,
+        metricAxisX: axisPad / 2,
+        gdpAxisX: width - axisPad / 2,
+      };
+    } else {
+      const band = height / n;
+      const baselineX = flagPad;
+      const plotRight = width - axisPad / 2;
+      const plotW = plotRight - baselineX;
+      const flagX = flagPad / 2;
+      return {
+        horizontal: false as const,
+        band, baselineX, plotRight, plotW, flagX,
+        metricAxisY: axisPad / 2,
+        gdpAxisY: height - axisPad / 2,
+      };
+    }
+  });
+
+  // Axis scales: range goes from baseline (0 value) toward the opposite end,
+  // so higher values map further from the baseline. For horizontal, higher =
+  // smaller y (upward). For vertical, higher = larger x (rightward).
+  const metricAxisScale = createMemo(() => {
+    const l = layout();
+    if (!l) return null;
+    const range: [number, number] = l.horizontal ? [l.baselineY, l.plotTop] : [l.baselineX, l.plotRight];
+    return scaleLinear().domain([0, globalMaxMetric() || 1]).range(range).nice();
+  });
+  const gdpAxisScale = createMemo(() => {
+    const l = layout();
+    if (!l) return null;
+    const range: [number, number] = l.horizontal ? [l.baselineY, l.plotTop] : [l.baselineX, l.plotRight];
+    return scaleLinear().domain([0, globalMaxGdp || 1]).range(range).nice();
+  });
+
+  const flagSize = createMemo(() => {
+    const l = layout();
+    if (!l) return 12;
+    return Math.max(10, Math.min(l.band * 0.7, 22));
+  });
+
+  const nodes = createMemo(() => {
+    const l = layout();
+    const ms = metricAxisScale();
+    const gs = gdpAxisScale();
+    if (!l || !ms || !gs) return [];
+    const fs = flagSize();
+    const gap = l.band * 0.08;
+    const barW = Math.max(3, (l.band - gap) / 2);
+    const agg = metricAgg();
+    return sorted().map((d, idx) => {
+      const horiz = l.horizontal;
+      const along = idx * l.band + l.band / 2;
+      const metricVal = agg === "mean" ? d.mean : d.max;
+      const gdpColor = Number.isFinite(d.gdp) ? color(d.gdp) : "#999";
+      // metric bar on the left/top half of the band, GDP on the right/bottom
+      const metricOffset = -barW / 2 - gap / 2;
+      const gdpOffset = barW / 2 + gap / 2;
+
+      if (horiz) {
+        const metricBarX = along + metricOffset;
+        const gdpBarX = along + gdpOffset;
+        const metricTopY = Number.isFinite(metricVal) ? ms(metricVal) : l.baselineY;
+        const gdpTopY = Number.isFinite(d.gdp) ? gs(d.gdp) : l.baselineY;
+        return {
+          ...d, horiz, agg, barW, fs,
+          flagCx: along, flagCy: l.flagY,
+          metricBarX, metricBarY: metricTopY, metricBarW: barW, metricBarH: Math.max(0, l.baselineY - metricTopY),
+          gdpBarX, gdpBarY: gdpTopY, gdpBarW: barW, gdpBarH: Math.max(0, l.baselineY - gdpTopY),
+          gdpColor,
+        };
+      } else {
+        const metricBarY = along + metricOffset;
+        const gdpBarY = along + gdpOffset;
+        const metricEndX = Number.isFinite(metricVal) ? ms(metricVal) : l.baselineX;
+        const gdpEndX = Number.isFinite(d.gdp) ? gs(d.gdp) : l.baselineX;
+        return {
+          ...d, horiz, agg, barW, fs,
+          flagCx: l.flagX, flagCy: along,
+          metricBarX: l.baselineX, metricBarY, metricBarW: Math.max(0, metricEndX - l.baselineX), metricBarH: barW,
+          gdpBarX: l.baselineX, gdpBarY, gdpBarW: Math.max(0, gdpEndX - l.baselineX), gdpBarH: barW,
+          gdpColor,
+        };
+      }
+    });
+  });
+
+  // Render the two d3 axes reactively. They must be rebuilt whenever layout,
+  // scales, or metric agg change.
+  let metricAxisG: SVGGElement | undefined;
+  let gdpAxisG: SVGGElement | undefined;
+  createEffect(() => {
+    const l = layout();
+    const ms = metricAxisScale();
+    const gs = gdpAxisScale();
+    if (!l || !ms || !gs || !metricAxisG || !gdpAxisG) return;
+    const mSel = select(metricAxisG);
+    const gSel = select(gdpAxisG);
+    mSel.selectAll("*").remove();
+    gSel.selectAll("*").remove();
+    if (l.horizontal) {
+      mSel.call(axisLeft(ms).ticks(4).tickSize(-l.plotH));
+      gSel.call(axisRight(gs).ticks(4).tickSize(-l.plotH));
+      mSel.attr("transform", `translate(${l.metricAxisX},0)`);
+      gSel.attr("transform", `translate(${l.gdpAxisX},0)`);
+    } else {
+      mSel.call(axisTop(ms).ticks(4).tickSize(-l.plotW));
+      gSel.call(axisBottom(gs).ticks(4).tickSize(-l.plotW));
+      mSel.attr("transform", `translate(0,${l.metricAxisY})`);
+      gSel.attr("transform", `translate(0,${l.gdpAxisY})`);
+    }
+    for (const sel of [mSel, gSel]) {
+      sel.select(".domain").remove();
+      sel.selectAll(".tick line").style("stroke", "var(--muted)").style("stroke-opacity", 0.35).style("stroke-width", 0.5);
+      sel.selectAll(".tick text").style("font-size", "10px").style("fill", "currentColor").style("fill-opacity", 0.6);
+    }
+  });
+
+  const metricLabel = createMemo(() =>
+    `${METRICS_BY_VALUE[props.metric()]?.label ?? props.metric()} (${metricAgg()})`
+  );
+  const gdpLabel = "Mean GDP per capita";
+
+  return (
+    <div class="w-full h-full flex flex-col" ref={container}>
+      <div class="flex justify-end items-center gap-2 px-2 pt-1">
+        <button
+          type="button"
+          class="px-2 py-1 text-[11px] rounded-md border border-black/20 bg-transparent text-foreground hover:bg-black/5 cursor-pointer"
+          onClick={() => setMetricAgg(prev => (prev === "mean" ? "max" : "mean"))}
+        >
+          {metricAgg() === "mean" ? "Show max" : "Show mean"}
+        </button>
+        <button
+          type="button"
+          class="px-2 py-1 text-[11px] rounded-md border border-black/20 bg-transparent text-foreground hover:bg-black/5 cursor-pointer"
+          onClick={() => setSortBy(prev => (prev === "metric" ? "gdp" : "metric"))}
+        >
+          {sortBy() === "metric" ? "Sort by GDP per capita" : "Sort by metric"}
+        </button>
+      </div>
+      <div class="flex-1 min-h-0" ref={svgHost}>
+        <Show when={nodes().length > 0}>
+          <svg width={size().width} height={size().height} class="block">
+            {/* axes */}
+            <g ref={metricAxisG} />
+            <g ref={gdpAxisG} />
+            {/* axis labels */}
+            <Show when={layout()}>
+              {(l) => (
+                <>
+                  <text
+                    x={l().horizontal ? l().metricAxisX : l().baselineX + l().plotW / 2}
+                    y={l().horizontal ? l().baselineY + l().plotH / 2 : l().metricAxisY - 10}
+                    text-anchor="middle" dominant-baseline="middle"
+                    fill="currentColor" fill-opacity={0.7}
+                    font-size={11} font-weight={600}
+                    transform={l().horizontal ? `rotate(-90 ${l().metricAxisX} ${l().baselineY + l().plotH / 2})` : ""}
+                  >{metricLabel()}</text>
+                  <text
+                    x={l().horizontal ? l().gdpAxisX : l().baselineX + l().plotW / 2}
+                    y={l().horizontal ? l().baselineY + l().plotH / 2 : l().gdpAxisY + 18}
+                    text-anchor="middle" dominant-baseline="middle"
+                    fill="currentColor" fill-opacity={0.7}
+                    font-size={11} font-weight={600}
+                    transform={l().horizontal ? `rotate(-90 ${l().gdpAxisX} ${l().baselineY + l().plotH / 2})` : ""}
+                  >{gdpLabel}</text>
+                </>
+              )}
+            </Show>
+            <For each={nodes()}>
+              {(n) => {
+                return (
+                  <g
+                    opacity={(() => {
+                      const a = activeCountry();
+                      return a != null && a !== n.code ? 0.35 : 1;
+                    })()}
+                    style={{ cursor: "pointer" }}
+                    onMouseEnter={() => setHoveredCountry(n.code)}
+                    onMouseLeave={() => setHoveredCountry(null)}
+                    onClick={() => toggleSelectedCountry(n.code)}
+                  >
+                    {/* metric bar */}
+                    <rect
+                      x={n.metricBarX} y={n.metricBarY}
+                      width={n.metricBarW} height={n.metricBarH}
+                      fill="#d62728" fill-opacity={0.8}
+                    />
+                    {/* GDP bar */}
+                    <rect
+                      x={n.gdpBarX} y={n.gdpBarY}
+                      width={n.gdpBarW} height={n.gdpBarH}
+                      fill="#1f77b4" fill-opacity={0.8}
+                    />
+                    {/* flag */}
+                    <text
+                      x={n.flagCx} y={n.flagCy}
+                      text-anchor="middle" dominant-baseline="central"
+                      font-size={n.fs}
+                      style={{ "user-select": "none" }}
+                    >{n.flag}</text>
+                  </g>
+                );
+              }}
+            </For>
+          </svg>
+        </Show>
+      </div>
+    </div>
+  );
 }
 
 function CountriesKey(props: { metric: () => Metric }) {
@@ -323,7 +601,7 @@ for (const row of rows) {
 }
 
 const color = scaleSequential(
-  interpolateRdYlGn
+  interpolateBlues
 ).domain([
   Math.min(...avgGdpPc.filter(Number.isFinite)),
   Math.max(...avgGdpPc.filter(Number.isFinite))
