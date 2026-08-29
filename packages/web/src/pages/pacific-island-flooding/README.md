@@ -84,3 +84,7 @@ It is important to mention that these sea level projections for the 2050 horizon
 * Note that the impact of sea level change (SLR) is not that it moves people into different population bands. Its impact is to change the baseline for tides and storm surges, meaning that the frequency of flooding that people in each band experience increases.
 * All regions use the same doubling interval (D). This means that the same AF is calculated for a given sea level rise both for low-lying atolls and high islands. If anything, this means that for low-lying atolls, who have the most flood risk, AF is conservative.
 * The definition of "disaster-affected" is slightly different between the two different merged data sources (UNDRR and EM-DAT).
+* We removed any countries with <10k population from DisasterImpact visualization
+
+## Other TODOs:
+* Add footnotes (modal probably)
