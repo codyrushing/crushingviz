@@ -2,7 +2,7 @@ import { createEffect, createMemo, createSignal, For, Show, onCleanup } from "so
 import { select, type Selection } from "d3-selection";
 import "d3-transition";
 import { scaleLinear, scaleSequential, type ScaleLinear } from "d3-scale";
-import { interpolateBlues, interpolateRdYlGn, schemeBlues, schemeGreens } from "d3-scale-chromatic";
+import { interpolateBlues, interpolateRdYlGn, schemeBlues, schemeGreens, schemePurples } from "d3-scale-chromatic";
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import { area, curveBumpX, curveMonotoneX, line, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
@@ -204,7 +204,7 @@ for (const row of rows) {
 }
 
 export const color = scaleSequential(
-  interpolateRgb(schemeBlues[9][3], schemeBlues[9][8])
+  interpolateRgb(schemePurples[9][3], schemePurples[9][8])
 ).domain([
   Math.min(...avgGdpPc.filter(Number.isFinite)),
   Math.max(...avgGdpPc.filter(Number.isFinite))

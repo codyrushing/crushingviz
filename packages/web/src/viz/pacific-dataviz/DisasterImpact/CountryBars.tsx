@@ -18,7 +18,7 @@ import {
 import { ButtonGroup, type ButtonGroupOption } from "../../../components/ButtonGroup";
 import { format } from "d3-format";
 import { Dynamic } from "solid-js/web";
-import { schemeBlues, schemeGreens, schemeReds } from "d3-scale-chromatic";
+import { schemeBlues, schemeGreens, schemeOranges, schemePurples, schemeReds } from "d3-scale-chromatic";
 
 type SortKey = "metric" | "gdp";
 type Agg = "mean" | "max";
@@ -65,8 +65,8 @@ function sortStats(stats: CountryStat[], { sortBy, agg }: { sortBy: SortKey, agg
   });
 }
 
-const METRIC_COLOR = schemeReds[9][5];
-const GDP_COLOR = schemeBlues[9][5];
+const METRIC_COLOR = schemeOranges[9][5];
+const GDP_COLOR = schemePurples[9][5];
 
 function Legend(props: { metric: () => Metric; agg: () => Agg }) {
   const metricLabel = () => `${METRICS_BY_VALUE[props.metric()]?.title ?? METRICS_BY_VALUE[props.metric()]?.label ?? props.metric()} (per-year ${props.agg()})`;

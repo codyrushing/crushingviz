@@ -1,13 +1,15 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show, For } from "solid-js";
 import { select, type Selection } from "d3-selection";
 import "d3-transition";
-import { scaleLinear, scaleBand, type ScaleLinear } from "d3-scale";
+import { scaleLinear, scaleBand, scaleSqrt, type ScaleLinear } from "d3-scale";
 import { axisBottom, axisLeft, axisTop } from "d3-axis";
 import { area, curveBumpX, stack, stackOrderDescending, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { format } from "d3-format";
-import { hierarchy, treemap, treemapBinary, type HierarchyRectangularNode } from "d3-hierarchy";
+import { schemeCategory10 } from "d3-scale-chromatic";
+import { hierarchy, treemap, treemapBinary, pack, type HierarchyRectangularNode, type HierarchyCircularNode } from "d3-hierarchy";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
-import { disasterEmdatByType, disasterEmdatRegionalEvents, type EmdatDamageableDisasterTypeName, type EmdatDisasterTypeName, type EmdatDisasterTypeWithSubtypes } from "../data";
+import { useScreenSize } from "../../../hooks/useScreenSize";
+import { countries, disasterEmdatByType, disasterEmdatRegionalEvents, type EmdatDamageableDisasterTypeName, type EmdatDisasterTypeName, type EmdatDisasterTypeWithSubtypes, type RegionalEmdatEvent } from "../data";
 
 // Disaster types rendered in the chart. `flood_relevant` (Storm + Flood +
 // Mass movement (wet), per `flood_relevant_definition`) is included as a
@@ -25,12 +27,13 @@ const DISASTER_TYPES = [
 type TypeName = (typeof DISASTER_TYPES)[number];
 
 // Curated categorical palette — distinct, roughly color-blind friendly.
+// Indices into d3's Category10 scheme; flood_relevant keeps the blue slot.
 const TYPE_COLORS: Record<TypeName, string> = {
-  Drought: "#bcbd22",
-  flood_relevant: "#1f77b4",
-  Earthquake: "#d62728",
-  "Volcanic activity": "#ff7f0e",
-  "Mass movement (dry)": "#7f7f7f",
+  Drought: schemeCategory10[8],
+  flood_relevant: schemeCategory10[0],
+  Earthquake: schemeCategory10[3],
+  "Volcanic activity": schemeCategory10[1],
+  "Mass movement (dry)": schemeCategory10[7],
 };
 
 // EM-DAT's year_span runs to 2026, but 2026 is incomplete — only show full years.
@@ -43,26 +46,41 @@ for (let yr = MIN_YEAR; yr <= MAX_YEAR; yr++) {
 }
 
 const fmtAffected = format(".2s");
-const fmtUSD = format("$.3s");
+const fmtDeaths = format(",.0f");
+const fmtUSD = (v: number) => format("$.2s")(v).replace("G", "B").replace("k", "K");
+
+
+// `flood_relevant` is an internal grouping label (Storm + Flood + Mass
+// movement (wet)), not a real EM-DAT type — display it as "Flooding".
+function getTypeName(type: string): string {
+  return type === "flood_relevant" ? "Flooding" : type;
+}
 
 type HoverState = { type: TypeName; value: number; year?: number; subtype?: string };
 
+// Hover payload for an individual event dot; px/py are the dot's center in
+// container-relative pixels, used to anchor the tooltip beneath it.
+type EventHover = { event: RegionalEmdatEvent; px: number; py: number; r: number };
+
 export function DisastersByType() {
   const { ref } = useElementVisibility();
+  const { size, ref: sizeRef } = useScreenSize();
   let affectedContainer!: HTMLDivElement;
   let damageContainer!: HTMLDivElement;
   let affectedChart: ReturnType<typeof DisastersByTypeStreamGraph> | undefined;
   const [hoveredAffected, setHoveredAffected] = createSignal<HoverState | null>(null);
+  const [hoveredEvent, setHoveredEvent] = createSignal<EventHover | null>(null);
 
   createEffect(() => {
-    affectedChart = affectedChart ?? DisastersByTypeStreamGraph(affectedContainer, setHoveredAffected);
+    size(); // re-render on (debounced) container resize
+    affectedChart = affectedChart ?? DisastersByTypeStreamGraph(affectedContainer, setHoveredAffected, setHoveredEvent);
     affectedChart.render();
   });
 
-  // Re-render event dots whenever the hovered subtype changes.
+  // Highlight the event dots belonging to the hovered subtype.
   createEffect(() => {
     const h = hoveredAffected();
-    affectedChart?.renderEventDots(h?.subtype);
+    affectedChart?.highlightSubtype(h?.subtype);
   });
 
   return (
@@ -74,10 +92,10 @@ export function DisastersByType() {
         <h3 class="text-sm font-semibold text-center opacity-80">People affected by year</h3>
         <Show when={hoveredAffected()} keyed>
           {(h) => (
-            <div class="z-1 absolute top-2 right-2 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2 text-xs">
+            <div class="z-1 absolute top-[46%] left-6 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2 text-xs">
               <div class="flex items-center gap-1.5 font-semibold text-sm">
                 <span class="inline-block w-2.5 h-2.5" style={{ background: TYPE_COLORS[h.type] }} />
-                {h.type}
+                {h.subtype ?? getTypeName(h.type)}
               </div>
               <div class="mt-1 opacity-80">
                 {fmtAffected(h.value)} affected{h.year != null ? ` (${h.year})` : ""}
@@ -85,8 +103,73 @@ export function DisastersByType() {
             </div>
           )}
         </Show>
-        <div class="chart-container flex-1" ref={affectedContainer} />
+        {/* Event dot tooltip — anchored beneath the hovered dot */}
+        <Show when={hoveredEvent()} keyed>
+          {(h) => (
+            <div
+              class="z-1 absolute pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2 max-w-64 min-w-48"
+              style={{ left: `${h.px}px`, top: `${h.py + 2*h.r + 24}px`, transform: "translate(-50%, 0)" }}
+            >
+              <EventTooltipContent event={h.event} />
+            </div>
+          )}
+        </Show>
+        <div class="chart-container flex-1" ref={(el) => { sizeRef(el); affectedContainer = el; }} />
       </div>
+    </div>
+  );
+}
+
+function EventTooltipContent(props: { event: RegionalEmdatEvent }) {
+  const e = props.event;
+  return (
+    <div class="text-xs relative flex flex-col gap-1.5">
+      <div class="flex items-center justify-between gap-3">
+        <div class="font-semibold text-base leading-tight">
+          {e.name ?? e.subtype}
+          <div class="text-[11px] opacity-70">
+            {e.type} — {e.year}
+            {e.events_count > 1 ? ` (${e.events_count} events)` : ""}
+          </div>
+        </div>
+        <span
+          class="inline-block w-2.5 h-2.5 shrink-0"
+          style={{ background: TYPE_COLORS[TYPE_TO_CATEGORY[e.type]] }}
+        />
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="flex flex-col gap-0.5">
+          <div class="text-lg font-bold leading-none">{fmtAffected(e.affected)}</div>
+          <div class="text-[10px] opacity-70 leading-tight">Affected</div>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <div class="text-lg font-bold leading-none">{fmtDeaths(e.deaths)}</div>
+          <div class="text-[10px] opacity-70 leading-tight">Deaths</div>
+        </div>
+        <Show when={e.damage_usd != null} fallback={
+          <div class="flex flex-col gap-0.5">
+            <div class="text-lg font-bold leading-none opacity-40">—</div>
+            <div class="text-[10px] opacity-70 leading-tight">Damage (USD)</div>
+          </div>
+        }>
+          <div class="flex flex-col gap-0.5">
+            <div class="text-lg font-bold leading-none">{fmtUSD(e.damage_usd!)}</div>
+            <div class="text-[10px] opacity-70 leading-tight">Damage (USD)</div>
+          </div>
+        </Show>
+      </div>
+      <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+        <For each={e.countries_affected}>
+          {(c) => (
+            <span class="text-[10px] opacity-80 leading-tight">
+              {countries[c]?.flag} {countries[c]?.name ?? c}
+            </span>
+          )}
+        </For>
+      </div>
+      <Show when={e.note}>
+        <div class="text-[10px] opacity-60 leading-tight italic">{e.note}</div>
+      </Show>
     </div>
   );
 }
@@ -135,19 +218,46 @@ type TreemapNodeData = {
   children?: TreemapNodeData[];
 };
 
+type DotDatum = {
+  subtype: string;
+  type: TypeName;
+  affected: number;
+  event: RegionalEmdatEvent;
+  children?: DotDatum[];
+};
+
+// Minimum treemap cell area (px²) for a category to be worth rendering:
+// enough for its 16px header bar plus a sliver of leaf content.
+const MIN_CAT_CELL_AREA = 16 * 48;
+
 // Build the two-level hierarchy (category → subtype) sizing leaves by total
-// people affected, matching the streamgraph's metric.
-function buildTreemapData(): TreemapNodeData {
+// people affected, matching the streamgraph's metric. Categories whose share
+// of the grand total is below `minShare` are dropped — at small treemap sizes
+// they'd render as meaningless header-only slivers.
+function buildTreemapData(minShare = 0): TreemapNodeData {
   const byCat: Record<string, Record<string, number>> = {};
   for (const t of DISASTER_TYPES) byCat[t] = {};
   for (const e of disasterEmdatRegionalEvents.events) {
-    if (!e.deaths) continue;
     const cat = TYPE_TO_CATEGORY[e.type];
     if (!cat) continue;
     byCat[cat][e.subtype] = (byCat[cat][e.subtype] ?? 0) + (e.affected ?? 0);
   }
+  const catTotals: Record<string, number> = {};
+  for (const t of DISASTER_TYPES) {
+    catTotals[t] = Object.values(byCat[t]).reduce((a, b) => a + b, 0);
+  }
+  const grandTotal = Object.values(catTotals).reduce((a, b) => a + b, 0);
+  // Never drop everything: if even the largest category falls below `minShare`
+  // (very small treemap), keep whichever categories tie for the largest share.
+  const maxShare = grandTotal > 0
+    ? Math.max(...DISASTER_TYPES.map((t) => catTotals[t])) / grandTotal
+    : 0;
+  const threshold = Math.min(minShare, maxShare);
   const children = DISASTER_TYPES
-    .filter((cat) => Object.keys(byCat[cat]).length > 0)
+    .filter((cat) => {
+      if (catTotals[cat] <= 0) return false;
+      return grandTotal === 0 || catTotals[cat] / grandTotal >= threshold;
+    })
     .map((cat) => ({
       name: cat,
       children: Object.entries(byCat[cat])
@@ -186,6 +296,7 @@ function stackOffsetWiggleCentered(
 function DisastersByTypeStreamGraph(
   container: HTMLElement,
   onHover: (h: HoverState | null) => void,
+  onEventHover: (h: EventHover | null) => void,
 ) {
   const root = select(container);
   let svg: Selection<SVGSVGElement, unknown, null, undefined>;
@@ -197,10 +308,15 @@ function DisastersByTypeStreamGraph(
   let treemapG: Selection<SVGGElement, unknown, null, undefined>;
   let eventDotsG: Selection<SVGGElement, unknown, null, undefined>;
   let initialized = false;
-  // Cached streamgraph layout so renderEventDots can position dots by year
+  // Cached streamgraph layout so the event-dot band can position dots by year
   // without re-running the full render.
   let xScale: ScaleLinear<number, number> | null = null;
-  let streamBottom = 0;
+  let dotsBandC = 0; // vertical center of the dot band (below the streamgraph)
+  let dotsBandR = 12; // max cluster radius that fits in the band
+  let hoveredSubtype: string | undefined;
+  let plotLeft = 0; // plot group origin, for container-relative tooltip coords
+  let plotTop = 0;
+  let bandScale = 1; // viewport-dependent dot-band scale (see render)
 
   function init() {
     root.selectAll("*").remove();
@@ -225,15 +341,19 @@ function DisastersByTypeStreamGraph(
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // Split the plot vertically: streamgraph on top, treemap below with a
-    // small gutter for the section label.
-    const STREAM_H = Math.max(60, innerHeight * 0.56);
-    const GUTTER = 34;
+    // Split the plot vertically: streamgraph on top, event-dot band + label
+    // gutter, then treemap below. The dot band is full-size on viewports
+    // ≥1024px wide and shrinks linearly toward half size on narrower screens.
+    bandScale = window.innerWidth >= 1024 ? 1 : Math.max(0.5, (window.innerWidth - 320) / (1024 - 320));
+    const STREAM_H = Math.max(60, innerHeight * 0.53);
+    const GUTTER = 92 * bandScale;
     const TREEMAP_TOP = STREAM_H + GUTTER;
     const TREEMAP_H = Math.max(0, innerHeight - TREEMAP_TOP);
 
     svg.attr("width", width).attr("height", height);
     plot.attr("transform", `translate(${margin.left},${margin.top})`);
+    plotLeft = margin.left;
+    plotTop = margin.top;
 
     const data = buildAffectedRows();
     const totals = affectedTotals();
@@ -247,7 +367,8 @@ function DisastersByTypeStreamGraph(
 
     const x = scaleLinear().domain([MIN_YEAR, MAX_YEAR]).range([0, innerWidth]);
     xScale = x;
-    streamBottom = STREAM_H;
+    dotsBandC = STREAM_H + 30 * bandScale;
+    dotsBandR = 26 * bandScale;
     let maxAbs = 0;
     for (const s of series) for (const p of s) maxAbs = Math.max(maxAbs, Math.abs(p[0]), Math.abs(p[1]));
     const yScalePadding = 10;
@@ -305,24 +426,28 @@ function DisastersByTypeStreamGraph(
       .attr("d", areaGen);
 
     renderTreemap(innerWidth, TREEMAP_TOP, TREEMAP_H);
+    renderEventDots();
   }
 
   function renderTreemap(w: number, top: number, h: number) {
     treemapG.attr("transform", `translate(0,${top})`);
 
     // Section label
-    // const sectionLabel = treemapG.selectAll<SVGTextElement, unknown>("text.section").data([1]);
-    // sectionLabel.enter().append("text").attr("class", "section").merge(sectionLabel as any)
-    //   .attr("x", 0)
-    //   .attr("y", -14)
-    //   .attr("fill", "var(--muted)")
-    //   .style("font-size", "12px")
-    //   .style("font-weight", "600")
-    //   .text("Affected by subtype (treemap)");
+    const sectionLabel = treemapG.selectAll<SVGTextElement, unknown>("text.section").data([1]);
+    sectionLabel.enter().append("text").attr("class", "section").merge(sectionLabel as any)
+      .attr("x", 0)
+      .attr("y", -14)
+      .attr("fill", "var(--muted)")
+      .style("font-size", "12px")
+      .style("font-weight", "600")
+      .text("Disaster events");
 
     if (h <= 0) return;
 
-    const tmapRoot = hierarchy(buildTreemapData())
+    // A category's treemap share approximates its cell area — drop categories
+    // too small to fit a legible cell (header + content) at this size.
+    const minShare = MIN_CAT_CELL_AREA / Math.max(1, w * h);
+    const tmapRoot = hierarchy(buildTreemapData(minShare))
       .sum((d) => d.value ?? 0)
       .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
 
@@ -342,7 +467,10 @@ function DisastersByTypeStreamGraph(
     const catEnter = catSel.enter().append("g").attr("class", "cat");
     catEnter.append("rect").attr("class", "cat-border");
     catEnter.append("rect").attr("class", "cat-header");
-    catEnter.append("text").attr("class", "cat-label");
+    // HTML label inside a foreignObject so it can ellipsize via CSS when the
+    // category cell is too narrow for the full type name.
+    catEnter.append("foreignObject").attr("class", "cat-label-fo")
+      .append("xhtml:div").attr("class", "cat-label");
 
     const catMerge = catEnter.merge(catSel as any);
     catMerge.select(".cat-border")
@@ -359,13 +487,20 @@ function DisastersByTypeStreamGraph(
       .attr("width", (d) => d.x1 - d.x0)
       .attr("height", 16)
       .attr("fill", (d) => TYPE_COLORS[d.data.name as TypeName] ?? "#999");
-    catMerge.select(".cat-label")
+    catMerge.select<SVGForeignObjectElement>("foreignObject.cat-label-fo")
       .attr("x", (d) => d.x0 + 4)
-      .attr("y", (d) => d.y0 + 12)
-      .text((d) => d.data.name)
-      .attr("fill", "#fff")
+      .attr("y", (d) => d.y0)
+      .attr("width", (d) => Math.max(0, d.x1 - d.x0 - 8))
+      .attr("height", 16)
+      .select("div.cat-label")
+      .text((d) => getTypeName(d.data.name))
       .style("font-size", "11px")
       .style("font-weight", "600")
+      .style("color", "#fff")
+      .style("line-height", "16px")
+      .style("overflow", "hidden")
+      .style("white-space", "nowrap")
+      .style("text-overflow", "ellipsis")
       .style("pointer-events", "none");
 
     // Leaf cells (subtypes), colored by parent category with stepped opacity
@@ -405,154 +540,123 @@ function DisastersByTypeStreamGraph(
       .text((d) => (d.x1 - d.x0 > 64 && d.y1 - d.y0 > 22 ? d.data.name : ""));
   }
 
-  // Render a dot for each event of the hovered subtype, placed below the
-  // streamgraph at the x-position of its year. Events sharing a year are
-  // stacked vertically so they don't overlap.
-  function renderEventDots(subtype?: string) {
-    if (!subtype || !xScale) {
-      eventDotsG.selectAll("*").remove();
-      return;
-    }
+  // Event dots: always rendered — one dot per regional event, colored by
+  // disaster type, radius scaled by people affected (clamped), clustered by
+  // year via circle packing in the band below the streamgraph. Clusters are
+  // uniformly shrunk if they would overflow the band.
+  function renderEventDots() {
+    if (!xScale) return;
+
+    // // Section label above the dot band. Safe at the left edge: the affected
+    // // data starts in 2011, so the streamgraph is flat where the label sits.
+    // const sectionLabel = eventDotsG.selectAll<SVGTextElement, unknown>("text.section").data([1]);
+    // sectionLabel.enter().append("text").attr("class", "section").merge(sectionLabel as any)
+    //   .attr("x", 0)
+    //   .attr("y", dotsBandC - dotsBandR - 8)
+    //   .attr("fill", "var(--muted)")
+    //   .style("font-size", "12px")
+    //   .style("font-weight", "600")
+    //   .style("pointer-events", "none")
+    //   .text("Disaster events");
+
     const events = disasterEmdatRegionalEvents.events.filter(
-      (e) => e.subtype === subtype && e.year >= MIN_YEAR && e.year <= MAX_YEAR,
+      (e) => e.year >= MIN_YEAR && e.year <= MAX_YEAR && !!e.deaths && e.affected,
     );
-    // Group by year to stack dots vertically within the gutter band.
+    let maxAffected = 0;
+    for (const e of events) maxAffected = Math.max(maxAffected, e.affected);
+    // Dot radii scale with the band on narrow screens, but the 4px minimum
+    // is preserved so the smallest events stay hoverable.
+    const rMax = Math.max(8, 16 * bandScale);
+    const rScale = scaleSqrt().domain([0, maxAffected]).range([4, rMax]).clamp(true);
+
+    const packLayout = pack<DotDatum>().radius((d) => rScale(d.data.affected)).padding(0);
+
+    type Dot = DotDatum & { id: number; x: number; y: number; r: number };
+    const dots: Dot[] = [];
+    let id = 0;
     const byYear = new Map<number, typeof events>();
     for (const e of events) {
       const arr = byYear.get(e.year) ?? [];
       arr.push(e);
       byYear.set(e.year, arr);
     }
-    type Dot = { year: number; idx: number; n: number; type: TypeName };
-    const dots: Dot[] = [];
+    // Pass 1: pack each year's cluster and find the worst-case enclosing
+    // radius. A single global shrink factor is then derived from it so every
+    // dot's radius stays a constant multiple of sqrt(affected) — per-cluster
+    // clamping would break size comparability across years.
+    const clusters: { yr: number; cr: HierarchyCircularNode<DotDatum> }[] = [];
+    let maxClusterR = 0;
     for (const [yr, arr] of byYear) {
-      for (let i = 0; i < arr.length; i++) dots.push({ year: yr, idx: i, n: arr.length, type: TYPE_TO_CATEGORY[arr[i].type] });
+      if (!arr.length) continue;
+      const clusterRoot = hierarchy<DotDatum>({
+        children: arr.map((e) => ({
+          subtype: e.subtype,
+          type: TYPE_TO_CATEGORY[e.type],
+          affected: e.affected,
+          event: e,
+        })),
+      } as DotDatum);
+      packLayout(clusterRoot);
+      const cr = clusterRoot as HierarchyCircularNode<DotDatum>;
+      clusters.push({ yr, cr });
+      maxClusterR = Math.max(maxClusterR, cr.r);
+    }
+    const k = maxClusterR > dotsBandR ? dotsBandR / maxClusterR : 1;
+
+    // Pass 2: emit dots, positioned relative to their year's x and the band
+    // center, all scaled by the same k. The 4px floor keeps the smallest
+    // events hoverable; it only flattens dots below that size, not the
+    // ordering above it.
+    for (const { yr, cr } of clusters) {
+      const leaves = cr.leaves() as HierarchyCircularNode<DotDatum>[];
+      for (const leaf of leaves) {
+        dots.push({
+          id: id++,
+          subtype: leaf.data.subtype,
+          type: leaf.data.type,
+          affected: leaf.data.affected,
+          event: leaf.data.event,
+          x: xScale(yr) + (leaf.x - cr.x) * k,
+          y: dotsBandC + (leaf.y - cr.y) * k,
+          r: Math.max(4, leaf.r * k),
+        });
+      }
     }
 
-    const bandTop = streamBottom + 4;
-    const bandH = 14; // gutter is 34px; label sits at +20, dots occupy +4..+18
-    const r = 2.5;
-
-    const sel = eventDotsG.selectAll<SVGCircleElement, Dot>("circle").data(dots, (d) => `${d.year}-${d.idx}`);
+    const sel = eventDotsG.selectAll<SVGCircleElement, Dot>("circle").data(dots, (d) => String(d.id));
     sel.exit().remove();
-    const enter = sel.enter().append("circle").attr("r", 0);
+    const enter = sel.enter().append("circle").attr("r", 0).style("cursor", "pointer");
     enter
       .merge(sel as any)
-      .attr("cx", (d) => xScale!(d.year))
-      .attr("cy", (d) => bandTop + (d.n === 1 ? bandH / 2 : (d.idx / (d.n - 1)) * bandH))
-      .attr("r", r)
+      .attr("cx", (d) => d.x)
+      .attr("cy", (d) => d.y)
+      .attr("r", (d) => d.r)
       .attr("fill", (d) => TYPE_COLORS[d.type] ?? "#999")
-      .attr("fill-opacity", 0.9);
-  }
-
-  return { render, renderEventDots };
-}
-function DamageBarChart(
-  container: HTMLElement,
-  onHover: (h: HoverState | null) => void,
-) {
-  const root = select(container);
-  let svg: Selection<SVGSVGElement, unknown, null, undefined>;
-  let plot: Selection<SVGGElement, unknown, null, undefined>;
-  let xAxisG: Selection<SVGGElement, unknown, null, undefined>;
-  let yAxisG: Selection<SVGGElement, unknown, null, undefined>;
-  let barsG: Selection<SVGGElement, unknown, null, undefined>;
-  let initialized = false;
-
-  function init() {
-    root.selectAll("*").remove();
-    svg = root.append("svg");
-    plot = svg.append("g");
-    xAxisG = plot.append("g");
-    yAxisG = plot.append("g");
-    barsG = plot.append("g");
-    initialized = true;
-  }
-
-  function render() {
-    if (!initialized) init();
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    if (!width || !height) return;
-
-    const margin = { top: 28, right: 80, bottom: 24, left: 80 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-
-    svg.attr("width", width).attr("height", height);
-    plot.attr("transform", `translate(${margin.left},${margin.top})`);
-
-    const dmg = disasterEmdatByType.regional_damage_usd_by_type as Record<EmdatDamageableDisasterTypeName, number>;
-    // `flood_relevant` = Storm + Flood + Mass movement (wet) (per
-    // `flood_relevant_definition`); the data only stores per-type totals, so
-    // sum the constituents and exclude them individually.
-    const FLOOD_RELEVANT_PARTS: EmdatDamageableDisasterTypeName[] = ["Storm", "Flood", "Mass movement (wet)"];
-    const floodRelevantDamage = FLOOD_RELEVANT_PARTS.reduce((sum, t) => sum + (dmg[t] ?? 0), 0);
-    const entries = (DISASTER_TYPES as readonly string[])
-      .map((t) => {
-        const value = t === "flood_relevant" ? floodRelevantDamage : dmg[t as EmdatDamageableDisasterTypeName] ?? 0;
-        return { type: t as TypeName, value };
+      .attr("stroke", "var(--background)")
+      .attr("stroke-width", 0.5)
+      .style("pointer-events", "all")
+      .on("mouseenter", (_e, d) => {
+        // Clamp so the ~220px tooltip stays inside the container horizontally.
+        const w = container.clientWidth;
+        const px = Math.max(110, Math.min(w - 110, d.x + plotLeft));
+        onEventHover({ event: d.event, px, py: d.y + plotTop, r: d.r });
       })
-      .filter((d) => d.value > 0)
-      .sort((a, b) => b.value - a.value);
+      .on("mouseleave", () => onEventHover(null));
 
-    const x = scaleLinear().domain([0, (entries[0]?.value ?? 1)]).range([0, innerWidth]).nice();
-    const y = scaleBand<TypeName>().domain(entries.map((d) => d.type)).range([0, innerHeight]).padding(0.25);
-
-    xAxisG
-      .interrupt()
-      .call(axisBottom(x).ticks(5).tickFormat((d) => fmtUSD(Number(d))).tickSize(-innerHeight));
-    xAxisG.select(".domain").remove();
-    xAxisG.selectAll(".tick line").style("stroke", "var(--muted)").style("stroke-opacity", 0.35).style("stroke-width", 0.5);
-    xAxisG.selectAll(".tick text").attr("fill", "var(--muted)").style("font-size", "10px");
-    xAxisG.attr("transform", `translate(0,${innerHeight})`);
-
-    yAxisG
-      .interrupt()
-      .call(axisLeft(y).tickSize(0));
-    yAxisG.select(".domain").remove();
-    yAxisG.selectAll(".tick text").attr("fill", "currentColor").style("font-size", "11px");
-
-    const bars = barsG.selectAll<SVGRectElement, typeof entries[number]>("rect").data(entries, (d) => d.type);
-    bars.exit().remove();
-    const enter = bars
-      .enter()
-      .append("rect")
-      .attr("x", 0)
-      .attr("y", (d) => y(d.type)!)
-      .attr("height", y.bandwidth())
-      .attr("width", 0)
-      .attr("fill", (d) => TYPE_COLORS[d.type] ?? "#999")
-      .attr("fill-opacity", 0.85)
-      .style("cursor", "pointer")
-      .on("mouseenter", (_e, d) => onHover({ type: d.type, value: d.value }))
-      .on("mouseleave", () => onHover(null));
-
-    enter
-      .merge(bars as any)
-      .transition()
-      .duration(400)
-      .attr("x", 0)
-      .attr("y", (d) => y(d.type)!)
-      .attr("height", y.bandwidth())
-      .attr("width", (d) => x(d.value));
-
-    // const vals = labelG.selectAll<SVGTextElement, typeof entries[number]>("text").data(entries, (d) => d.type);
-    // vals.exit().remove();
-    // const vEnter = vals
-    //   .enter()
-    //   .append("text")
-    //   .attr("dominant-baseline", "central")
-    //   .style("font-size", "10px")
-    //   .attr("fill", "currentColor");
-    // vEnter
-    //   .merge(vals as any)
-    //   .transition()
-    //   .duration(400)
-    //   .attr("x", (d) => x(d.value) + 4)
-    //   .attr("y", (d) => (y(d.type) ?? 0) + y.bandwidth() / 2)
-    //   .text((d) => fmtUSD(d.value));
+    highlightSubtype(hoveredSubtype);
   }
 
-  return { render };
+  // Dim dots that don't belong to the hovered subtype (undefined = none
+  // hovered, so all dots render at full opacity).
+  function highlightSubtype(subtype?: string) {
+    hoveredSubtype = subtype;
+    eventDotsG
+      .selectAll<SVGCircleElement, { subtype: string }>("circle")
+      .interrupt()
+      .transition()
+      .duration(150)
+      .attr("fill-opacity", (d) => (!subtype || d.subtype === subtype) ? 0.9 : 0.25);
+  }
+
+  return { render, highlightSubtype };
 }
