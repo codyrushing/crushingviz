@@ -2,6 +2,7 @@
 layout: ../../layouts/ArticleLayout.astro
 ---
 import { DisasterImpact } from "../../viz/pacific-dataviz/DisasterImpact";
+import { DisastersByType } from "../../viz/pacific-dataviz/DisastersByType";
 
 # Flooding in the Pacific Islands
 
@@ -10,6 +11,8 @@ import { DisasterImpact } from "../../viz/pacific-dataviz/DisasterImpact";
 Here is some content
 
 And some more
+
+<DisastersByType client:load />
 
 <div style="height: 3000px;"></div>
 

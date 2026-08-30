@@ -1,0 +1,1429 @@
+{
+  "indicator": "EM-DAT disaster events by type (PICTs)",
+  "label": "Disaster events from EM-DAT HDX Country Profiles, preserving disaster type/subtype",
+  "source": "EM-DAT (CRED/UCLouvain) via HDX Country Profiles, 2000-2026",
+  "emdat_threshold": "EM-DAT includes disasters with >=10 deaths, >=100 affected, emergency declaration, or international appeal. Smaller events may not appear.",
+  "year_span": [
+    2000,
+    2026
+  ],
+  "merge_note": "Regional events built by grouping country-level EMDAT events on (year, type, subtype). Where web research (Wikipedia cyclone season articles, JTWC, BoM, FMS reports) clearly identifies distinct events within a group — e.g. a North Pacific typhoon vs a South Pacific cyclone in the same year, or two named cyclones affecting different country sets — the group is split into separate events. The 'name' field gives the identified storm name; the 'note' field explains the split rationale or lists constituent storms when decomposition is impossible. Affected, deaths, damage_usd, and events_count are summed across the countries in each sub-event. When a single country was hit by multiple events of the same type/subtype in the same year, EMDAT has already aggregated them and the data cannot be decomposed — those groups retain a note listing the known constituent storms.",
+  "events": [
+    {
+      "year": 2000,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 5000,
+      "deaths": 2,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2001,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 201,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2001,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 4,
+      "affected": 18044,
+      "deaths": 2,
+      "damage_usd": 51300000.0,
+      "countries_affected": [
+        "CK",
+        "TO",
+        "VU"
+      ]
+    },
+    {
+      "year": 2001,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 4500,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2002,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 2,
+      "affected": 5470,
+      "deaths": 5,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ],
+      "note": "Earthquake in Papua New Guinea."
+    },
+    {
+      "year": 2002,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 2,
+      "affected": 1003,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ],
+      "note": "Earthquake in Vanuatu."
+    },
+    {
+      "year": 2002,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 3001,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2002,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 174,
+      "deaths": 36,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2002,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 1110,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ],
+      "name": "Cyclone Zoe",
+      "note": "Severe Tropical Cyclone Zoe (Dec 2002) affected Tikopia and Anuta in the Solomon Islands."
+    },
+    {
+      "year": 2002,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 5,
+      "affected": 17067,
+      "deaths": 48,
+      "damage_usd": 130500000.0,
+      "countries_affected": [
+        "FM",
+        "GU",
+        "MP"
+      ],
+      "name": "Typhoon Pongsona",
+      "note": "Super Typhoon Pongsona (Dec 2002) caused $730M damage on Guam, the 3rd-most intense typhoon to strike the island."
+    },
+    {
+      "year": 2002,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 13000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2003,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 3,
+      "deaths": 6,
+      "damage_usd": 50000000.0,
+      "countries_affected": [
+        "AS"
+      ]
+    },
+    {
+      "year": 2003,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 2,
+      "affected": 621,
+      "deaths": 13,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2003,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 4,
+      "affected": 31525,
+      "deaths": 19,
+      "damage_usd": 70000000.0,
+      "countries_affected": [
+        "FJ",
+        "NC",
+        "SB"
+      ],
+      "note": "South Pacific tropical cyclone(s) from the 2002-03 season."
+    },
+    {
+      "year": 2003,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 1000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FM"
+      ],
+      "note": "North Pacific typhoon affecting the Federated States of Micronesia."
+    },
+    {
+      "year": 2004,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 600,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2004,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 10000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2004,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 5000,
+      "deaths": 16,
+      "damage_usd": 4000000.0,
+      "countries_affected": [
+        "FJ"
+      ],
+      "note": "Tropical Depression 10F (Apr 2004) caused flooding in Fiji with 11 deaths."
+    },
+    {
+      "year": 2004,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 4,
+      "affected": 6508,
+      "deaths": 5,
+      "damage_usd": 1000000.0,
+      "countries_affected": [
+        "FM",
+        "GU",
+        "MP"
+      ],
+      "note": "North Pacific typhoon(s) affecting Guam, Northern Mariana Islands, and FSM."
+    },
+    {
+      "year": 2004,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 23762,
+      "deaths": 2,
+      "damage_usd": 190000000.0,
+      "countries_affected": [
+        "AS",
+        "NU",
+        "WS"
+      ],
+      "name": "Cyclone Heta",
+      "note": "Cyclone Heta (Jan 2004, Cat 5) caused $150M+ damage across American Samoa, Samoa, and Niue."
+    },
+    {
+      "year": 2004,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 54008,
+      "deaths": 2,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ],
+      "name": "Cyclone Ivy",
+      "note": "Cyclone Ivy (Feb 2004, Cat 4) affected ~25% of Vanuatu's population (54,000+)."
+    },
+    {
+      "year": 2004,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 9600,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2005,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 200,
+      "deaths": 1,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2005,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 2493,
+      "deaths": 1,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2005,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 634,
+      "deaths": 9,
+      "damage_usd": null,
+      "countries_affected": [
+        "CK",
+        "TK",
+        "WS"
+      ]
+    },
+    {
+      "year": 2005,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 15000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ],
+      "note": "Volcanic eruption in Papua New Guinea."
+    },
+    {
+      "year": 2005,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 5000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ],
+      "note": "Volcanic eruption in Vanuatu."
+    },
+    {
+      "year": 2006,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 3,
+      "affected": 12624,
+      "deaths": 5,
+      "damage_usd": 500000.0,
+      "countries_affected": [
+        "FJ",
+        "PG"
+      ]
+    },
+    {
+      "year": 2006,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 10000,
+      "deaths": 14,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2006,
+      "type": "Mass movement (wet)",
+      "subtype": "Mudslide",
+      "events_count": 1,
+      "affected": 300,
+      "deaths": 1,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2006,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 168,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2006,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 2,
+      "affected": 3299,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2007,
+      "type": "Earthquake",
+      "subtype": "Tsunami",
+      "events_count": 1,
+      "affected": 2384,
+      "deaths": 52,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2007,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 5,
+      "damage_usd": 7000000.0,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2007,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 900,
+      "deaths": 1,
+      "damage_usd": 30000000.0,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2007,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 162209,
+      "deaths": 173,
+      "damage_usd": 652000.0,
+      "countries_affected": [
+        "FJ",
+        "PG"
+      ]
+    },
+    {
+      "year": 2008,
+      "type": "Flood",
+      "subtype": "Coastal flood",
+      "events_count": 4,
+      "affected": 75985,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "KI",
+        "MH",
+        "PG"
+      ]
+    },
+    {
+      "year": 2008,
+      "type": "Mass movement (dry)",
+      "subtype": "Landslide (dry)",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 10,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2008,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 7,
+      "damage_usd": 30000000.0,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2008,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 9000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2009,
+      "type": "Earthquake",
+      "subtype": "Tsunami",
+      "events_count": 3,
+      "affected": 8591,
+      "deaths": 191,
+      "damage_usd": 133540000.0,
+      "countries_affected": [
+        "AS",
+        "TO",
+        "WS"
+      ],
+      "name": "2009 Samoa earthquake and tsunami",
+      "note": "M8.1 earthquake on Sep 29, 2009 generated a tsunami that struck Samoa, American Samoa, and Tonga (Nuatoputapu). 189+ deaths."
+    },
+    {
+      "year": 2009,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 3,
+      "affected": 18506,
+      "deaths": 33,
+      "damage_usd": 43247000.0,
+      "countries_affected": [
+        "FJ",
+        "SB",
+        "VU"
+      ]
+    },
+    {
+      "year": 2009,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 19,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2009,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 3845,
+      "deaths": 2,
+      "damage_usd": 13300000.0,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2009,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 400,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2010,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 1126,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2010,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 16017,
+      "deaths": 2,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2010,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 4,
+      "affected": 45509,
+      "deaths": 3,
+      "damage_usd": 50427000.0,
+      "countries_affected": [
+        "CK",
+        "FJ",
+        "PF",
+        "SB"
+      ]
+    },
+    {
+      "year": 2011,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 39600,
+      "deaths": 3,
+      "damage_usd": 3000000.0,
+      "countries_affected": [
+        "TO",
+        "VU"
+      ]
+    },
+    {
+      "year": 2012,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 4836,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2012,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 3,
+      "affected": 219545,
+      "deaths": 20,
+      "damage_usd": 116000000.0,
+      "countries_affected": [
+        "FJ",
+        "PG"
+      ]
+    },
+    {
+      "year": 2012,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 60,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2012,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 1250,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PW"
+      ],
+      "note": "North Pacific typhoon affecting Palau."
+    },
+    {
+      "year": 2012,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 22355,
+      "deaths": 14,
+      "damage_usd": 141400000.0,
+      "countries_affected": [
+        "FJ",
+        "WF",
+        "WS"
+      ],
+      "name": "Cyclone Evan",
+      "note": "Cyclone Evan (Dec 2012, Cat 4) caused $313M damage and 14 deaths across Samoa, Wallis & Futuna, and Fiji."
+    },
+    {
+      "year": 2013,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 6384,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "MH"
+      ]
+    },
+    {
+      "year": 2013,
+      "type": "Earthquake",
+      "subtype": "Tsunami",
+      "events_count": 1,
+      "affected": 3329,
+      "deaths": 10,
+      "damage_usd": 2000000.0,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2013,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 2,
+      "affected": 45227,
+      "deaths": 0,
+      "damage_usd": 2000000.0,
+      "countries_affected": [
+        "PG",
+        "SB"
+      ]
+    },
+    {
+      "year": 2014,
+      "type": "Flood",
+      "subtype": "Coastal flood",
+      "events_count": 2,
+      "affected": 580,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "KI",
+        "MH"
+      ]
+    },
+    {
+      "year": 2014,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 52000,
+      "deaths": 47,
+      "damage_usd": 24000000.0,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2014,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 27000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2014,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 3,
+      "affected": 36366,
+      "deaths": 13,
+      "damage_usd": 33000000.0,
+      "countries_affected": [
+        "PG",
+        "TO",
+        "VU"
+      ]
+    },
+    {
+      "year": 2014,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 1380,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2015,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 4,
+      "affected": 2622200,
+      "deaths": 24,
+      "damage_usd": 64900000.0,
+      "countries_affected": [
+        "FJ",
+        "MH",
+        "PG",
+        "PW"
+      ]
+    },
+    {
+      "year": 2015,
+      "type": "Flood",
+      "subtype": "Flood (General)",
+      "events_count": 1,
+      "affected": 20000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2015,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 6,
+      "affected": 247808,
+      "deaths": 20,
+      "damage_usd": 451400000.0,
+      "countries_affected": [
+        "KI",
+        "PG",
+        "SB",
+        "TV",
+        "VU"
+      ],
+      "name": "Cyclone Pam",
+      "note": "Cyclone Pam (Mar 2015, Cat 5) was one of the worst disasters in Vanuatu's history ($543M damage). Also impacted Kiribati, Solomon Islands, Tuvalu, and PNG."
+    },
+    {
+      "year": 2015,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 2,
+      "affected": 35360,
+      "deaths": 5,
+      "damage_usd": 11000000.0,
+      "countries_affected": [
+        "FM",
+        "MP"
+      ],
+      "name": "Tropical Storm Bavi",
+      "note": "Tropical Storm Bavi (Mar 2015) affected the Marshall Islands and Mariana Islands in the North Pacific."
+    },
+    {
+      "year": 2016,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 100000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FM"
+      ]
+    },
+    {
+      "year": 2016,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 9770,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "SB"
+      ]
+    },
+    {
+      "year": 2016,
+      "type": "Flood",
+      "subtype": "Flood (General)",
+      "events_count": 1,
+      "affected": 6600,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2016,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 5,
+      "affected": 545950,
+      "deaths": 47,
+      "damage_usd": 600000000.0,
+      "countries_affected": [
+        "FJ",
+        "TO"
+      ],
+      "name": "Cyclone Winston and others",
+      "note": "Cyclone Winston (Feb 2016, Cat 5) was the most intense tropical cyclone in Southern Hemisphere history — $1.4B damage, 44 deaths in Fiji. Fiji's numbers may also include Cyclone Zena (Apr 2016); EMDAT aggregates by year and cannot be decomposed."
+    },
+    {
+      "year": 2017,
+      "type": "Flood",
+      "subtype": "Flood (General)",
+      "events_count": 1,
+      "affected": 5004,
+      "deaths": 0,
+      "damage_usd": 2000000.0,
+      "countries_affected": [
+        "PF"
+      ]
+    },
+    {
+      "year": 2017,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 2564,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2017,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 11000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2018,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 3,
+      "affected": 544300,
+      "deaths": 181,
+      "damage_usd": 61000000.0,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2018,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 2,
+      "damage_usd": null,
+      "countries_affected": [
+        "MP"
+      ],
+      "note": "North Pacific typhoon affecting Northern Mariana Islands."
+    },
+    {
+      "year": 2018,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 4,
+      "affected": 267200,
+      "deaths": 7,
+      "damage_usd": 60000000.0,
+      "countries_affected": [
+        "FJ",
+        "SB",
+        "TO"
+      ],
+      "name": "Cyclone Gita",
+      "note": "Cyclone Gita (Feb 2018, Cat 5) was the strongest cyclone to strike Tonga on record ($253M total damage). Also affected Fiji and Solomon Islands."
+    },
+    {
+      "year": 2018,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 2,
+      "affected": 13586,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2018,
+      "type": "Volcanic activity",
+      "subtype": "Volcanic activity (General)",
+      "events_count": 1,
+      "affected": 736,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2019,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 651,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2019,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 350,
+      "deaths": 2,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2019,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 10,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2019,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 7780,
+      "deaths": 1,
+      "damage_usd": null,
+      "countries_affected": [
+        "FJ"
+      ],
+      "note": "South Pacific tropical cyclone affecting Fiji."
+    },
+    {
+      "year": 2019,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 10000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FM"
+      ],
+      "note": "North Pacific typhoon affecting the Federated States of Micronesia."
+    },
+    {
+      "year": 2019,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 15800,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2020,
+      "type": "Flood",
+      "subtype": "Flash flood",
+      "events_count": 1,
+      "affected": 200,
+      "deaths": 7,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2020,
+      "type": "Flood",
+      "subtype": "Flood (General)",
+      "events_count": 1,
+      "affected": 700,
+      "deaths": 12,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2020,
+      "type": "Flood",
+      "subtype": "Riverine flood",
+      "events_count": 1,
+      "affected": 60000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2020,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 2,
+      "affected": 100,
+      "deaths": 23,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2020,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 7,
+      "affected": 515735,
+      "deaths": 59,
+      "damage_usd": 125120000.0,
+      "countries_affected": [
+        "FJ",
+        "SB",
+        "TO",
+        "TV",
+        "VU"
+      ],
+      "name": "Multiple cyclones (Sarai, Tino, Harold, etc.)",
+      "note": "The 2019-20 South Pacific cyclone season had 8+ named storms. Cyclone Harold (Apr 2020, Cat 5, $768M, 31 deaths) hit Solomon Islands, Vanuatu, Fiji, and Tonga. Other storms (Sarai, Tino, Uesi) also affected these countries. EMDAT aggregates all 2020 cyclones by country and the data cannot be decomposed into individual events."
+    },
+    {
+      "year": 2021,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 10204,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "TV"
+      ]
+    },
+    {
+      "year": 2021,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 82751,
+      "deaths": 6,
+      "damage_usd": 10000000.0,
+      "countries_affected": [
+        "FJ"
+      ],
+      "note": "South Pacific tropical cyclone affecting Fiji."
+    },
+    {
+      "year": 2021,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 7288,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "PW"
+      ],
+      "note": "North Pacific typhoon affecting Palau."
+    },
+    {
+      "year": 2021,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 3383,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "VU"
+      ]
+    },
+    {
+      "year": 2022,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 4480,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "MH"
+      ]
+    },
+    {
+      "year": 2022,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 1969,
+      "deaths": 7,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2022,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 69564,
+      "deaths": 1,
+      "damage_usd": 25000000.0,
+      "countries_affected": [
+        "FJ"
+      ]
+    },
+    {
+      "year": 2022,
+      "type": "Volcanic activity",
+      "subtype": "Ash fall",
+      "events_count": 1,
+      "affected": 84176,
+      "deaths": 4,
+      "damage_usd": 118000000.0,
+      "countries_affected": [
+        "TO"
+      ]
+    },
+    {
+      "year": 2023,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 113401,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FM"
+      ]
+    },
+    {
+      "year": 2023,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 16274,
+      "deaths": 8,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2023,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 5,
+      "affected": 846021,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FJ",
+        "SB",
+        "VU"
+      ],
+      "name": "Cyclones Judy, Kevin, and Lola",
+      "note": "Vanuatu was struck by Cyclones Judy & Kevin (Mar 2023, $433M combined) and Cyclone Lola (Oct 2023, Cat 5, $352M). Fiji and Solomon Islands also affected. EMDAT aggregates all 2023 cyclones by country and the data cannot be decomposed."
+    },
+    {
+      "year": 2023,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 100000,
+      "deaths": 2,
+      "damage_usd": 4300000000.0,
+      "countries_affected": [
+        "GU"
+      ],
+      "name": "Typhoon Mawar",
+      "note": "Typhoon Mawar (May 2023, Cat 4-equivalent) caused $4.3B damage to Guam — the strongest storm to hit Guam since Typhoon Pongsona in 2002."
+    },
+    {
+      "year": 2024,
+      "type": "Drought",
+      "subtype": "Drought",
+      "events_count": 1,
+      "affected": 13924,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "MH"
+      ]
+    },
+    {
+      "year": 2024,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 5002,
+      "deaths": 5,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ],
+      "note": "Earthquake in Papua New Guinea."
+    },
+    {
+      "year": 2024,
+      "type": "Earthquake",
+      "subtype": "Ground movement",
+      "events_count": 1,
+      "affected": 80265,
+      "deaths": 14,
+      "damage_usd": 100000000.0,
+      "countries_affected": [
+        "VU"
+      ],
+      "note": "Earthquake in Vanuatu (2024). Vanuatu experienced a significant earthquake causing $100M damage and 14 deaths."
+    },
+    {
+      "year": 2024,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 2,
+      "affected": 7849,
+      "deaths": 693,
+      "damage_usd": 60000000.0,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2024,
+      "type": "Storm",
+      "subtype": "Storm surge",
+      "events_count": 1,
+      "affected": 19532,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "MH"
+      ]
+    },
+    {
+      "year": 2025,
+      "type": "Mass movement (wet)",
+      "subtype": "Landslide (wet)",
+      "events_count": 1,
+      "affected": 0,
+      "deaths": 21,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG"
+      ]
+    },
+    {
+      "year": 2026,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 34000,
+      "deaths": 0,
+      "damage_usd": null,
+      "countries_affected": [
+        "FM"
+      ],
+      "note": "North Pacific typhoon affecting the Federated States of Micronesia."
+    },
+    {
+      "year": 2026,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 2,
+      "affected": 540648,
+      "deaths": 31,
+      "damage_usd": null,
+      "countries_affected": [
+        "PG",
+        "SB"
+      ],
+      "name": "Cyclone Maila",
+      "note": "Cyclone Maila (Apr 2026, Cat 3+) battered Solomon Islands and Papua New Guinea with flooding, storm surges, and major infrastructure damage."
+    },
+    {
+      "year": 2026,
+      "type": "Storm",
+      "subtype": "Tropical cyclone",
+      "events_count": 1,
+      "affected": 75000,
+      "deaths": 1,
+      "damage_usd": null,
+      "countries_affected": [
+        "FJ"
+      ],
+      "name": "Cyclone Vaianu",
+      "note": "Cyclone Vaianu (Apr 2026, Cat 3) caused $1.5M agricultural damage in Fiji before making landfall in New Zealand."
+    }
+  ]
+}

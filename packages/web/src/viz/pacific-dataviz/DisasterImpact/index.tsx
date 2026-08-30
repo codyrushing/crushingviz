@@ -68,7 +68,15 @@ export function DisasterImpact() {
       <h2 class="text-2xl font-bold text-center">Disaster Impact</h2>
       <div class="flex flex-col flex-1 gap-2 min-w-0">
         <div class="flex flex-col relative flex-1">
-          <div class="max-w-sm mx-auto sticky top-16">
+          <Show when={activeCountry()} keyed>
+            {(code) => (
+              <div class="z-1 w-56 sm:w-sm absolute bottom-2 left-2 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2">
+                <CountryTooltipContent code={code} />
+              </div>
+            )}
+          </Show>
+
+          <div class="max-w-sm mx-auto sticky top-16 z-2">
             <ButtonGroup
               value={metric()}
               onChange={setMetric}
@@ -76,13 +84,6 @@ export function DisasterImpact() {
             />
           </div>
           <div class="chart-container flex-1" ref={chartContainer}></div>
-          <Show when={activeCountry()} keyed>
-            {(code) => (
-              <div class="w-56 sm:w-sm absolute bottom-2 left-2 z-10 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2">
-                <CountryTooltipContent code={code} />
-              </div>
-            )}
-          </Show>
         </div>
         <div class="countries flex-1"><CountryBars metric={metric} /></div>
       </div>
@@ -96,9 +97,9 @@ function CountryTooltipContent(props: { code: string; }) {
   const avgGdp = avgGdpPc[idx];
   const affectedVals = Object.values(row.series.affected).filter(Number.isFinite);
   const affectedTotal = affectedVals.reduce((a, b) => a + b, 0);
-  const pctVals = Object.values(row.series.affectedPctPop).filter(Number.isFinite);
-  const pctAvg = pctVals.length ? pctVals.reduce((a, b) => a + b, 0) / pctVals.length : NaN;
-  const pctMax = pctVals.length ? Math.max(...pctVals) : NaN;
+  const pctEntriesSorted = Object.entries(row.series.affectedPctPop).filter(([_, v]) => Number.isFinite(v)).sort((a, b) => b[1] - a[1]);
+  const pctAvg = pctEntriesSorted.length ? pctEntriesSorted.reduce((acc, v) => acc + v[1], 0) / pctEntriesSorted.length : NaN;
+  const [pctMaxYear, pctMax] = pctEntriesSorted[0]
 
   return (
     <div class="text-xs relative flex flex-col gap-1.5">
@@ -116,7 +117,7 @@ function CountryTooltipContent(props: { code: string; }) {
             setSelectedCountry(null);
           }}
         >
-          <XCircle fill="#000" class="size-5" />
+          <XCircle class="size-5" />
         </button>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -136,7 +137,7 @@ function CountryTooltipContent(props: { code: string; }) {
         </div>
         <div class="flex flex-col gap-0.5">
           <div class="text-lg font-bold leading-none">{format('.2~r')(pctMax * 100)}%</div>
-          <div class="text-[10px] opacity-70 leading-tight">{METRICS_BY_VALUE.affectedPctPop?.title} (max)</div>
+          <div class="text-[10px] opacity-70 leading-tight">{METRICS_BY_VALUE.affectedPctPop?.title} (max) ({pctMaxYear})</div>
         </div>
       </div>
     </div>
@@ -153,21 +154,6 @@ type CountryRow = {
 
 type RowData = { year: number } & Record<string, number>;
 
-function nearestValue(series: { [year: string]: number }, year: number): number | undefined {
-  const direct = series[String(year)];
-  if (direct != null) return direct;
-  let best: number | undefined;
-  let bestDist = Infinity;
-  for (const [yStr, v] of Object.entries(series)) {
-    const dist = Math.abs(Number(yStr) - year);
-    if (dist < bestDist) {
-      bestDist = dist;
-      best = v;
-    }
-  }
-  return best;
-}
-
 function buildRows(): CountryRow[] {
   const rows: CountryRow[] = [];
   for (const code of Object.keys(disasterAffected.countries)) {
@@ -176,6 +162,7 @@ function buildRows(): CountryRow[] {
 
     const series: CountryRow["series"] = { affected: {}, affectedPctPop: {} };
     for (const [year, count] of Object.entries(affectedSeries)) {
+      if (Number(year) > 2025) continue;
       series.affected[year] = count;
       const pop = popSeries[year];
       if (pop != null && pop !== 0) series.affectedPctPop[year] = (count / pop);

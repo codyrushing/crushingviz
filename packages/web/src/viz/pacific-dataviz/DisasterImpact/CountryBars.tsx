@@ -126,8 +126,8 @@ export function CountryBars(props: { metric: () => Metric }) {
         </div>
       </div>
       <div class="flex-1 min-h-0" ref={(el: HTMLDivElement) => { svgHost = el; ref(el); }} />
-      <div class="flex flex-row">
-        <div class="mt-4 mx-auto">
+      <div class="flex flex-row mt-2">
+        <div class="mx-auto">
           <label class="text-[12px] block text-center">Sort countries by</label>
           <ButtonGroup
             size="sm"
@@ -158,6 +158,10 @@ function CountryBarsChart(container: HTMLElement) {
   let initialized = false;
 
   const globalMaxGdp = Math.max(...avgGdpPc.filter(Number.isFinite), 0);
+
+  function getBarData() {
+
+  }
 
   function init() {
     root.selectAll("*").remove();
@@ -248,7 +252,7 @@ function CountryBarsChart(container: HTMLElement) {
         .attr("transform", "").text(metricLabelText);
     }
 
-    const fs = Math.max(10, Math.min(bandW * 0.7, 22));
+    const fs = Math.max(10, Math.min(bandW * 0.7, 14));
 
     const barData = stats.map((d) => {
       const bandStart = bandScale(d.code)!;
@@ -321,7 +325,8 @@ function CountryBarsChart(container: HTMLElement) {
       .attr("x", d => d.flagCx)
       .attr("y", d => d.flagCy)
       .attr("font-size", d => d.fs)
-      .text(d => d.flag);
+      .attr("fill", "var(--muted)")
+      .text(d => d.code);
 
     groups.exit().remove();
   }
@@ -329,7 +334,7 @@ function CountryBarsChart(container: HTMLElement) {
   function highlight() {
     if (!initialized) return;
     const a = activeCountry();
-    barsG.selectAll<SVGGElement, typeof barData[number]>(".country-bar")
+    barsG.selectAll<SVGGElement, (typeof barData)[number]>(".country-bar")
       .attr("opacity", (d) => a != null && a !== d.code ? 0.35 : 1);
   }
 

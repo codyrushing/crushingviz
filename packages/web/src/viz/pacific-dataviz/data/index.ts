@@ -4,6 +4,7 @@ import GDPByCountryJSON from "./gdp_by_country.json";
 import disasterAffectedMergedJSON from "./disaster_affected_merged.json";
 import disasterLossPctGDPMergedJSON from "./disaster_loss_pct_gdp_merged.json";
 import disasterEmdatByTypeJSON from "./disaster_emdat_by_type.json";
+import disasterEmdatRegionalEventsJSON from "./disaster_emdat_regional_events.json";
 
 export const countries = countriesJSON as {
   [countryCode: string]: {
@@ -148,10 +149,24 @@ export type EmdatSummaryData = {
   } | null
 };
 
+export type EmdatEventSubtypeByType = {
+  Drought: 'Drought',
+  Earthquake: 'Ground movement' | 'Tsunami',
+  Flood: 'Coastal flood' | 'Flash flood' | 'Flood (General)' | 'Riverine flood',
+  'Mass movement (dry)': 'Landslide (dry)',
+  'Mass movement (wet)': 'Landslide (wet)' | 'Mudslide',
+  Storm: 'Storm surge' | 'Tropical cyclone',
+  'Volcanic activity': 'Ash fall' | 'Volcanic activity (General)'
+};
+
+export type EmdatDisasterTypeWithSubtypes = keyof EmdatEventSubtypeByType;
+
+export type EmdatEventSubtype = EmdatEventSubtypeByType[EmdatDisasterTypeWithSubtypes];
+
 export type EmdatEvent = {
   year: number,
-  type: string,
-  subtype: string,
+  type: EmdatDisasterTypeWithSubtypes,
+  subtype: EmdatEventSubtypeByType[EmdatDisasterTypeWithSubtypes],
   events_count: number,
   affected: number,
   deaths: number,
@@ -185,6 +200,26 @@ export type FloodDamagePctGDPCountryData = {
   }
 };
 
+export type EmdatDisasterTypeName =
+  | 'all'
+  | 'flood_relevant'
+  | 'coastal_flood_only'
+  | 'Earthquake'
+  | 'Storm'
+  | 'Flood'
+  | 'Volcanic activity'
+  | 'Mass movement (wet)'
+  | 'Mass movement (dry)'
+  | 'Drought';
+
+export type EmdatDamageableDisasterTypeName =
+  | 'Earthquake'
+  | 'Storm'
+  | 'Flood'
+  | 'Volcanic activity'
+  | 'Drought'
+  | 'Mass movement (wet)';
+
 export type DisasterEmdatByTypeData = {
   indicator: string,
   label: string,
@@ -195,10 +230,10 @@ export type DisasterEmdatByTypeData = {
   coastal_flood_only_definition: string,
   caveat: string,
   regional_by_year_affected: {
-    [typeName: string]: YearSeries
+    [typeName in EmdatDisasterTypeName]: YearSeries
   },
   regional_damage_usd_by_type: {
-    [typeName: string]: number
+    [typeName in EmdatDamageableDisasterTypeName]: number
   },
   flood_damage_pct_gdp: {
     [countryCode: string]: FloodDamagePctGDPCountryData
@@ -209,3 +244,28 @@ export type DisasterEmdatByTypeData = {
 };
 
 export const disasterEmdatByType = disasterEmdatByTypeJSON as DisasterEmdatByTypeData;
+
+export type RegionalEmdatEvent = {
+  year: number,
+  type: EmdatDisasterTypeWithSubtypes,
+  subtype: EmdatEventSubtypeByType[EmdatDisasterTypeWithSubtypes],
+  events_count: number,
+  affected: number,
+  deaths: number,
+  damage_usd: number | null,
+  countries_affected: CountryCode[],
+  name?: string,
+  note?: string
+};
+
+export type RegionalEmdatEventsData = {
+  indicator: string,
+  label: string,
+  source: string,
+  emdat_threshold: string,
+  year_span: number[],
+  merge_note: string,
+  events: RegionalEmdatEvent[]
+};
+
+export const disasterEmdatRegionalEvents = disasterEmdatRegionalEventsJSON as RegionalEmdatEventsData;
