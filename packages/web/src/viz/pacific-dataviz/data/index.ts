@@ -5,6 +5,7 @@ import disasterAffectedMergedJSON from "./disaster_affected_merged.json";
 import disasterLossPctGDPMergedJSON from "./disaster_loss_pct_gdp_merged.json";
 import disasterEmdatByTypeJSON from "./disaster_emdat_by_type.json";
 import disasterEmdatRegionalEventsJSON from "./disaster_emdat_regional_events.json";
+import popLeczByCountryJSON from "./pop_lecz_by_country.json";
 
 export const countries = countriesJSON as {
   [countryCode: string]: {
@@ -269,3 +270,16 @@ export type RegionalEmdatEventsData = {
 };
 
 export const disasterEmdatRegionalEvents = disasterEmdatRegionalEventsJSON as RegionalEmdatEventsData;
+
+export type PopLeczElevation = '5M' | '10M' | '20M';
+
+export type PopLeczElevationData = {
+  pct: number,
+  n: number
+};
+
+export type PopLeczCountryData = Partial<Record<PopLeczElevation, PopLeczElevationData>>;
+
+export const popLeczByCountry = popLeczByCountryJSON as {
+  [countryCode: CountryCode]: PopLeczCountryData
+};

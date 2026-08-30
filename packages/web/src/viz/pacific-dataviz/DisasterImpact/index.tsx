@@ -64,9 +64,9 @@ export function DisasterImpact() {
   );
 
   return (
-    <div class="h-screen flex flex-col font-monospace gap-1" ref={ref}>
-      <h2 class="text-2xl font-bold text-center">Disaster Impact</h2>
-      <div class="flex flex-col flex-1 gap-2 min-w-0">
+    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
+      <h2 class="text-2xl font-serif font-bold text-center">Disaster Impact and GDP</h2>
+      <div class="flex flex-col flex-1 gap-6 min-w-0">
         <div class="flex flex-col relative flex-1">
           <Show when={activeCountry()} keyed>
             {(code) => (

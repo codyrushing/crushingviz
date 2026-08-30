@@ -128,7 +128,7 @@ body {
 h1 {
   /*@apply text-6xl;*/
   @apply font-serif;
-  @apply leading-tight;
+  @apply leading-none;
   @apply text-2xl sm:text-3xl md:text-5xl lg:text-6xl;
   font-size: clamp(3rem,9vw,6rem);
   /*font-size: clamp(56px,9vw,128px);*/

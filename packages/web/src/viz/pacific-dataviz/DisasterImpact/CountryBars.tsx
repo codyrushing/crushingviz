@@ -112,7 +112,7 @@ export function CountryBars(props: { metric: () => Metric }) {
 
   return (
     <div class="w-full h-full flex flex-col">
-      <div class="flex gap-2 flex-col">
+      <div class="flex gap-2 flex-col mt-4 z-1">
         <Legend metric={props.metric} agg={metricAgg} />
         <div class="flex flex-row justify-center">
           <div>
@@ -159,10 +159,6 @@ function CountryBarsChart(container: HTMLElement) {
 
   const globalMaxGdp = Math.max(...avgGdpPc.filter(Number.isFinite), 0);
 
-  function getBarData() {
-
-  }
-
   function init() {
     root.selectAll("*").remove();
     svg = root.append("svg").style("display", "block");
@@ -194,8 +190,8 @@ function CountryBarsChart(container: HTMLElement) {
 
     const horizontal = width >= height;
     const margin = horizontal
-      ? { top: 22, right: 8, bottom: 28, left: 50 }
-      : { top: 22, right: 8, bottom: 28, left: 44 };
+      ? { top: 12, right: 8, bottom: 20, left: 50 }
+      : { top: 12, right: 8, bottom: 20, left: 44 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const globalMaxMetric = Math.max(...stats.map(s => (agg === "mean" ? s.mean : s.max)).filter(Number.isFinite), 0);

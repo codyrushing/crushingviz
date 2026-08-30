@@ -84,12 +84,12 @@ export function DisastersByType() {
   });
 
   return (
-    <div class="h-screen flex flex-col font-monospace gap-1" ref={ref}>
-      <h2 class="text-2xl font-bold text-center">Disasters by Type</h2>
+    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
+      <h2 class="text-2xl leading-none font-serif font-bold text-center">Disasters by Type</h2>
 
       {/* People affected — stacked area chart */}
       <div class="flex flex-col relative flex-1 min-h-0">
-        <h3 class="text-sm font-semibold text-center opacity-80">People affected by year</h3>
+        <h3 class="text-sm font-serif font-semibold text-center opacity-80">Num of affected people by year</h3>
         <Show when={hoveredAffected()} keyed>
           {(h) => (
             <div class="z-1 absolute top-[46%] left-6 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2 text-xs">

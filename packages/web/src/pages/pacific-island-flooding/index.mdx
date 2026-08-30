@@ -3,16 +3,33 @@ layout: ../../layouts/ArticleLayout.astro
 ---
 import { DisasterImpact } from "../../viz/pacific-dataviz/DisasterImpact";
 import { DisastersByType } from "../../viz/pacific-dataviz/DisastersByType";
+import InfoBox from "../../components/InfoBox.astro";
 
 # Flooding in the Pacific Islands
 
+Goal: Understand who in the Pacific regions lives with high risk exposure to natural disasters today, and how is that risk expected to change by 2050.
+
+To begin to understand who is most negatively affected by natural disasters in the Pacific region today, let's first explore the last 25 years disaster exposure of countries in the region measured alongside their relative economic power.
+
 <DisasterImpact client:load />
 
-Here is some content
+When measuring disaster exposure as a percent of population, it becomes clear that risk mostly clusters at the lower end of the per-capita GDP spectrum. These smaller economies are less capable of summoning resources needed mitigate risk and rebuild.
 
-And some more
+Furthermore, there are four countries (Vanuatu, Palau, Marshall Islands, and Micronesia) whose worst disaster years resulted in ___>100%___ population affected. This means that there were multiple high-impact disaster events in a given year. These become "whole-nation" events, leaving the population with fewer unaffected resources and a smaller economic buffer. Of these four countries, only Palau has a GDP per-capita above the median for the region.
+
+With that context, let's try to understand what types of disaster are creating the most impact.
 
 <DisastersByType client:load />
+
+With 3.9 million people affected during the period, flood-related phenomena clearly emerge as the highest-impact event category. The next highest is drought, which affected 2.9 million people, nearly all of which came from a devastating drought in Papua New Guinea in 2015-2016, the single largest event in the dataset.
+
+Still, despite a major drought event in a country with 10x the population of any other country in the region, more people were impacted by flooding.
+
+<div class="text-xs">
+  ok now we need to know is if our mour economically ost affected flooding countries are the same
+
+  some other stuff
+</div>
 
 <div style="height: 3000px;"></div>
 
