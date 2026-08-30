@@ -6,14 +6,19 @@ import { axisLeft, axisTop } from "d3-axis";
 import { useScreenSize } from "../../../hooks/useScreenSize";
 import {
   activeCountry,
+  setHoveredCountry,
+  toggleSelectedCountry,
+} from "./shared";
+import {
   avgGdpPc,
   type Metric,
   METRICS_BY_VALUE,
   rows,
-  setHoveredCountry,
-  toggleSelectedCountry,
 } from "./index";
 import { ButtonGroup, type ButtonGroupOption } from "../../../components/ButtonGroup";
+import { format } from "d3-format";
+import { Dynamic } from "solid-js/web";
+import { schemeBlues, schemeGreens, schemeReds } from "d3-scale-chromatic";
 
 type SortKey = "metric" | "gdp";
 type Agg = "mean" | "max";
@@ -28,13 +33,13 @@ type CountryStat = {
 };
 
 const METRIC_AGGS: ButtonGroupOption<Agg>[] = [
-  { value: "mean", label: "Avg", title: "Avg affected per year" },
+  { value: "mean", label: "Mean", title: "Avg affected per year" },
   { value: "max", label: "Max", title: "Max yearly affected" },
 ];
 
 const SORT_OPTIONS: ButtonGroupOption<SortKey>[] = [
   { value: "metric", label: "Disaster impact", title: "Disaster impact" },
-  { value: "gdp", label: "GDP per capita", title: "GDP per capita" },
+  { value: "gdp", label: "GDP", title: "GDP per capita" },
 ]
 
 function computeStats(metric: Metric): CountryStat[] {
@@ -46,6 +51,11 @@ function computeStats(metric: Metric): CountryStat[] {
   });
 }
 
+const formattersByMetric: Record<Metric, ReturnType<typeof format>> = {
+  "affected": format('.2s'),
+  "affectedPctPop": format('.0%')
+}
+
 function sortStats(stats: CountryStat[], { sortBy, agg }: { sortBy: SortKey, agg: Agg }): CountryStat[] {
   const getMetricValue = (stat: CountryStat) => agg === "mean" ? stat.mean : stat.max;
   return [...stats].sort((a, b) => {
@@ -53,6 +63,25 @@ function sortStats(stats: CountryStat[], { sortBy, agg }: { sortBy: SortKey, agg
     const bv = sortBy === "metric" ? getMetricValue(b) : b.gdp;
     return (Number.isFinite(av) ? av : Infinity) - (Number.isFinite(bv) ? bv : Infinity);
   });
+}
+
+const METRIC_COLOR = schemeReds[9][5];
+const GDP_COLOR = schemeBlues[9][5];
+
+function Legend(props: { metric: () => Metric; agg: () => Agg }) {
+  const metricLabel = () => `${METRICS_BY_VALUE[props.metric()]?.title ?? METRICS_BY_VALUE[props.metric()]?.label ?? props.metric()} (per-year ${props.agg()})`;
+  return (
+    <div class="flex flex-col sm:flex-row justify-center place-self-center gap-2 sm:gap-4 text-[11px]">
+      <span class="flex items-center gap-1.5">
+        <span class="inline-block w-2.5 h-2.5 shrink-0" style={{ background: GDP_COLOR }} />
+        GDP per capita
+      </span>
+      <span class="flex items-center gap-1.5">
+        <span class="inline-block w-2.5 h-2.5 shrink-0" style={{ background: METRIC_COLOR }} />
+        {metricLabel()}
+      </span>
+    </div>
+  );
 }
 
 export function CountryBars(props: { metric: () => Metric }) {
@@ -75,26 +104,38 @@ export function CountryBars(props: { metric: () => Metric }) {
     });
   });
 
+  createEffect(() => {
+    activeCountry();
+    chart?.highlight();
+  });
+
+
   return (
     <div class="w-full h-full flex flex-col">
-      <div class="max-w-sm mx-auto flex gap-1 items-center">
-        <label class="text-[12px]">Impact aggregate</label>
-        <ButtonGroup
-          size="sm"
-          value={metricAgg()}
-          onChange={setMetricAgg}
-          options={METRIC_AGGS}
-        />
+      <div class="flex gap-2 flex-col">
+        <Legend metric={props.metric} agg={metricAgg} />
+        <div class="flex flex-row justify-center">
+          <div>
+            <ButtonGroup
+              size="sm"
+              value={metricAgg()}
+              onChange={setMetricAgg}
+              options={METRIC_AGGS}
+            />
+          </div>
+        </div>
       </div>
       <div class="flex-1 min-h-0" ref={(el: HTMLDivElement) => { svgHost = el; ref(el); }} />
-      <div class="max-w-sm mx-auto flex gap-1 items-center">
-        <label class="text-[12px]">Sort by</label>
-        <ButtonGroup
-          size="sm"
-          value={sortBy()}
-          onChange={setSortBy}
-          options={SORT_OPTIONS}
-        />
+      <div class="flex flex-row">
+        <div class="mt-4 mx-auto">
+          <label class="text-[12px] block text-center">Sort countries by</label>
+          <ButtonGroup
+            size="sm"
+            value={sortBy()}
+            onChange={setSortBy}
+            options={SORT_OPTIONS}
+          />
+        </div>
       </div>
     </div>
   );
@@ -149,7 +190,7 @@ function CountryBarsChart(container: HTMLElement) {
 
     const horizontal = width >= height;
     const margin = horizontal
-      ? { top: 22, right: 8, bottom: 28, left: 44 }
+      ? { top: 22, right: 8, bottom: 28, left: 50 }
       : { top: 22, right: 8, bottom: 28, left: 44 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -183,9 +224,13 @@ function CountryBarsChart(container: HTMLElement) {
     // Metric axis — gridlines extend across the full inner area
     metricAxisG.interrupt().selectAll("*").remove();
     if (horizontal) {
-      metricAxisG.call(axisLeft(ms).ticks(4).tickSize(-innerWidth) as any);
+      metricAxisG.call(
+        axisLeft(ms).ticks(4).tickSize(-innerWidth).tickFormat(formattersByMetric[metric])
+      );
     } else {
-      metricAxisG.call(axisTop(ms).ticks(4).tickSize(-innerHeight) as any);
+      metricAxisG.call(
+        axisTop(ms).ticks(4).tickSize(-innerHeight).tickFormat(formattersByMetric[metric])
+      );
     }
     metricAxisG.select(".domain").remove();
     metricAxisG.selectAll(".tick line").style("stroke", "var(--muted)").style("stroke-opacity", 0.35).style("stroke-width", 0.5);
@@ -241,24 +286,20 @@ function CountryBarsChart(container: HTMLElement) {
       .style("cursor", "pointer")
       .attr("opacity", 1);
 
-    groupsEnter.append("rect").attr("class", "metric-bar").attr("fill", "#d62728").attr("fill-opacity", 0.8);
-    groupsEnter.append("rect").attr("class", "gdp-bar").attr("fill", "#1f77b4").attr("fill-opacity", 0.8);
+    groupsEnter.append("rect").attr("class", "metric-bar").attr("fill", METRIC_COLOR).attr("fill-opacity", 0.8);
+    groupsEnter.append("rect").attr("class", "gdp-bar").attr("fill", GDP_COLOR).attr("fill-opacity", 0.8);
     groupsEnter.append("text").attr("class", "flag-text")
       .attr("text-anchor", "middle").attr("dominant-baseline", "central")
       .style("user-select", "none");
 
-    groupsEnter
+    const allGroups = groupsEnter.merge(groups as any);
+
+    allGroups
       .on("mouseenter", (_e, d) => setHoveredCountry(d.code))
       .on("mouseleave", () => setHoveredCountry(null))
       .on("click", (_e, d) => toggleSelectedCountry(d.code));
 
-    const allGroups = groupsEnter.merge(groups as any);
-
-    // Dimming (instant, no transition)
-    allGroups.attr("opacity", (d) => {
-      const a = activeCountry();
-      return a != null && a !== d.code ? 0.35 : 1;
-    });
+    allGroups.attr("opacity", 1);
 
     // Bar geometry transitions
     allGroups.select<SVGRectElement>(".metric-bar")
@@ -285,5 +326,12 @@ function CountryBarsChart(container: HTMLElement) {
     groups.exit().remove();
   }
 
-  return { update };
+  function highlight() {
+    if (!initialized) return;
+    const a = activeCountry();
+    barsG.selectAll<SVGGElement, typeof barData[number]>(".country-bar")
+      .attr("opacity", (d) => a != null && a !== d.code ? 0.35 : 1);
+  }
+
+  return { update, highlight };
 }

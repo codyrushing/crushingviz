@@ -25,11 +25,11 @@ export function ButtonGroup<T extends string>(props: ButtonGroupProps<T>) {
             title={option.title}
             aria-pressed={isActive(option)}
             classList={{
-              "flex-grow text-xs whitespace-nowrap transition-colors border-l border-border first:border-l-0 cursor-pointer": true,
+              "flex-grow leading-none text-[12px] md:text-xs whitespace-nowrap transition-colors border-l border-border first:border-l-0 cursor-pointer": true,
               "px-3 py-1.5": size === "md",
-              "text-[11px] px-2 py-1": size === "sm",
+              "text-[10px] md:text-[11px] px-2 py-1": size === "sm",
               "bg-neutral-700 text-white": isActive(option),
-              "bg-transparent text-neutral-400 hover:text-white hover:bg-neutral-800": !isActive(option),
+              "bg-background text-neutral-400 hover:text-white hover:bg-neutral-800": !isActive(option),
             }}
             onClick={() => props.onChange(option.value)}
           >
