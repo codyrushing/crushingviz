@@ -56,7 +56,9 @@ function getTypeName(type: string): string {
   return type === "flood_relevant" ? "Flooding" : type;
 }
 
-type HoverState = { type: TypeName; value: number; year?: number; subtype?: string };
+// `total` is the all-years total for the hovered type/subtype; `value` is the
+// per-year value when `year` is present, otherwise the same as `total`.
+type HoverState = { type: TypeName; value: number; total: number; year?: number; subtype?: string };
 
 // Hover payload for an individual event dot; px/py are the dot's center in
 // container-relative pixels, used to anchor the tooltip beneath it.
@@ -85,11 +87,11 @@ export function DisastersByType() {
 
   return (
     <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
-      <h2 class="text-2xl leading-none font-serif font-bold text-center">Disasters by Type</h2>
+      <h2 class="unstyled text-xl sm:text-2xl leading-none font-serif font-bold text-center">Disasters by Type</h2>
 
       {/* People affected — stacked area chart */}
       <div class="flex flex-col relative flex-1 min-h-0">
-        <h3 class="text-sm font-serif font-semibold text-center opacity-80">Num of affected people by year</h3>
+        <h3 class="unstyled text-sm font-serif font-semibold text-center opacity-80">Num of affected people by year</h3>
         <Show when={hoveredAffected()} keyed>
           {(h) => (
             <div class="z-1 absolute top-[46%] left-6 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2 text-xs">
@@ -97,9 +99,10 @@ export function DisastersByType() {
                 <span class="inline-block w-2.5 h-2.5" style={{ background: TYPE_COLORS[h.type] }} />
                 {h.subtype ?? getTypeName(h.type)}
               </div>
-              <div class="mt-1 opacity-80">
-                {fmtAffected(h.value)} affected{h.year != null ? ` (${h.year})` : ""}
-              </div>
+              <div class="mt-1 opacity-80">{fmtAffected(h.total)} total affected</div>
+              {h.year != null && (
+                <div class="opacity-80">{fmtAffected(h.value)} affected ({h.year})</div>
+              )}
             </div>
           )}
         </Show>
@@ -239,7 +242,9 @@ function buildTreemapData(minShare = 0): TreemapNodeData {
   for (const t of DISASTER_TYPES) byCat[t] = {};
   for (const e of disasterEmdatRegionalEvents.events) {
     const cat = TYPE_TO_CATEGORY[e.type];
-    if (!cat) continue;
+    // Match the streamgraph's year range (2026 is incomplete) so subtype
+    // totals never exceed their category's stream total.
+    if (!cat || e.year > MAX_YEAR) continue;
     byCat[cat][e.subtype] = (byCat[cat][e.subtype] ?? 0) + (e.affected ?? 0);
   }
   const catTotals: Record<string, number> = {};
@@ -410,7 +415,7 @@ function DisastersByTypeStreamGraph(
       .merge(paths as any)
       .on("mouseenter", (_e, d) => {
         const total = totals[d.key] ?? 0;
-        onHover({ type: d.key as TypeName, value: total });
+        onHover({ type: d.key as TypeName, value: total, total });
       })
       .on("mousemove", (e, d) => {
         const rect = container.getBoundingClientRect();
@@ -418,7 +423,7 @@ function DisastersByTypeStreamGraph(
         const yr = Math.round(x.invert(Math.max(0, Math.min(innerWidth, px))));
         const s = d as Series<RowData, string>;
         const val = s.find((p) => (p.data as RowData).year === yr);
-        onHover({ type: s.key as TypeName, value: val ? val[1] - val[0] : 0, year: yr });
+        onHover({ type: s.key as TypeName, value: val ? val[1] - val[0] : 0, total: totals[s.key] ?? 0, year: yr });
       })
       .on("mouseleave", () => onHover(null))
       .transition()
@@ -511,7 +516,8 @@ function DisastersByTypeStreamGraph(
       .style("cursor", "pointer")
       .on("mouseenter", (_e, d) => {
         const cat = (d.parent?.data.name ?? "Drought") as TypeName;
-        onHover({ type: cat, value: d.value ?? 0, subtype: d.data.name });
+        // Leaf value is the subtype's all-years total.
+        onHover({ type: cat, value: d.value ?? 0, total: d.value ?? 0, subtype: d.data.name });
       })
       .on("mouseleave", () => onHover(null));
     leafEnter.merge(leafSel as any)

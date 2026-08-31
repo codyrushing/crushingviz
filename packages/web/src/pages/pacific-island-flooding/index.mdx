@@ -3,11 +3,9 @@ layout: ../../layouts/ArticleLayout.astro
 ---
 import { DisasterImpact } from "../../viz/pacific-dataviz/DisasterImpact";
 import { DisastersByType } from "../../viz/pacific-dataviz/DisastersByType";
-import InfoBox from "../../components/InfoBox.astro";
+import { FloodingProjection } from "../../viz/pacific-dataviz/FloodingProjection";
 
 # Flooding in the Pacific Islands
-
-Goal: Understand who in the Pacific regions lives with high risk exposure to natural disasters today, and how is that risk expected to change by 2050.
 
 To begin to understand who is most negatively affected by natural disasters in the Pacific region today, let's first explore the last 25 years disaster exposure of countries in the region measured alongside their relative economic power.
 
@@ -21,16 +19,27 @@ With that context, let's try to understand what types of disaster are creating t
 
 <DisastersByType client:load />
 
-With 3.9 million people affected during the period, flood-related phenomena clearly emerge as the highest-impact event category. The next highest is drought, which affected 2.9 million people, nearly all of which came from a devastating drought in Papua New Guinea in 2015-2016, the single largest event in the dataset.
+With 3.8 million people affected during the period, flood-related phenomena clearly emerge as the highest-impact event category. The next highest is drought, which affected 2.9 million people, nearly all of which came from a devastating drought in Papua New Guinea in 2015-2016, the single largest event in the dataset.
 
-Still, despite a major drought event in a country with 10x the population of any other country in the region, more people were impacted by flooding.
+Still, despite a major drought event in a country with 10x the population of any other in the region, flooding impacted more people in the region during the period.
 
-<div class="text-xs">
-  ok now we need to know is if our mour economically ost affected flooding countries are the same
+## Looking to the future
 
-  some other stuff
+Because flooding is a major disaster category in the region, forecasting future flood exposure could prove valuable. We have 25 years of flood impact data, but in the context of the changing climate, we have to account for how flooding frequencies may change.
+
+To do this, we can use a method described by [Vitousek et al. 2017](https://www.nature.com/articles/s41598-017-01362-7) to determine a _flood amplification factor (AF)_ for each country in the region:
+
+<div class="font-monospace text-lg font-bold text-center">
+  AF = 2^(SLR / D)
 </div>
 
-<div style="height: 3000px;"></div>
+* __SLR__ - relative sea-level rise. This is determined per-country from the nearest IPCC AR6 sensors.
+* __D__ - the regionally-defined doubling interval.
 
-and yes more
+__AF__ does not predict a change in storm frequency. It describes a change in flooding frequency with the same level of storm frequency/intensity. It produces a range of expected values, and the plot below plots the central point in the range (represented by the dotted line). Hovering or tapping a projection will show the upper and lower bounds of the expected range.
+
+The __SLR__ sea level projections for the 2050 horizon are essentially locked in, meaning that the window to reduce them by cutting emissions has already closed. Because of this, the __AF__ range is likely more conservative reality.
+
+Using the 2000 - 2025 data to establish a baseline of observed average flood impact, we can apply the amplification factor to create a projection of the number of flood affected people through 2050.
+
+<FloodingProjection client:load />

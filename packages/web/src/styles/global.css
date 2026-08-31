@@ -81,6 +81,7 @@
   --border:     var(--color-sand-300);
   --accent:     var(--color-accent-700);
   --accent-fg:  #ffffff;
+  --container-width: 1280px;
 }
 
 /* Dark mode */
@@ -124,12 +125,7 @@ body {
     "wdth" 100;
 }
 
-/* MAIN */
-h1 {
-  /*@apply text-6xl;*/
-  @apply font-serif;
-  @apply leading-none;
-  @apply text-2xl sm:text-3xl md:text-5xl lg:text-6xl;
-  font-size: clamp(3rem,9vw,6rem);
-  /*font-size: clamp(56px,9vw,128px);*/
+.container {
+  @apply mx-auto;
+  max-width: var(--container-width);
 }

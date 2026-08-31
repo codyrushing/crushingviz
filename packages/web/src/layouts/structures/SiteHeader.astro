@@ -12,3 +12,48 @@ import ColorSchemeSelector from "./ColorSchemeSelector.astro";
 		<ColorSchemeSelector />
 	</div>
 </header>
+<script>
+	const header = document.getElementById("site-header");
+	if (header) {
+  	const threshold = 1;
+  	let lastY = window.scrollY;
+  	let lastTime = performance.now();
+  	let velocity = 0;
+  	let hidden = false;
+
+  	const onScroll = () => {
+  		const now = performance.now();
+  		const y = window.scrollY;
+  		const deltaY = y - lastY;
+  		const dt = Math.max(now - lastTime, 1);
+  		velocity = deltaY / dt;
+  		lastY = y;
+  		lastTime = now;
+
+  		if (y <= 0) {
+  			show();
+  		} else if (velocity > threshold) {
+  			hide();
+  		} else if (velocity < -threshold) {
+  			show();
+  		}
+  	};
+
+  	const hide = () => {
+  		if (hidden) return;
+  		hidden = true;
+  		header.style.transform = "translateY(-100%)";
+  	};
+
+  	const show = () => {
+  		if (!hidden) return;
+  		hidden = false;
+  		header.style.transform = "translateY(0)";
+  	};
+
+  	header.style.transition = "transform 0.2s ease";
+  	window.addEventListener("scroll", onScroll, { passive: true });
+
+  	if (window.scrollY >= 40) hide();
+ 	}
+</script>

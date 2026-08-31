@@ -330,7 +330,7 @@ function CountryBarsChart(container: HTMLElement) {
   function highlight() {
     if (!initialized) return;
     const a = activeCountry();
-    barsG.selectAll<SVGGElement, (typeof barData)[number]>(".country-bar")
+    barsG.selectAll<SVGGElement, any>(".country-bar")
       .attr("opacity", (d) => a != null && a !== d.code ? 0.35 : 1);
   }
 

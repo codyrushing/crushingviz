@@ -1,0 +1,282 @@
+{
+  "MP": {
+    "exposed_10m_2020": 13320,
+    "exposed_10m_2050": 11981,
+    "exposed_5m_2050": 1284,
+    "pct_below_10m": 28.0,
+    "slr_2050_cm": 18.9,
+    "af_central": 5.1,
+    "af_range": [
+      3.7,
+      13.7
+    ],
+    "slr_match_dist_km": 2.2,
+    "slr_low_confidence": false
+  },
+  "SB": {
+    "exposed_10m_2020": 245690,
+    "exposed_10m_2050": 429265,
+    "exposed_5m_2050": 247152,
+    "pct_below_10m": 33.0,
+    "slr_2050_cm": 18.1,
+    "af_central": 4.8,
+    "af_range": [
+      3.5,
+      12.3
+    ],
+    "slr_match_dist_km": 0.0,
+    "slr_low_confidence": false
+  },
+  "PW": {
+    "exposed_10m_2020": 3032,
+    "exposed_10m_2050": 2647,
+    "exposed_5m_2050": 1246,
+    "pct_below_10m": 17.0,
+    "slr_2050_cm": 20.2,
+    "af_central": 5.8,
+    "af_range": [
+      4.1,
+      16.4
+    ],
+    "slr_match_dist_km": 1.6,
+    "slr_low_confidence": false
+  },
+  "GU": {
+    "exposed_10m_2020": 6487,
+    "exposed_10m_2050": 7644,
+    "exposed_5m_2050": 3822,
+    "pct_below_10m": 4.0,
+    "slr_2050_cm": 20.0,
+    "af_central": 5.7,
+    "af_range": [
+      4.0,
+      16.0
+    ],
+    "slr_match_dist_km": 11.3,
+    "slr_low_confidence": false
+  },
+  "WS": {
+    "exposed_10m_2020": 27557,
+    "exposed_10m_2050": 35299,
+    "exposed_5m_2050": 13576,
+    "pct_below_10m": 13.0,
+    "slr_2050_cm": 27.4,
+    "af_central": 10.7,
+    "af_range": [
+      6.7,
+      44.6
+    ],
+    "slr_match_dist_km": 1.1,
+    "slr_low_confidence": false
+  },
+  "NC": {
+    "exposed_10m_2020": 88102,
+    "exposed_10m_2050": 105442,
+    "exposed_5m_2050": 40816,
+    "pct_below_10m": 31.0,
+    "slr_2050_cm": 19.3,
+    "af_central": 5.3,
+    "af_range": [
+      3.8,
+      14.5
+    ],
+    "slr_match_dist_km": 3.8,
+    "slr_low_confidence": false
+  },
+  "MH": {
+    "exposed_10m_2020": 41035,
+    "exposed_10m_2050": 24234,
+    "exposed_5m_2050": 15399,
+    "pct_below_10m": 96.0,
+    "slr_2050_cm": 23.4,
+    "af_central": 7.6,
+    "af_range": [
+      5.1,
+      25.6
+    ],
+    "slr_match_dist_km": 1.1,
+    "slr_low_confidence": false
+  },
+  "TO": {
+    "exposed_10m_2020": 28550,
+    "exposed_10m_2050": 28371,
+    "exposed_5m_2050": 3152,
+    "pct_below_10m": 27.0,
+    "slr_2050_cm": 21.7,
+    "af_central": 6.6,
+    "af_range": [
+      4.5,
+      20.3
+    ],
+    "slr_match_dist_km": 2.1,
+    "slr_low_confidence": false
+  },
+  "NU": {
+    "exposed_10m_2020": 18,
+    "exposed_10m_2050": 20,
+    "exposed_5m_2050": 20,
+    "pct_below_10m": 1.0,
+    "slr_2050_cm": 21.8,
+    "af_central": 6.6,
+    "af_range": [
+      4.5,
+      20.5
+    ],
+    "slr_match_dist_km": 10.7,
+    "slr_low_confidence": false
+  },
+  "AS": {
+    "exposed_10m_2020": 12452,
+    "exposed_10m_2050": 9406,
+    "exposed_5m_2050": 4139,
+    "pct_below_10m": 25.0,
+    "slr_2050_cm": 27.5,
+    "af_central": 10.8,
+    "af_range": [
+      6.7,
+      45.3
+    ],
+    "slr_match_dist_km": 1.1,
+    "slr_low_confidence": false
+  },
+  "WF": {
+    "exposed_10m_2020": 4432,
+    "exposed_10m_2050": 3867,
+    "exposed_5m_2050": 1527,
+    "pct_below_10m": 38.0,
+    "slr_2050_cm": 23.2,
+    "af_central": 7.5,
+    "af_range": [
+      5.0,
+      24.9
+    ],
+    "slr_match_dist_km": 36.2,
+    "slr_low_confidence": false
+  },
+  "FM": {
+    "exposed_10m_2020": 44380,
+    "exposed_10m_2050": 50472,
+    "exposed_5m_2050": 27759,
+    "pct_below_10m": 40.0,
+    "slr_2050_cm": 22.9,
+    "af_central": 7.3,
+    "af_range": [
+      4.9,
+      23.9
+    ],
+    "slr_match_dist_km": 8.0,
+    "slr_low_confidence": false
+  },
+  "KI": {
+    "exposed_10m_2020": 93338,
+    "exposed_10m_2050": 134517,
+    "exposed_5m_2050": 43627,
+    "pct_below_10m": 74.0,
+    "slr_2050_cm": 21.5,
+    "af_central": 6.4,
+    "af_range": [
+      4.4,
+      19.7
+    ],
+    "slr_match_dist_km": 1.6,
+    "slr_low_confidence": false
+  },
+  "NR": {
+    "exposed_10m_2020": 8880,
+    "exposed_10m_2050": 11919,
+    "exposed_5m_2050": 4705,
+    "pct_below_10m": 76.0,
+    "slr_2050_cm": 21.2,
+    "af_central": 6.3,
+    "af_range": [
+      4.3,
+      18.9
+    ],
+    "slr_match_dist_km": 2.5,
+    "slr_low_confidence": false
+  },
+  "VU": {
+    "exposed_10m_2020": 35866,
+    "exposed_10m_2050": 63632,
+    "exposed_5m_2050": 21211,
+    "pct_below_10m": 12.0,
+    "slr_2050_cm": 19.8,
+    "af_central": 5.6,
+    "af_range": [
+      3.9,
+      15.6
+    ],
+    "slr_match_dist_km": 3.5,
+    "slr_low_confidence": false
+  },
+  "TV": {
+    "exposed_10m_2020": 9506,
+    "exposed_10m_2050": 8871,
+    "exposed_5m_2050": 3997,
+    "pct_below_10m": 91.0,
+    "slr_2050_cm": 21.9,
+    "af_central": 6.7,
+    "af_range": [
+      4.6,
+      20.8
+    ],
+    "slr_match_dist_km": 2.2,
+    "slr_low_confidence": false
+  },
+  "FJ": {
+    "exposed_10m_2020": 256194,
+    "exposed_10m_2050": 279982,
+    "exposed_5m_2050": 89994,
+    "pct_below_10m": 28.0,
+    "slr_2050_cm": 21.0,
+    "af_central": 6.2,
+    "af_range": [
+      4.3,
+      18.4
+    ],
+    "slr_match_dist_km": 1.5,
+    "slr_low_confidence": false
+  },
+  "PF": {
+    "exposed_10m_2020": 153575,
+    "exposed_10m_2050": 156864,
+    "exposed_5m_2050": 85562,
+    "pct_below_10m": 55.0,
+    "slr_2050_cm": 19.4,
+    "af_central": 5.4,
+    "af_range": [
+      3.8,
+      14.7
+    ],
+    "slr_match_dist_km": 1.1,
+    "slr_low_confidence": false
+  },
+  "PG": {
+    "exposed_10m_2020": 981575,
+    "exposed_10m_2050": 1483629,
+    "exposed_5m_2050": 593451,
+    "pct_below_10m": 10.0,
+    "slr_2050_cm": 17.0,
+    "af_central": 4.4,
+    "af_range": [
+      3.2,
+      10.6
+    ],
+    "slr_match_dist_km": 56.2,
+    "slr_low_confidence": false
+  },
+  "CK": {
+    "exposed_10m_2020": 4865,
+    "exposed_10m_2050": 2904,
+    "exposed_5m_2050": 656,
+    "pct_below_10m": 31.0,
+    "slr_2050_cm": 19.9,
+    "af_central": 5.6,
+    "af_range": [
+      4.0,
+      15.8
+    ],
+    "slr_match_dist_km": 1.1,
+    "slr_low_confidence": false
+  }
+}

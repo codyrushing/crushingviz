@@ -6,6 +6,8 @@ import disasterLossPctGDPMergedJSON from "./disaster_loss_pct_gdp_merged.json";
 import disasterEmdatByTypeJSON from "./disaster_emdat_by_type.json";
 import disasterEmdatRegionalEventsJSON from "./disaster_emdat_regional_events.json";
 import popLeczByCountryJSON from "./pop_lecz_by_country.json";
+import riskTrajectory2050JSON from "./risk_trajectory_2050.json";
+import affectedProjection2050JSON from "./affected_projection_2050.json";
 
 export const countries = countriesJSON as {
   [countryCode: string]: {
@@ -283,3 +285,94 @@ export type PopLeczCountryData = Partial<Record<PopLeczElevation, PopLeczElevati
 export const popLeczByCountry = popLeczByCountryJSON as {
   [countryCode: CountryCode]: PopLeczCountryData
 };
+
+export type RiskTrajectoryCountryData = {
+  exposed_10m_2020: number,
+  exposed_10m_2050: number,
+  exposed_5m_2050: number,
+  pct_below_10m: number,
+  slr_2050_cm: number,
+  af_central: number,
+  af_range: [number, number],
+  slr_match_dist_km: number,
+  slr_low_confidence: boolean
+};
+
+export const riskTrajectory2050 = riskTrajectory2050JSON as unknown as {
+  [countryCode: string]: RiskTrajectoryCountryData
+};
+
+export type AffectedProjectionYearPoint = {
+  exposed: number,
+  af: number,
+  affected: number
+};
+
+export type AffectedProjectionBandPoint = {
+  affected: number
+};
+
+export type AffectedProjectionCumulative = {
+  central: number,
+  low: number,
+  high: number
+};
+
+export type AffectedProjectionWorstFlood = {
+  year: number,
+  affected: number,
+  return_period_today_yrs: number,
+  return_period_2050_yrs: number
+};
+
+// Countries with EM-DAT records: full projection.
+export type AffectedProjectionCountryProjected = {
+  baseline_window: number[],
+  baseline_annual_affected: number,
+  baseline_events: number,
+  baseline_exposed_pop: number,
+  pct_below_10m: number,
+  af_central: number,
+  af_range: number[],
+  small_n_flag: boolean,
+  series: { [year: string]: AffectedProjectionYearPoint },
+  series_low: { [year: string]: AffectedProjectionBandPoint },
+  series_high: { [year: string]: AffectedProjectionBandPoint },
+  cumulative_affected: AffectedProjectionCumulative,
+  affected_2050_vs_baseline: number | null,
+  worst_historical_flood: AffectedProjectionWorstFlood | null
+};
+
+// Countries with no EM-DAT records (e.g. Nauru): projection not computed.
+export type AffectedProjectionCountryNoRecords = {
+  no_emdat_records: true,
+  note: string,
+  pct_below_10m: number,
+  af_central: number,
+  af_range: number[]
+};
+
+export type AffectedProjectionCountryData =
+  | AffectedProjectionCountryProjected
+  | AffectedProjectionCountryNoRecords;
+
+export type AffectedProjectionRegional = {
+  series: { [year: string]: AffectedProjectionBandPoint },
+  series_low: { [year: string]: AffectedProjectionBandPoint },
+  series_high: { [year: string]: AffectedProjectionBandPoint },
+  cumulative_affected: AffectedProjectionCumulative
+};
+
+export type AffectedProjectionData = {
+  indicator: string,
+  label: string,
+  source: string,
+  method: { [key: string]: string },
+  caveat: string,
+  countries: {
+    [countryCode: string]: AffectedProjectionCountryData
+  },
+  regional: AffectedProjectionRegional
+};
+
+export const affectedProjection2050 = affectedProjection2050JSON as AffectedProjectionData;

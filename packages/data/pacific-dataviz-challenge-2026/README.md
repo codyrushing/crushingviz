@@ -295,6 +295,35 @@ SSP scenarios barely diverge — it's locked in.** Applying AF = 2^(SLR/8cm):
   (Am. Samoa / Samoa's higher ~27–28 cm is a *real* tide-gauge value, not a
   proxy — that region genuinely projects higher RSL.)
 
+### Spine extension (2026-08-30) — projected flood-AFFECTED population → `derived/affected_projection_2050.json`
+
+`analysis/affected_projection.py` turns the hazard spine into a human-impact
+projection: **affected(t) = baseline_annual_affected × (exposed(t)/baseline_
+exposed) × AF(t)**, per country per year 2025–2050, with low/high bands.
+
+- **Frequency ramp (key trick):** AF(t) = `af_central^((t−2020)/30)` — valid
+  because AF = 2^(SLR/D) is exponential in SLR and AR6 SLR ramps ~linearly
+  to 2050, so the ramp from 1 (2020) to `af_central` (2050) is a simple power
+  curve. No re-derivation of D needed; `af_range` handled identically.
+- **Exposure growth:** exposed(t) = static LECZ% × **SPC yearly** population
+  (follows the real demographic curve, not a straight-line endpoint lerp).
+- **Baseline burden:** mean annual EM-DAT `flood_relevant` affected 2000–2024
+  (zero years included; 2025+ excluded as incomplete).
+- **Also emitted:** return-period framing per country (worst flood ≈ 1-in-25-yr
+  today → 25/af_central yrs by 2050) — the honest fallback for small-n
+  countries (`small_n_flag`, baseline_events < 3 — most of them).
+
+**Results (central, illustrative):** regional cumulative 2025–2050 ≈ **16.9M
+affected person-incidents** (band 13.2–35.7M), dominated by Vanuatu (5.8M,
+Pam-scale events), Fiji (5.2M), PNG (2.8M). Kiribati's annual burden grows
+**~10×** (72 → 754/yr) via exposure growth × AF 6.4. **Nauru excluded** (no
+EM-DAT records at all).
+
+**Caveats (in file):** person-incidents ≠ unique people (repeat counting);
+`flood_relevant` includes cyclone wind damage not SLR-driven; per-event
+affected size held constant; AF ramp ignores pre-2020 rise since the AR6
+~1995–2011 baseline (slightly conservative); LECZ share static.
+
 ## Story leads (feeding the spine)
 
 Population added (`derived/population_by_country.json`, SPC `DF_POP_PROJ`

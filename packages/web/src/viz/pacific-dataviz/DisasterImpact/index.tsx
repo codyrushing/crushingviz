@@ -6,10 +6,11 @@ import { interpolateBlues, interpolateRdYlGn, schemeBlues, schemeGreens, schemeP
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import { area, curveBumpX, curveMonotoneX, line, stack, stackOffsetWiggle, type Series, type SeriesPoint } from "d3-shape";
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
+import { useScreenSize } from "../../../hooks/useScreenSize";
 import { countries, GDPByCountry, disasterAffected, populationByCountry, disasterLossPctGDP } from "../data";
 import { Tooltip } from "../../../components/Tooltip";
 import { ButtonGroup, type ButtonGroupOption } from "../../../components/ButtonGroup";
-import { XCircle } from "../../../icons/XCircle";
+import { XIcon } from "../../../icons/XIcon";
 import { format } from "d3-format";
 import { interpolateRgb } from "d3-interpolate";
 import { CountryBars } from "./CountryBars";
@@ -44,6 +45,7 @@ for (const m of METRICS) {
 export function DisasterImpact() {
   const { isVisible, intersectionRatio, hiddenAbove, hiddenBelow, ref } =
     useElementVisibility();
+  const { size, ref: sizeRef } = useScreenSize();
   let chartContainer!: HTMLDivElement;
   let chart: ReturnType<typeof DisasterImpactStreamGraph> | undefined;
   const [metric, setMetric] = createSignal<Metric>("affectedPctPop");
@@ -51,6 +53,7 @@ export function DisasterImpact() {
 
   createEffect(
     () => {
+      size(); // re-render on (debounced) container resize
       chart = chart ?? DisasterImpactStreamGraph(chartContainer);
       chart.render(metric());
     }
@@ -65,12 +68,12 @@ export function DisasterImpact() {
 
   return (
     <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
-      <h2 class="text-2xl font-serif font-bold text-center">Disaster Impact and GDP</h2>
+      <h2 class="unstyled text-xl sm:text-2xl font-serif font-bold text-center">Disaster Impact and GDP</h2>
       <div class="flex flex-col flex-1 gap-6 min-w-0">
         <div class="flex flex-col relative flex-1">
           <Show when={activeCountry()} keyed>
             {(code) => (
-              <div class="z-1 w-56 sm:w-sm absolute bottom-2 left-2 pointer-events-none bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2">
+              <div class="z-1 w-56 sm:w-sm absolute bottom-2 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-black/10 p-2">
                 <CountryTooltipContent code={code} />
               </div>
             )}
@@ -83,7 +86,7 @@ export function DisasterImpact() {
               options={METRICS}
             />
           </div>
-          <div class="chart-container flex-1" ref={chartContainer}></div>
+          <div class="chart-container flex-1" ref={(el) => { sizeRef(el); chartContainer = el; }}></div>
         </div>
         <div class="countries flex-1"><CountryBars metric={metric} /></div>
       </div>
@@ -102,7 +105,7 @@ function CountryTooltipContent(props: { code: string; }) {
   const [pctMaxYear, pctMax] = pctEntriesSorted[0]
 
   return (
-    <div class="text-xs relative flex flex-col gap-1.5">
+    <div class="text-xs flex flex-col gap-1.5">
       <div class="flex items-center justify-between gap-3">
         <div class="font-semibold text-base leading-tight">
           {row.flag} {row.name}
@@ -110,14 +113,14 @@ function CountryTooltipContent(props: { code: string; }) {
         </div>
         <button
           type="button"
-          class="absolute -top-4 -right-4 text-foreground pointer-events-auto hover:text-muted cursor-pointer shrink-0"
+          class="absolute p-1 top-0 right-0 text-foreground pointer-events-auto hover:text-muted cursor-pointer shrink-0"
           title="Clear selection"
           onClick={() => {
             setHoveredCountry(null);
             setSelectedCountry(null);
           }}
         >
-          <XCircle class="size-5" />
+          <XIcon class="size-4" />
         </button>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -249,31 +252,27 @@ function DisasterImpactStreamGraph(container: HTMLElement) {
   let initialized = false;
 
   function init() {
-    const { clientWidth: width, clientHeight: height } = container;
-    const margin = { top: 30, right: 20, bottom: 16, left: 20 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
-
     root.selectAll("*").remove();
 
-    root.transition("streamgraph-update").duration(400);
-
-    svg = root.append("svg").attr("width", width).attr("height", height);
-    plot = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-    const yScalePadding = 10;
-    x = scaleLinear().domain([minYear, maxYear]).range([0, innerWidth]);
-    y = scaleLinear().range([innerHeight - yScalePadding/2, yScalePadding/2]);
-
+    svg = root.append("svg");
+    plot = svg.append("g");
     xAxisG = plot.append("g");
     yAxisG = plot.append("g");
+    gdpLegendG = plot.append("g");
+    areaPaths = [];
 
+    initialized = true;
+  }
+
+  // Rebuilt on every render because the bar width depends on innerWidth.
+  function renderLegend(innerWidth: number) {
     const legendGradientId = "gdp-legend-gradient";
     const legendWidth = Math.max(innerWidth/10, 100);
     const legendBarHeight = 16;
     const legendMin = Math.min(...avgGdpPc.filter(Number.isFinite));
     const legendMax = Math.max(...avgGdpPc.filter(Number.isFinite));
 
-    gdpLegendG = plot.append("g").attr("transform", `translate(10,10)`);
+    gdpLegendG.attr("transform", `translate(10,10)`).selectAll("*").remove();
 
     gdpLegendG
       .append("text")
@@ -331,11 +330,9 @@ function DisasterImpactStreamGraph(container: HTMLElement) {
       .attr("opacity", 0.8)
       .style("font-size", "10px")
       .text("Hi");
-
-    initialized = true;
   }
 
-  function update(metric: Metric) {
+  function update(metric: Metric, innerHeight: number) {
     const data: RowData[] = years.map(yr => {
       const d: RowData = { year: yr };
       rows.forEach((r, i) => {
@@ -363,12 +360,13 @@ function DisasterImpactStreamGraph(container: HTMLElement) {
     // x-axis
     const gridTicks = years.filter(yr => yr % 5 === 0);
     xAxisG
+      .interrupt()
       .call(
         axisTop(x)
           .tickValues(gridTicks)
           .tickFormat(d => String(Number(d)))
           .tickSize(-innerHeight)
-    );
+      );
     xAxisG.select(".domain").remove();
     xAxisG
       .selectAll(".tick line")
@@ -436,7 +434,22 @@ function DisasterImpactStreamGraph(container: HTMLElement) {
 
   function render(metric: Metric) {
     if (!initialized) init();
-    update(metric);
+    const { clientWidth: width, clientHeight: height } = container;
+    if (!width || !height) return;
+
+    const margin = { top: 30, right: 20, bottom: 16, left: 20 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    svg.attr("width", width).attr("height", height);
+    plot.attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const yScalePadding = 10;
+    x = scaleLinear().domain([minYear, maxYear]).range([0, innerWidth]);
+    y = scaleLinear().range([innerHeight - yScalePadding/2, yScalePadding/2]);
+
+    renderLegend(innerWidth);
+    update(metric, innerHeight);
   }
 
   return { render, highlight };

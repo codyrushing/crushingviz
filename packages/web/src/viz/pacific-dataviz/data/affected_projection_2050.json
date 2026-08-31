@@ -1,0 +1,6308 @@
+{
+  "indicator": "Projected flood-affected population (person-incidents) 2025-2050",
+  "label": "Historical EM-DAT flood burden scaled by exposure growth x time-varying flood-frequency amplification",
+  "source": "EM-DAT (CRED/UCLouvain) via HDX Country Profiles; SPC DF_POP_PROJ; IPCC AR6 RSL; Vitousek et al. 2017; Taherkhani et al. 2020",
+  "method": {
+    "af_t": "af_central^((t-2020)/30) -- exponential ramp from 1 in 2020 to af_central in 2050; valid because AF=2^(SLR/D) is exponential in SLR and AR6 SLR ramps ~linearly to 2050",
+    "exposed_t": "pct_below_10m/100 x SPC yearly population projection (static LECZ share; follows the real demographic curve, not a linear endpoint interpolation)",
+    "affected_t": "baseline_annual_affected x (exposed_t / baseline_exposed_pop) x af_t",
+    "af_source": "af_central / af_range from risk_trajectory_2050.json (doubling interval D=5/8/10 cm, central 8)",
+    "baseline": "mean annual EM-DAT flood_relevant affected over 2000-2024 (25 yrs, zero years included; 2025+ excluded as incomplete)",
+    "return_period": "worst EM-DAT Flood event in window treated as 1-in-25-yr; 2050 return period = 25 / af_central"
+  },
+  "caveat": "Illustrative, not site-calibrated. Affected = person-incidents (EM-DAT repeat/overlap counting). flood_relevant includes tropical-cyclone wind/crop damage not driven by SLR. Assumes per-event affected size stays constant; only frequency scales. AF ramp treats SLR as zero at 2020, excluding the few cm of pre-2020 rise since the AR6 baseline (~1995-2011) -- slightly conservative. LECZ share held static (no coastal-migration projection). Small-n countries (see small_n_flag / baseline_events) rest on 1-2 events; prefer the return_period framing for those.",
+  "countries": {
+    "MP": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 34,
+      "baseline_events": 4,
+      "baseline_exposed_pop": 15386,
+      "pct_below_10m": 28.0,
+      "af_central": 5.1,
+      "af_range": [
+        3.7,
+        13.7
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 12288,
+          "af": 1.31,
+          "affected": 36
+        },
+        "2026": {
+          "exposed": 12094,
+          "af": 1.39,
+          "affected": 37
+        },
+        "2027": {
+          "exposed": 11938,
+          "af": 1.46,
+          "affected": 39
+        },
+        "2028": {
+          "exposed": 11849,
+          "af": 1.54,
+          "affected": 41
+        },
+        "2029": {
+          "exposed": 11777,
+          "af": 1.63,
+          "affected": 43
+        },
+        "2030": {
+          "exposed": 11720,
+          "af": 1.72,
+          "affected": 45
+        },
+        "2031": {
+          "exposed": 11680,
+          "af": 1.82,
+          "affected": 47
+        },
+        "2032": {
+          "exposed": 11659,
+          "af": 1.92,
+          "affected": 50
+        },
+        "2033": {
+          "exposed": 11637,
+          "af": 2.03,
+          "affected": 53
+        },
+        "2034": {
+          "exposed": 11630,
+          "af": 2.14,
+          "affected": 56
+        },
+        "2035": {
+          "exposed": 11641,
+          "af": 2.26,
+          "affected": 59
+        },
+        "2036": {
+          "exposed": 11665,
+          "af": 2.38,
+          "affected": 62
+        },
+        "2037": {
+          "exposed": 11699,
+          "af": 2.52,
+          "affected": 66
+        },
+        "2038": {
+          "exposed": 11726,
+          "af": 2.66,
+          "affected": 70
+        },
+        "2039": {
+          "exposed": 11756,
+          "af": 2.81,
+          "affected": 74
+        },
+        "2040": {
+          "exposed": 11796,
+          "af": 2.96,
+          "affected": 78
+        },
+        "2041": {
+          "exposed": 11822,
+          "af": 3.13,
+          "affected": 83
+        },
+        "2042": {
+          "exposed": 11863,
+          "af": 3.3,
+          "affected": 88
+        },
+        "2043": {
+          "exposed": 11885,
+          "af": 3.49,
+          "affected": 93
+        },
+        "2044": {
+          "exposed": 11907,
+          "af": 3.68,
+          "affected": 98
+        },
+        "2045": {
+          "exposed": 11929,
+          "af": 3.89,
+          "affected": 104
+        },
+        "2046": {
+          "exposed": 11952,
+          "af": 4.1,
+          "affected": 110
+        },
+        "2047": {
+          "exposed": 11961,
+          "af": 4.33,
+          "affected": 116
+        },
+        "2048": {
+          "exposed": 11969,
+          "af": 4.58,
+          "affected": 122
+        },
+        "2049": {
+          "exposed": 11965,
+          "af": 4.83,
+          "affected": 129
+        },
+        "2050": {
+          "exposed": 11981,
+          "af": 5.1,
+          "affected": 137
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 34
+        },
+        "2026": {
+          "affected": 35
+        },
+        "2027": {
+          "affected": 36
+        },
+        "2028": {
+          "affected": 38
+        },
+        "2029": {
+          "affected": 39
+        },
+        "2030": {
+          "affected": 41
+        },
+        "2031": {
+          "affected": 42
+        },
+        "2032": {
+          "affected": 44
+        },
+        "2033": {
+          "affected": 46
+        },
+        "2034": {
+          "affected": 48
+        },
+        "2035": {
+          "affected": 50
+        },
+        "2036": {
+          "affected": 52
+        },
+        "2037": {
+          "affected": 55
+        },
+        "2038": {
+          "affected": 57
+        },
+        "2039": {
+          "affected": 60
+        },
+        "2040": {
+          "affected": 63
+        },
+        "2041": {
+          "affected": 66
+        },
+        "2042": {
+          "affected": 69
+        },
+        "2043": {
+          "affected": 72
+        },
+        "2044": {
+          "affected": 76
+        },
+        "2045": {
+          "affected": 79
+        },
+        "2046": {
+          "affected": 83
+        },
+        "2047": {
+          "affected": 87
+        },
+        "2048": {
+          "affected": 91
+        },
+        "2049": {
+          "affected": 95
+        },
+        "2050": {
+          "affected": 99
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 42
+        },
+        "2026": {
+          "affected": 46
+        },
+        "2027": {
+          "affected": 49
+        },
+        "2028": {
+          "affected": 53
+        },
+        "2029": {
+          "affected": 58
+        },
+        "2030": {
+          "affected": 63
+        },
+        "2031": {
+          "affected": 68
+        },
+        "2032": {
+          "affected": 74
+        },
+        "2033": {
+          "affected": 81
+        },
+        "2034": {
+          "affected": 88
+        },
+        "2035": {
+          "affected": 96
+        },
+        "2036": {
+          "affected": 105
+        },
+        "2037": {
+          "affected": 115
+        },
+        "2038": {
+          "affected": 126
+        },
+        "2039": {
+          "affected": 138
+        },
+        "2040": {
+          "affected": 151
+        },
+        "2041": {
+          "affected": 165
+        },
+        "2042": {
+          "affected": 181
+        },
+        "2043": {
+          "affected": 198
+        },
+        "2044": {
+          "affected": 216
+        },
+        "2045": {
+          "affected": 236
+        },
+        "2046": {
+          "affected": 258
+        },
+        "2047": {
+          "affected": 282
+        },
+        "2048": {
+          "affected": 308
+        },
+        "2049": {
+          "affected": 336
+        },
+        "2050": {
+          "affected": 367
+        }
+      },
+      "cumulative_affected": {
+        "central": 1936,
+        "low": 1557,
+        "high": 3900
+      },
+      "affected_2050_vs_baseline": 4.0,
+      "worst_historical_flood": null
+    },
+    "SB": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 12409,
+      "baseline_events": 14,
+      "baseline_exposed_pop": 197791,
+      "pct_below_10m": 33.0,
+      "af_central": 4.8,
+      "af_range": [
+        3.5,
+        12.3
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 273523,
+          "af": 1.3,
+          "affected": 22288
+        },
+        "2026": {
+          "exposed": 279983,
+          "af": 1.37,
+          "affected": 24039
+        },
+        "2027": {
+          "exposed": 286487,
+          "af": 1.44,
+          "affected": 25917
+        },
+        "2028": {
+          "exposed": 293061,
+          "af": 1.52,
+          "affected": 27935
+        },
+        "2029": {
+          "exposed": 299669,
+          "af": 1.6,
+          "affected": 30098
+        },
+        "2030": {
+          "exposed": 306314,
+          "af": 1.69,
+          "affected": 32417
+        },
+        "2031": {
+          "exposed": 312996,
+          "af": 1.78,
+          "affected": 34903
+        },
+        "2032": {
+          "exposed": 319694,
+          "af": 1.87,
+          "affected": 37563
+        },
+        "2033": {
+          "exposed": 326434,
+          "af": 1.97,
+          "affected": 40414
+        },
+        "2034": {
+          "exposed": 333118,
+          "af": 2.08,
+          "affected": 43455
+        },
+        "2035": {
+          "exposed": 339781,
+          "af": 2.19,
+          "affected": 46704
+        },
+        "2036": {
+          "exposed": 346392,
+          "af": 2.31,
+          "affected": 50168
+        },
+        "2037": {
+          "exposed": 352898,
+          "af": 2.43,
+          "affected": 53854
+        },
+        "2038": {
+          "exposed": 359303,
+          "af": 2.56,
+          "affected": 57774
+        },
+        "2039": {
+          "exposed": 365573,
+          "af": 2.7,
+          "affected": 61938
+        },
+        "2040": {
+          "exposed": 371710,
+          "af": 2.85,
+          "affected": 66358
+        },
+        "2041": {
+          "exposed": 377691,
+          "af": 3.0,
+          "affected": 71045
+        },
+        "2042": {
+          "exposed": 383593,
+          "af": 3.16,
+          "affected": 76029
+        },
+        "2043": {
+          "exposed": 389489,
+          "af": 3.33,
+          "affected": 81341
+        },
+        "2044": {
+          "exposed": 395335,
+          "af": 3.51,
+          "affected": 86994
+        },
+        "2045": {
+          "exposed": 401115,
+          "af": 3.7,
+          "affected": 93004
+        },
+        "2046": {
+          "exposed": 406856,
+          "af": 3.89,
+          "affected": 99399
+        },
+        "2047": {
+          "exposed": 412530,
+          "af": 4.1,
+          "affected": 106195
+        },
+        "2048": {
+          "exposed": 418156,
+          "af": 4.32,
+          "affected": 113421
+        },
+        "2049": {
+          "exposed": 423736,
+          "af": 4.56,
+          "affected": 121104
+        },
+        "2050": {
+          "exposed": 429265,
+          "af": 4.8,
+          "affected": 129270
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 21145
+        },
+        "2026": {
+          "affected": 22567
+        },
+        "2027": {
+          "affected": 24076
+        },
+        "2028": {
+          "affected": 25679
+        },
+        "2029": {
+          "affected": 27377
+        },
+        "2030": {
+          "affected": 29178
+        },
+        "2031": {
+          "affected": 31086
+        },
+        "2032": {
+          "affected": 33105
+        },
+        "2033": {
+          "affected": 35244
+        },
+        "2034": {
+          "affected": 37500
+        },
+        "2035": {
+          "affected": 39881
+        },
+        "2036": {
+          "affected": 42390
+        },
+        "2037": {
+          "affected": 45028
+        },
+        "2038": {
+          "affected": 47800
+        },
+        "2039": {
+          "affected": 50709
+        },
+        "2040": {
+          "affected": 53758
+        },
+        "2041": {
+          "affected": 56953
+        },
+        "2042": {
+          "affected": 60309
+        },
+        "2043": {
+          "affected": 63848
+        },
+        "2044": {
+          "affected": 67569
+        },
+        "2045": {
+          "affected": 71481
+        },
+        "2046": {
+          "affected": 75596
+        },
+        "2047": {
+          "affected": 79919
+        },
+        "2048": {
+          "affected": 84463
+        },
+        "2049": {
+          "affected": 89240
+        },
+        "2050": {
+          "affected": 94259
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 26072
+        },
+        "2026": {
+          "affected": 29016
+        },
+        "2027": {
+          "affected": 32281
+        },
+        "2028": {
+          "affected": 35903
+        },
+        "2029": {
+          "affected": 39916
+        },
+        "2030": {
+          "affected": 44361
+        },
+        "2031": {
+          "affected": 49283
+        },
+        "2032": {
+          "affected": 54730
+        },
+        "2033": {
+          "affected": 60760
+        },
+        "2034": {
+          "affected": 67414
+        },
+        "2035": {
+          "affected": 74762
+        },
+        "2036": {
+          "affected": 82867
+        },
+        "2037": {
+          "affected": 91789
+        },
+        "2038": {
+          "affected": 101609
+        },
+        "2039": {
+          "affected": 112403
+        },
+        "2040": {
+          "affected": 124262
+        },
+        "2041": {
+          "affected": 137278
+        },
+        "2042": {
+          "affected": 151588
+        },
+        "2043": {
+          "affected": 167347
+        },
+        "2044": {
+          "affected": 184680
+        },
+        "2045": {
+          "affected": 203729
+        },
+        "2046": {
+          "affected": 224676
+        },
+        "2047": {
+          "affected": 247686
+        },
+        "2048": {
+          "affected": 272969
+        },
+        "2049": {
+          "affected": 300746
+        },
+        "2050": {
+          "affected": 331254
+        }
+      },
+      "cumulative_affected": {
+        "central": 1633627,
+        "low": 1310160,
+        "high": 3249381
+      },
+      "affected_2050_vs_baseline": 10.4,
+      "worst_historical_flood": {
+        "year": 2014,
+        "affected": 52000,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 5.2
+      }
+    },
+    "PW": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 342,
+      "baseline_events": 2,
+      "baseline_exposed_pop": 3144,
+      "pct_below_10m": 17.0,
+      "af_central": 5.8,
+      "af_range": [
+        4.1,
+        16.4
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 3006,
+          "af": 1.34,
+          "affected": 438
+        },
+        "2026": {
+          "exposed": 2999,
+          "af": 1.42,
+          "affected": 463
+        },
+        "2027": {
+          "exposed": 2990,
+          "af": 1.51,
+          "affected": 489
+        },
+        "2028": {
+          "exposed": 2982,
+          "af": 1.6,
+          "affected": 518
+        },
+        "2029": {
+          "exposed": 2970,
+          "af": 1.69,
+          "affected": 547
+        },
+        "2030": {
+          "exposed": 2960,
+          "af": 1.8,
+          "affected": 578
+        },
+        "2031": {
+          "exposed": 2948,
+          "af": 1.91,
+          "affected": 610
+        },
+        "2032": {
+          "exposed": 2935,
+          "af": 2.02,
+          "affected": 644
+        },
+        "2033": {
+          "exposed": 2924,
+          "af": 2.14,
+          "affected": 680
+        },
+        "2034": {
+          "exposed": 2912,
+          "af": 2.27,
+          "affected": 718
+        },
+        "2035": {
+          "exposed": 2899,
+          "af": 2.41,
+          "affected": 758
+        },
+        "2036": {
+          "exposed": 2886,
+          "af": 2.55,
+          "affected": 800
+        },
+        "2037": {
+          "exposed": 2874,
+          "af": 2.71,
+          "affected": 845
+        },
+        "2038": {
+          "exposed": 2859,
+          "af": 2.87,
+          "affected": 892
+        },
+        "2039": {
+          "exposed": 2846,
+          "af": 3.04,
+          "affected": 941
+        },
+        "2040": {
+          "exposed": 2829,
+          "af": 3.23,
+          "affected": 992
+        },
+        "2041": {
+          "exposed": 2815,
+          "af": 3.42,
+          "affected": 1047
+        },
+        "2042": {
+          "exposed": 2798,
+          "af": 3.63,
+          "affected": 1103
+        },
+        "2043": {
+          "exposed": 2780,
+          "af": 3.85,
+          "affected": 1162
+        },
+        "2044": {
+          "exposed": 2764,
+          "af": 4.08,
+          "affected": 1225
+        },
+        "2045": {
+          "exposed": 2744,
+          "af": 4.33,
+          "affected": 1290
+        },
+        "2046": {
+          "exposed": 2726,
+          "af": 4.59,
+          "affected": 1359
+        },
+        "2047": {
+          "exposed": 2707,
+          "af": 4.87,
+          "affected": 1430
+        },
+        "2048": {
+          "exposed": 2687,
+          "af": 5.16,
+          "affected": 1506
+        },
+        "2049": {
+          "exposed": 2668,
+          "af": 5.47,
+          "affected": 1585
+        },
+        "2050": {
+          "exposed": 2647,
+          "af": 5.8,
+          "affected": 1668
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 413
+        },
+        "2026": {
+          "affected": 432
+        },
+        "2027": {
+          "affected": 451
+        },
+        "2028": {
+          "affected": 472
+        },
+        "2029": {
+          "affected": 493
+        },
+        "2030": {
+          "affected": 515
+        },
+        "2031": {
+          "affected": 537
+        },
+        "2032": {
+          "affected": 560
+        },
+        "2033": {
+          "affected": 585
+        },
+        "2034": {
+          "affected": 611
+        },
+        "2035": {
+          "affected": 638
+        },
+        "2036": {
+          "affected": 665
+        },
+        "2037": {
+          "affected": 694
+        },
+        "2038": {
+          "affected": 724
+        },
+        "2039": {
+          "affected": 755
+        },
+        "2040": {
+          "affected": 787
+        },
+        "2041": {
+          "affected": 821
+        },
+        "2042": {
+          "affected": 855
+        },
+        "2043": {
+          "affected": 891
+        },
+        "2044": {
+          "affected": 928
+        },
+        "2045": {
+          "affected": 966
+        },
+        "2046": {
+          "affected": 1006
+        },
+        "2047": {
+          "affected": 1047
+        },
+        "2048": {
+          "affected": 1089
+        },
+        "2049": {
+          "affected": 1134
+        },
+        "2050": {
+          "affected": 1179
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 520
+        },
+        "2026": {
+          "affected": 570
+        },
+        "2027": {
+          "affected": 624
+        },
+        "2028": {
+          "affected": 683
+        },
+        "2029": {
+          "affected": 747
+        },
+        "2030": {
+          "affected": 817
+        },
+        "2031": {
+          "affected": 893
+        },
+        "2032": {
+          "affected": 976
+        },
+        "2033": {
+          "affected": 1068
+        },
+        "2034": {
+          "affected": 1167
+        },
+        "2035": {
+          "affected": 1275
+        },
+        "2036": {
+          "affected": 1394
+        },
+        "2037": {
+          "affected": 1523
+        },
+        "2038": {
+          "affected": 1663
+        },
+        "2039": {
+          "affected": 1818
+        },
+        "2040": {
+          "affected": 1984
+        },
+        "2041": {
+          "affected": 2167
+        },
+        "2042": {
+          "affected": 2364
+        },
+        "2043": {
+          "affected": 2578
+        },
+        "2044": {
+          "affected": 2814
+        },
+        "2045": {
+          "affected": 3067
+        },
+        "2046": {
+          "affected": 3344
+        },
+        "2047": {
+          "affected": 3645
+        },
+        "2048": {
+          "affected": 3973
+        },
+        "2049": {
+          "affected": 4329
+        },
+        "2050": {
+          "affected": 4716
+        }
+      },
+      "cumulative_affected": {
+        "central": 24288,
+        "low": 19248,
+        "high": 50719
+      },
+      "affected_2050_vs_baseline": 4.9,
+      "worst_historical_flood": null
+    },
+    "GU": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 4618,
+      "baseline_events": 5,
+      "baseline_exposed_pop": 6577,
+      "pct_below_10m": 4.0,
+      "af_central": 5.7,
+      "af_range": [
+        4.0,
+        16.0
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 6736,
+          "af": 1.34,
+          "affected": 6321
+        },
+        "2026": {
+          "exposed": 6784,
+          "af": 1.42,
+          "affected": 6747
+        },
+        "2027": {
+          "exposed": 6831,
+          "af": 1.5,
+          "affected": 7199
+        },
+        "2028": {
+          "exposed": 6876,
+          "af": 1.59,
+          "affected": 7680
+        },
+        "2029": {
+          "exposed": 6921,
+          "af": 1.69,
+          "affected": 8191
+        },
+        "2030": {
+          "exposed": 6964,
+          "af": 1.79,
+          "affected": 8735
+        },
+        "2031": {
+          "exposed": 7006,
+          "af": 1.89,
+          "affected": 9313
+        },
+        "2032": {
+          "exposed": 7048,
+          "af": 2.01,
+          "affected": 9927
+        },
+        "2033": {
+          "exposed": 7087,
+          "af": 2.13,
+          "affected": 10579
+        },
+        "2034": {
+          "exposed": 7124,
+          "af": 2.25,
+          "affected": 11269
+        },
+        "2035": {
+          "exposed": 7160,
+          "af": 2.39,
+          "affected": 12003
+        },
+        "2036": {
+          "exposed": 7195,
+          "af": 2.53,
+          "affected": 12781
+        },
+        "2037": {
+          "exposed": 7229,
+          "af": 2.68,
+          "affected": 13610
+        },
+        "2038": {
+          "exposed": 7262,
+          "af": 2.84,
+          "affected": 14488
+        },
+        "2039": {
+          "exposed": 7295,
+          "af": 3.01,
+          "affected": 15423
+        },
+        "2040": {
+          "exposed": 7328,
+          "af": 3.19,
+          "affected": 16418
+        },
+        "2041": {
+          "exposed": 7362,
+          "af": 3.38,
+          "affected": 17479
+        },
+        "2042": {
+          "exposed": 7393,
+          "af": 3.58,
+          "affected": 18602
+        },
+        "2043": {
+          "exposed": 7426,
+          "af": 3.8,
+          "affected": 19801
+        },
+        "2044": {
+          "exposed": 7457,
+          "af": 4.02,
+          "affected": 21072
+        },
+        "2045": {
+          "exposed": 7491,
+          "af": 4.26,
+          "affected": 22431
+        },
+        "2046": {
+          "exposed": 7524,
+          "af": 4.52,
+          "affected": 23876
+        },
+        "2047": {
+          "exposed": 7554,
+          "af": 4.79,
+          "affected": 25405
+        },
+        "2048": {
+          "exposed": 7585,
+          "af": 5.08,
+          "affected": 27030
+        },
+        "2049": {
+          "exposed": 7614,
+          "af": 5.38,
+          "affected": 28756
+        },
+        "2050": {
+          "exposed": 7644,
+          "af": 5.7,
+          "affected": 30593
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 5959
+        },
+        "2026": {
+          "affected": 6285
+        },
+        "2027": {
+          "affected": 6628
+        },
+        "2028": {
+          "affected": 6988
+        },
+        "2029": {
+          "affected": 7365
+        },
+        "2030": {
+          "affected": 7762
+        },
+        "2031": {
+          "affected": 8179
+        },
+        "2032": {
+          "affected": 8616
+        },
+        "2033": {
+          "affected": 9074
+        },
+        "2034": {
+          "affected": 9552
+        },
+        "2035": {
+          "affected": 10055
+        },
+        "2036": {
+          "affected": 10581
+        },
+        "2037": {
+          "affected": 11135
+        },
+        "2038": {
+          "affected": 11714
+        },
+        "2039": {
+          "affected": 12324
+        },
+        "2040": {
+          "affected": 12965
+        },
+        "2041": {
+          "affected": 13641
+        },
+        "2042": {
+          "affected": 14347
+        },
+        "2043": {
+          "affected": 15092
+        },
+        "2044": {
+          "affected": 15873
+        },
+        "2045": {
+          "affected": 16698
+        },
+        "2046": {
+          "affected": 17565
+        },
+        "2047": {
+          "affected": 18471
+        },
+        "2048": {
+          "affected": 19422
+        },
+        "2049": {
+          "affected": 20419
+        },
+        "2050": {
+          "affected": 21469
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 7508
+        },
+        "2026": {
+          "affected": 8293
+        },
+        "2027": {
+          "affected": 9159
+        },
+        "2028": {
+          "affected": 10113
+        },
+        "2029": {
+          "affected": 11164
+        },
+        "2030": {
+          "affected": 12322
+        },
+        "2031": {
+          "affected": 13597
+        },
+        "2032": {
+          "affected": 15001
+        },
+        "2033": {
+          "affected": 16545
+        },
+        "2034": {
+          "affected": 18242
+        },
+        "2035": {
+          "affected": 20110
+        },
+        "2036": {
+          "affected": 22164
+        },
+        "2037": {
+          "affected": 24427
+        },
+        "2038": {
+          "affected": 26912
+        },
+        "2039": {
+          "affected": 29653
+        },
+        "2040": {
+          "affected": 32671
+        },
+        "2041": {
+          "affected": 35998
+        },
+        "2042": {
+          "affected": 39652
+        },
+        "2043": {
+          "affected": 43685
+        },
+        "2044": {
+          "affected": 48118
+        },
+        "2045": {
+          "affected": 53013
+        },
+        "2046": {
+          "affected": 58403
+        },
+        "2047": {
+          "affected": 64318
+        },
+        "2048": {
+          "affected": 70828
+        },
+        "2049": {
+          "affected": 77989
+        },
+        "2050": {
+          "affected": 85874
+        }
+      },
+      "cumulative_affected": {
+        "central": 405729,
+        "low": 318179,
+        "high": 855759
+      },
+      "affected_2050_vs_baseline": 6.6,
+      "worst_historical_flood": null
+    },
+    "WS": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 508,
+      "baseline_events": 3,
+      "baseline_exposed_pop": 25753,
+      "pct_below_10m": 13.0,
+      "af_central": 10.7,
+      "af_range": [
+        6.7,
+        44.6
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 28431,
+          "af": 1.48,
+          "affected": 833
+        },
+        "2026": {
+          "exposed": 28589,
+          "af": 1.61,
+          "affected": 906
+        },
+        "2027": {
+          "exposed": 28748,
+          "af": 1.74,
+          "affected": 986
+        },
+        "2028": {
+          "exposed": 28913,
+          "af": 1.88,
+          "affected": 1073
+        },
+        "2029": {
+          "exposed": 29094,
+          "af": 2.04,
+          "affected": 1169
+        },
+        "2030": {
+          "exposed": 29278,
+          "af": 2.2,
+          "affected": 1273
+        },
+        "2031": {
+          "exposed": 29475,
+          "af": 2.38,
+          "affected": 1387
+        },
+        "2032": {
+          "exposed": 29697,
+          "af": 2.58,
+          "affected": 1512
+        },
+        "2033": {
+          "exposed": 29922,
+          "af": 2.79,
+          "affected": 1649
+        },
+        "2034": {
+          "exposed": 30166,
+          "af": 3.02,
+          "affected": 1799
+        },
+        "2035": {
+          "exposed": 30430,
+          "af": 3.27,
+          "affected": 1964
+        },
+        "2036": {
+          "exposed": 30717,
+          "af": 3.54,
+          "affected": 2145
+        },
+        "2037": {
+          "exposed": 31013,
+          "af": 3.83,
+          "affected": 2344
+        },
+        "2038": {
+          "exposed": 31317,
+          "af": 4.15,
+          "affected": 2562
+        },
+        "2039": {
+          "exposed": 31643,
+          "af": 4.49,
+          "affected": 2801
+        },
+        "2040": {
+          "exposed": 31969,
+          "af": 4.86,
+          "affected": 3063
+        },
+        "2041": {
+          "exposed": 32302,
+          "af": 5.25,
+          "affected": 3349
+        },
+        "2042": {
+          "exposed": 32645,
+          "af": 5.69,
+          "affected": 3663
+        },
+        "2043": {
+          "exposed": 32988,
+          "af": 6.15,
+          "affected": 4006
+        },
+        "2044": {
+          "exposed": 33317,
+          "af": 6.66,
+          "affected": 4378
+        },
+        "2045": {
+          "exposed": 33663,
+          "af": 7.21,
+          "affected": 4788
+        },
+        "2046": {
+          "exposed": 34005,
+          "af": 7.8,
+          "affected": 5234
+        },
+        "2047": {
+          "exposed": 34338,
+          "af": 8.44,
+          "affected": 5720
+        },
+        "2048": {
+          "exposed": 34659,
+          "af": 9.14,
+          "affected": 6248
+        },
+        "2049": {
+          "exposed": 34979,
+          "af": 9.89,
+          "affected": 6824
+        },
+        "2050": {
+          "exposed": 35299,
+          "af": 10.7,
+          "affected": 7452
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 770
+        },
+        "2026": {
+          "affected": 825
+        },
+        "2027": {
+          "affected": 884
+        },
+        "2028": {
+          "affected": 947
+        },
+        "2029": {
+          "affected": 1016
+        },
+        "2030": {
+          "affected": 1089
+        },
+        "2031": {
+          "affected": 1168
+        },
+        "2032": {
+          "affected": 1254
+        },
+        "2033": {
+          "affected": 1346
+        },
+        "2034": {
+          "affected": 1446
+        },
+        "2035": {
+          "affected": 1554
+        },
+        "2036": {
+          "affected": 1671
+        },
+        "2037": {
+          "affected": 1798
+        },
+        "2038": {
+          "affected": 1934
+        },
+        "2039": {
+          "affected": 2083
+        },
+        "2040": {
+          "affected": 2242
+        },
+        "2041": {
+          "affected": 2413
+        },
+        "2042": {
+          "affected": 2599
+        },
+        "2043": {
+          "affected": 2798
+        },
+        "2044": {
+          "affected": 3011
+        },
+        "2045": {
+          "affected": 3241
+        },
+        "2046": {
+          "affected": 3488
+        },
+        "2047": {
+          "affected": 3753
+        },
+        "2048": {
+          "affected": 4036
+        },
+        "2049": {
+          "affected": 4340
+        },
+        "2050": {
+          "affected": 4666
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 1056
+        },
+        "2026": {
+          "affected": 1206
+        },
+        "2027": {
+          "affected": 1376
+        },
+        "2028": {
+          "affected": 1571
+        },
+        "2029": {
+          "affected": 1794
+        },
+        "2030": {
+          "affected": 2049
+        },
+        "2031": {
+          "affected": 2341
+        },
+        "2032": {
+          "affected": 2677
+        },
+        "2033": {
+          "affected": 3061
+        },
+        "2034": {
+          "affected": 3502
+        },
+        "2035": {
+          "affected": 4010
+        },
+        "2036": {
+          "affected": 4594
+        },
+        "2037": {
+          "affected": 5264
+        },
+        "2038": {
+          "affected": 6033
+        },
+        "2039": {
+          "affected": 6918
+        },
+        "2040": {
+          "affected": 7933
+        },
+        "2041": {
+          "affected": 9097
+        },
+        "2042": {
+          "affected": 10434
+        },
+        "2043": {
+          "affected": 11967
+        },
+        "2044": {
+          "affected": 13718
+        },
+        "2045": {
+          "affected": 15731
+        },
+        "2046": {
+          "affected": 18035
+        },
+        "2047": {
+          "affected": 20669
+        },
+        "2048": {
+          "affected": 23678
+        },
+        "2049": {
+          "affected": 27121
+        },
+        "2050": {
+          "affected": 31063
+        }
+      },
+      "cumulative_affected": {
+        "central": 79128,
+        "low": 56372,
+        "high": 236898
+      },
+      "affected_2050_vs_baseline": 14.7,
+      "worst_historical_flood": {
+        "year": 2001,
+        "affected": 0,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 2.3
+      }
+    },
+    "NC": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 44,
+      "baseline_events": 1,
+      "baseline_exposed_pop": 82182,
+      "pct_below_10m": 31.0,
+      "af_central": 5.3,
+      "af_range": [
+        3.8,
+        14.5
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 91143,
+          "af": 1.32,
+          "affected": 64
+        },
+        "2026": {
+          "exposed": 91963,
+          "af": 1.4,
+          "affected": 69
+        },
+        "2027": {
+          "exposed": 92730,
+          "af": 1.48,
+          "affected": 73
+        },
+        "2028": {
+          "exposed": 93498,
+          "af": 1.56,
+          "affected": 78
+        },
+        "2029": {
+          "exposed": 94262,
+          "af": 1.65,
+          "affected": 83
+        },
+        "2030": {
+          "exposed": 94995,
+          "af": 1.74,
+          "affected": 89
+        },
+        "2031": {
+          "exposed": 95702,
+          "af": 1.84,
+          "affected": 94
+        },
+        "2032": {
+          "exposed": 96397,
+          "af": 1.95,
+          "affected": 101
+        },
+        "2033": {
+          "exposed": 97073,
+          "af": 2.06,
+          "affected": 107
+        },
+        "2034": {
+          "exposed": 97725,
+          "af": 2.18,
+          "affected": 114
+        },
+        "2035": {
+          "exposed": 98348,
+          "af": 2.3,
+          "affected": 121
+        },
+        "2036": {
+          "exposed": 98961,
+          "af": 2.43,
+          "affected": 129
+        },
+        "2037": {
+          "exposed": 99568,
+          "af": 2.57,
+          "affected": 137
+        },
+        "2038": {
+          "exposed": 100170,
+          "af": 2.72,
+          "affected": 146
+        },
+        "2039": {
+          "exposed": 100742,
+          "af": 2.88,
+          "affected": 155
+        },
+        "2040": {
+          "exposed": 101273,
+          "af": 3.04,
+          "affected": 165
+        },
+        "2041": {
+          "exposed": 101777,
+          "af": 3.21,
+          "affected": 175
+        },
+        "2042": {
+          "exposed": 102260,
+          "af": 3.4,
+          "affected": 186
+        },
+        "2043": {
+          "exposed": 102778,
+          "af": 3.59,
+          "affected": 198
+        },
+        "2044": {
+          "exposed": 103254,
+          "af": 3.8,
+          "affected": 210
+        },
+        "2045": {
+          "exposed": 103687,
+          "af": 4.01,
+          "affected": 223
+        },
+        "2046": {
+          "exposed": 104114,
+          "af": 4.24,
+          "affected": 237
+        },
+        "2047": {
+          "exposed": 104506,
+          "af": 4.49,
+          "affected": 251
+        },
+        "2048": {
+          "exposed": 104830,
+          "af": 4.74,
+          "affected": 266
+        },
+        "2049": {
+          "exposed": 105136,
+          "af": 5.01,
+          "affected": 282
+        },
+        "2050": {
+          "exposed": 105442,
+          "af": 5.3,
+          "affected": 299
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 61
+        },
+        "2026": {
+          "affected": 64
+        },
+        "2027": {
+          "affected": 68
+        },
+        "2028": {
+          "affected": 71
+        },
+        "2029": {
+          "affected": 75
+        },
+        "2030": {
+          "affected": 79
+        },
+        "2031": {
+          "affected": 84
+        },
+        "2032": {
+          "affected": 88
+        },
+        "2033": {
+          "affected": 93
+        },
+        "2034": {
+          "affected": 98
+        },
+        "2035": {
+          "affected": 103
+        },
+        "2036": {
+          "affected": 108
+        },
+        "2037": {
+          "affected": 114
+        },
+        "2038": {
+          "affected": 119
+        },
+        "2039": {
+          "affected": 126
+        },
+        "2040": {
+          "affected": 132
+        },
+        "2041": {
+          "affected": 139
+        },
+        "2042": {
+          "affected": 146
+        },
+        "2043": {
+          "affected": 153
+        },
+        "2044": {
+          "affected": 161
+        },
+        "2045": {
+          "affected": 169
+        },
+        "2046": {
+          "affected": 177
+        },
+        "2047": {
+          "affected": 186
+        },
+        "2048": {
+          "affected": 195
+        },
+        "2049": {
+          "affected": 205
+        },
+        "2050": {
+          "affected": 215
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 76
+        },
+        "2026": {
+          "affected": 84
+        },
+        "2027": {
+          "affected": 93
+        },
+        "2028": {
+          "affected": 102
+        },
+        "2029": {
+          "affected": 113
+        },
+        "2030": {
+          "affected": 124
+        },
+        "2031": {
+          "affected": 137
+        },
+        "2032": {
+          "affected": 150
+        },
+        "2033": {
+          "affected": 166
+        },
+        "2034": {
+          "affected": 182
+        },
+        "2035": {
+          "affected": 201
+        },
+        "2036": {
+          "affected": 221
+        },
+        "2037": {
+          "affected": 243
+        },
+        "2038": {
+          "affected": 267
+        },
+        "2039": {
+          "affected": 293
+        },
+        "2040": {
+          "affected": 322
+        },
+        "2041": {
+          "affected": 354
+        },
+        "2042": {
+          "affected": 389
+        },
+        "2043": {
+          "affected": 428
+        },
+        "2044": {
+          "affected": 470
+        },
+        "2045": {
+          "affected": 515
+        },
+        "2046": {
+          "affected": 566
+        },
+        "2047": {
+          "affected": 621
+        },
+        "2048": {
+          "affected": 681
+        },
+        "2049": {
+          "affected": 747
+        },
+        "2050": {
+          "affected": 819
+        }
+      },
+      "cumulative_affected": {
+        "central": 4052,
+        "low": 3229,
+        "high": 8364
+      },
+      "affected_2050_vs_baseline": 6.8,
+      "worst_historical_flood": null
+    },
+    "MH": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 820,
+      "baseline_events": 3,
+      "baseline_exposed_pop": 46351,
+      "pct_below_10m": 96.0,
+      "af_central": 7.6,
+      "af_range": [
+        5.1,
+        25.6
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 35437,
+          "af": 1.4,
+          "affected": 879
+        },
+        "2026": {
+          "exposed": 34224,
+          "af": 1.5,
+          "affected": 908
+        },
+        "2027": {
+          "exposed": 33120,
+          "af": 1.61,
+          "affected": 940
+        },
+        "2028": {
+          "exposed": 32114,
+          "af": 1.72,
+          "affected": 975
+        },
+        "2029": {
+          "exposed": 31200,
+          "af": 1.84,
+          "affected": 1014
+        },
+        "2030": {
+          "exposed": 30331,
+          "af": 1.97,
+          "affected": 1055
+        },
+        "2031": {
+          "exposed": 29547,
+          "af": 2.1,
+          "affected": 1099
+        },
+        "2032": {
+          "exposed": 28856,
+          "af": 2.25,
+          "affected": 1149
+        },
+        "2033": {
+          "exposed": 28246,
+          "af": 2.41,
+          "affected": 1203
+        },
+        "2034": {
+          "exposed": 27705,
+          "af": 2.58,
+          "affected": 1262
+        },
+        "2035": {
+          "exposed": 27226,
+          "af": 2.76,
+          "affected": 1327
+        },
+        "2036": {
+          "exposed": 26808,
+          "af": 2.95,
+          "affected": 1398
+        },
+        "2037": {
+          "exposed": 26460,
+          "af": 3.16,
+          "affected": 1477
+        },
+        "2038": {
+          "exposed": 26137,
+          "af": 3.38,
+          "affected": 1561
+        },
+        "2039": {
+          "exposed": 25877,
+          "af": 3.61,
+          "affected": 1653
+        },
+        "2040": {
+          "exposed": 25639,
+          "af": 3.87,
+          "affected": 1753
+        },
+        "2041": {
+          "exposed": 25428,
+          "af": 4.14,
+          "affected": 1860
+        },
+        "2042": {
+          "exposed": 25245,
+          "af": 4.43,
+          "affected": 1976
+        },
+        "2043": {
+          "exposed": 25090,
+          "af": 4.73,
+          "affected": 2101
+        },
+        "2044": {
+          "exposed": 24937,
+          "af": 5.07,
+          "affected": 2234
+        },
+        "2045": {
+          "exposed": 24804,
+          "af": 5.42,
+          "affected": 2377
+        },
+        "2046": {
+          "exposed": 24680,
+          "af": 5.8,
+          "affected": 2531
+        },
+        "2047": {
+          "exposed": 24570,
+          "af": 6.2,
+          "affected": 2696
+        },
+        "2048": {
+          "exposed": 24465,
+          "af": 6.64,
+          "affected": 2872
+        },
+        "2049": {
+          "exposed": 24355,
+          "af": 7.1,
+          "affected": 3059
+        },
+        "2050": {
+          "exposed": 24234,
+          "af": 7.6,
+          "affected": 3257
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 822
+        },
+        "2026": {
+          "affected": 838
+        },
+        "2027": {
+          "affected": 857
+        },
+        "2028": {
+          "affected": 877
+        },
+        "2029": {
+          "affected": 900
+        },
+        "2030": {
+          "affected": 923
+        },
+        "2031": {
+          "affected": 950
+        },
+        "2032": {
+          "affected": 979
+        },
+        "2033": {
+          "affected": 1012
+        },
+        "2034": {
+          "affected": 1048
+        },
+        "2035": {
+          "affected": 1087
+        },
+        "2036": {
+          "affected": 1130
+        },
+        "2037": {
+          "affected": 1178
+        },
+        "2038": {
+          "affected": 1229
+        },
+        "2039": {
+          "affected": 1284
+        },
+        "2040": {
+          "affected": 1343
+        },
+        "2041": {
+          "affected": 1407
+        },
+        "2042": {
+          "affected": 1475
+        },
+        "2043": {
+          "affected": 1547
+        },
+        "2044": {
+          "affected": 1624
+        },
+        "2045": {
+          "affected": 1705
+        },
+        "2046": {
+          "affected": 1791
+        },
+        "2047": {
+          "affected": 1883
+        },
+        "2048": {
+          "affected": 1979
+        },
+        "2049": {
+          "affected": 2080
+        },
+        "2050": {
+          "affected": 2186
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 1076
+        },
+        "2026": {
+          "affected": 1158
+        },
+        "2027": {
+          "affected": 1248
+        },
+        "2028": {
+          "affected": 1348
+        },
+        "2029": {
+          "affected": 1460
+        },
+        "2030": {
+          "affected": 1581
+        },
+        "2031": {
+          "affected": 1716
+        },
+        "2032": {
+          "affected": 1867
+        },
+        "2033": {
+          "affected": 2036
+        },
+        "2034": {
+          "affected": 2225
+        },
+        "2035": {
+          "affected": 2436
+        },
+        "2036": {
+          "affected": 2672
+        },
+        "2037": {
+          "affected": 2939
+        },
+        "2038": {
+          "affected": 3234
+        },
+        "2039": {
+          "affected": 3568
+        },
+        "2040": {
+          "affected": 3938
+        },
+        "2041": {
+          "affected": 4352
+        },
+        "2042": {
+          "affected": 4814
+        },
+        "2043": {
+          "affected": 5330
+        },
+        "2044": {
+          "affected": 5902
+        },
+        "2045": {
+          "affected": 6541
+        },
+        "2046": {
+          "affected": 7251
+        },
+        "2047": {
+          "affected": 8043
+        },
+        "2048": {
+          "affected": 8922
+        },
+        "2049": {
+          "affected": 9896
+        },
+        "2050": {
+          "affected": 10971
+        }
+      },
+      "cumulative_affected": {
+        "central": 44616,
+        "low": 34134,
+        "high": 106524
+      },
+      "affected_2050_vs_baseline": 4.0,
+      "worst_historical_flood": {
+        "year": 2008,
+        "affected": 600,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 3.3
+      }
+    },
+    "TO": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 5620,
+      "baseline_events": 8,
+      "baseline_exposed_pop": 28542,
+      "pct_below_10m": 27.0,
+      "af_central": 6.6,
+      "af_range": [
+        4.5,
+        20.3
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 28072,
+          "af": 1.37,
+          "affected": 7571
+        },
+        "2026": {
+          "exposed": 27948,
+          "af": 1.46,
+          "affected": 8027
+        },
+        "2027": {
+          "exposed": 27829,
+          "af": 1.55,
+          "affected": 8511
+        },
+        "2028": {
+          "exposed": 27735,
+          "af": 1.65,
+          "affected": 9033
+        },
+        "2029": {
+          "exposed": 27650,
+          "af": 1.76,
+          "affected": 9590
+        },
+        "2030": {
+          "exposed": 27582,
+          "af": 1.88,
+          "affected": 10188
+        },
+        "2031": {
+          "exposed": 27537,
+          "af": 2.0,
+          "affected": 10832
+        },
+        "2032": {
+          "exposed": 27502,
+          "af": 2.13,
+          "affected": 11520
+        },
+        "2033": {
+          "exposed": 27491,
+          "af": 2.27,
+          "affected": 12263
+        },
+        "2034": {
+          "exposed": 27485,
+          "af": 2.41,
+          "affected": 13057
+        },
+        "2035": {
+          "exposed": 27488,
+          "af": 2.57,
+          "affected": 13906
+        },
+        "2036": {
+          "exposed": 27500,
+          "af": 2.74,
+          "affected": 14815
+        },
+        "2037": {
+          "exposed": 27522,
+          "af": 2.91,
+          "affected": 15789
+        },
+        "2038": {
+          "exposed": 27556,
+          "af": 3.1,
+          "affected": 16836
+        },
+        "2039": {
+          "exposed": 27618,
+          "af": 3.3,
+          "affected": 17968
+        },
+        "2040": {
+          "exposed": 27663,
+          "af": 3.52,
+          "affected": 19166
+        },
+        "2041": {
+          "exposed": 27722,
+          "af": 3.75,
+          "affected": 20454
+        },
+        "2042": {
+          "exposed": 27788,
+          "af": 3.99,
+          "affected": 21834
+        },
+        "2043": {
+          "exposed": 27854,
+          "af": 4.25,
+          "affected": 23307
+        },
+        "2044": {
+          "exposed": 27930,
+          "af": 4.53,
+          "affected": 24888
+        },
+        "2045": {
+          "exposed": 28020,
+          "af": 4.82,
+          "affected": 26589
+        },
+        "2046": {
+          "exposed": 28102,
+          "af": 5.13,
+          "affected": 28398
+        },
+        "2047": {
+          "exposed": 28184,
+          "af": 5.46,
+          "affected": 30330
+        },
+        "2048": {
+          "exposed": 28247,
+          "af": 5.82,
+          "affected": 32371
+        },
+        "2049": {
+          "exposed": 28314,
+          "af": 6.2,
+          "affected": 34555
+        },
+        "2050": {
+          "exposed": 28371,
+          "af": 6.6,
+          "affected": 36872
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 7103
+        },
+        "2026": {
+          "affected": 7435
+        },
+        "2027": {
+          "affected": 7784
+        },
+        "2028": {
+          "affected": 8156
+        },
+        "2029": {
+          "affected": 8549
+        },
+        "2030": {
+          "affected": 8967
+        },
+        "2031": {
+          "affected": 9413
+        },
+        "2032": {
+          "affected": 9884
+        },
+        "2033": {
+          "affected": 10388
+        },
+        "2034": {
+          "affected": 10920
+        },
+        "2035": {
+          "affected": 11482
+        },
+        "2036": {
+          "affected": 12078
+        },
+        "2037": {
+          "affected": 12709
+        },
+        "2038": {
+          "affected": 13379
+        },
+        "2039": {
+          "affected": 14098
+        },
+        "2040": {
+          "affected": 14847
+        },
+        "2041": {
+          "affected": 15644
+        },
+        "2042": {
+          "affected": 16488
+        },
+        "2043": {
+          "affected": 17376
+        },
+        "2044": {
+          "affected": 18320
+        },
+        "2045": {
+          "affected": 19324
+        },
+        "2046": {
+          "affected": 20377
+        },
+        "2047": {
+          "affected": 21487
+        },
+        "2048": {
+          "affected": 22642
+        },
+        "2049": {
+          "affected": 23863
+        },
+        "2050": {
+          "affected": 25140
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 9130
+        },
+        "2026": {
+          "affected": 10049
+        },
+        "2027": {
+          "affected": 11063
+        },
+        "2028": {
+          "affected": 12189
+        },
+        "2029": {
+          "affected": 13435
+        },
+        "2030": {
+          "affected": 14816
+        },
+        "2031": {
+          "affected": 16354
+        },
+        "2032": {
+          "affected": 18057
+        },
+        "2033": {
+          "affected": 19955
+        },
+        "2034": {
+          "affected": 22057
+        },
+        "2035": {
+          "affected": 24387
+        },
+        "2036": {
+          "affected": 26974
+        },
+        "2037": {
+          "affected": 29845
+        },
+        "2038": {
+          "affected": 33037
+        },
+        "2039": {
+          "affected": 36606
+        },
+        "2040": {
+          "affected": 40536
+        },
+        "2041": {
+          "affected": 44911
+        },
+        "2042": {
+          "affected": 49770
+        },
+        "2043": {
+          "affected": 55154
+        },
+        "2044": {
+          "affected": 61143
+        },
+        "2045": {
+          "affected": 67815
+        },
+        "2046": {
+          "affected": 75194
+        },
+        "2047": {
+          "affected": 83373
+        },
+        "2048": {
+          "affected": 92381
+        },
+        "2049": {
+          "affected": 102376
+        },
+        "2050": {
+          "affected": 113408
+        }
+      },
+      "cumulative_affected": {
+        "central": 478670,
+        "low": 367853,
+        "high": 1084015
+      },
+      "affected_2050_vs_baseline": 6.6,
+      "worst_historical_flood": null
+    },
+    "NU": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 28,
+      "baseline_events": 1,
+      "baseline_exposed_pop": 19,
+      "pct_below_10m": 1.0,
+      "af_central": 6.6,
+      "af_range": [
+        4.5,
+        20.5
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 18,
+          "af": 1.37,
+          "affected": 38
+        },
+        "2026": {
+          "exposed": 18,
+          "af": 1.46,
+          "affected": 40
+        },
+        "2027": {
+          "exposed": 18,
+          "af": 1.55,
+          "affected": 43
+        },
+        "2028": {
+          "exposed": 18,
+          "af": 1.65,
+          "affected": 45
+        },
+        "2029": {
+          "exposed": 18,
+          "af": 1.76,
+          "affected": 49
+        },
+        "2030": {
+          "exposed": 18,
+          "af": 1.88,
+          "affected": 52
+        },
+        "2031": {
+          "exposed": 18,
+          "af": 2.0,
+          "affected": 55
+        },
+        "2032": {
+          "exposed": 18,
+          "af": 2.13,
+          "affected": 59
+        },
+        "2033": {
+          "exposed": 18,
+          "af": 2.27,
+          "affected": 63
+        },
+        "2034": {
+          "exposed": 19,
+          "af": 2.41,
+          "affected": 67
+        },
+        "2035": {
+          "exposed": 19,
+          "af": 2.57,
+          "affected": 72
+        },
+        "2036": {
+          "exposed": 19,
+          "af": 2.74,
+          "affected": 77
+        },
+        "2037": {
+          "exposed": 19,
+          "af": 2.91,
+          "affected": 83
+        },
+        "2038": {
+          "exposed": 19,
+          "af": 3.1,
+          "affected": 88
+        },
+        "2039": {
+          "exposed": 19,
+          "af": 3.3,
+          "affected": 94
+        },
+        "2040": {
+          "exposed": 19,
+          "af": 3.52,
+          "affected": 101
+        },
+        "2041": {
+          "exposed": 19,
+          "af": 3.75,
+          "affected": 108
+        },
+        "2042": {
+          "exposed": 19,
+          "af": 3.99,
+          "affected": 116
+        },
+        "2043": {
+          "exposed": 19,
+          "af": 4.25,
+          "affected": 123
+        },
+        "2044": {
+          "exposed": 19,
+          "af": 4.53,
+          "affected": 132
+        },
+        "2045": {
+          "exposed": 19,
+          "af": 4.82,
+          "affected": 141
+        },
+        "2046": {
+          "exposed": 19,
+          "af": 5.13,
+          "affected": 150
+        },
+        "2047": {
+          "exposed": 19,
+          "af": 5.46,
+          "affected": 160
+        },
+        "2048": {
+          "exposed": 20,
+          "af": 5.82,
+          "affected": 172
+        },
+        "2049": {
+          "exposed": 20,
+          "af": 6.2,
+          "affected": 183
+        },
+        "2050": {
+          "exposed": 20,
+          "af": 6.6,
+          "affected": 195
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 35
+        },
+        "2026": {
+          "affected": 37
+        },
+        "2027": {
+          "affected": 39
+        },
+        "2028": {
+          "affected": 41
+        },
+        "2029": {
+          "affected": 43
+        },
+        "2030": {
+          "affected": 46
+        },
+        "2031": {
+          "affected": 48
+        },
+        "2032": {
+          "affected": 51
+        },
+        "2033": {
+          "affected": 53
+        },
+        "2034": {
+          "affected": 56
+        },
+        "2035": {
+          "affected": 60
+        },
+        "2036": {
+          "affected": 63
+        },
+        "2037": {
+          "affected": 67
+        },
+        "2038": {
+          "affected": 70
+        },
+        "2039": {
+          "affected": 74
+        },
+        "2040": {
+          "affected": 78
+        },
+        "2041": {
+          "affected": 83
+        },
+        "2042": {
+          "affected": 87
+        },
+        "2043": {
+          "affected": 92
+        },
+        "2044": {
+          "affected": 97
+        },
+        "2045": {
+          "affected": 102
+        },
+        "2046": {
+          "affected": 108
+        },
+        "2047": {
+          "affected": 114
+        },
+        "2048": {
+          "affected": 120
+        },
+        "2049": {
+          "affected": 127
+        },
+        "2050": {
+          "affected": 133
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 45
+        },
+        "2026": {
+          "affected": 50
+        },
+        "2027": {
+          "affected": 56
+        },
+        "2028": {
+          "affected": 62
+        },
+        "2029": {
+          "affected": 68
+        },
+        "2030": {
+          "affected": 76
+        },
+        "2031": {
+          "affected": 84
+        },
+        "2032": {
+          "affected": 93
+        },
+        "2033": {
+          "affected": 103
+        },
+        "2034": {
+          "affected": 114
+        },
+        "2035": {
+          "affected": 128
+        },
+        "2036": {
+          "affected": 141
+        },
+        "2037": {
+          "affected": 157
+        },
+        "2038": {
+          "affected": 174
+        },
+        "2039": {
+          "affected": 194
+        },
+        "2040": {
+          "affected": 215
+        },
+        "2041": {
+          "affected": 239
+        },
+        "2042": {
+          "affected": 265
+        },
+        "2043": {
+          "affected": 294
+        },
+        "2044": {
+          "affected": 327
+        },
+        "2045": {
+          "affected": 361
+        },
+        "2046": {
+          "affected": 401
+        },
+        "2047": {
+          "affected": 445
+        },
+        "2048": {
+          "affected": 495
+        },
+        "2049": {
+          "affected": 548
+        },
+        "2050": {
+          "affected": 607
+        }
+      },
+      "cumulative_affected": {
+        "central": 2506,
+        "low": 1924,
+        "high": 5742
+      },
+      "affected_2050_vs_baseline": 6.9,
+      "worst_historical_flood": null
+    },
+    "AS": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 923,
+      "baseline_events": 2,
+      "baseline_exposed_pop": 13382,
+      "pct_below_10m": 25.0,
+      "af_central": 10.8,
+      "af_range": [
+        6.7,
+        45.3
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 11597,
+          "af": 1.49,
+          "affected": 1189
+        },
+        "2026": {
+          "exposed": 11417,
+          "af": 1.61,
+          "affected": 1267
+        },
+        "2027": {
+          "exposed": 11242,
+          "af": 1.74,
+          "affected": 1350
+        },
+        "2028": {
+          "exposed": 11085,
+          "af": 1.89,
+          "affected": 1441
+        },
+        "2029": {
+          "exposed": 10945,
+          "af": 2.04,
+          "affected": 1541
+        },
+        "2030": {
+          "exposed": 10801,
+          "af": 2.21,
+          "affected": 1646
+        },
+        "2031": {
+          "exposed": 10678,
+          "af": 2.39,
+          "affected": 1761
+        },
+        "2032": {
+          "exposed": 10560,
+          "af": 2.59,
+          "affected": 1886
+        },
+        "2033": {
+          "exposed": 10452,
+          "af": 2.8,
+          "affected": 2021
+        },
+        "2034": {
+          "exposed": 10348,
+          "af": 3.04,
+          "affected": 2165
+        },
+        "2035": {
+          "exposed": 10254,
+          "af": 3.29,
+          "affected": 2323
+        },
+        "2036": {
+          "exposed": 10167,
+          "af": 3.56,
+          "affected": 2493
+        },
+        "2037": {
+          "exposed": 10088,
+          "af": 3.85,
+          "affected": 2678
+        },
+        "2038": {
+          "exposed": 10015,
+          "af": 4.17,
+          "affected": 2878
+        },
+        "2039": {
+          "exposed": 9947,
+          "af": 4.51,
+          "affected": 3095
+        },
+        "2040": {
+          "exposed": 9878,
+          "af": 4.89,
+          "affected": 3327
+        },
+        "2041": {
+          "exposed": 9815,
+          "af": 5.29,
+          "affected": 3579
+        },
+        "2042": {
+          "exposed": 9759,
+          "af": 5.73,
+          "affected": 3852
+        },
+        "2043": {
+          "exposed": 9709,
+          "af": 6.2,
+          "affected": 4149
+        },
+        "2044": {
+          "exposed": 9662,
+          "af": 6.71,
+          "affected": 4469
+        },
+        "2045": {
+          "exposed": 9612,
+          "af": 7.26,
+          "affected": 4814
+        },
+        "2046": {
+          "exposed": 9573,
+          "af": 7.86,
+          "affected": 5190
+        },
+        "2047": {
+          "exposed": 9530,
+          "af": 8.51,
+          "affected": 5592
+        },
+        "2048": {
+          "exposed": 9484,
+          "af": 9.22,
+          "affected": 6025
+        },
+        "2049": {
+          "exposed": 9448,
+          "af": 9.98,
+          "affected": 6498
+        },
+        "2050": {
+          "exposed": 9406,
+          "af": 10.8,
+          "affected": 7003
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 1098
+        },
+        "2026": {
+          "affected": 1151
+        },
+        "2027": {
+          "affected": 1208
+        },
+        "2028": {
+          "affected": 1269
+        },
+        "2029": {
+          "affected": 1335
+        },
+        "2030": {
+          "affected": 1404
+        },
+        "2031": {
+          "affected": 1479
+        },
+        "2032": {
+          "affected": 1558
+        },
+        "2033": {
+          "affected": 1643
+        },
+        "2034": {
+          "affected": 1733
+        },
+        "2035": {
+          "affected": 1830
+        },
+        "2036": {
+          "affected": 1933
+        },
+        "2037": {
+          "affected": 2043
+        },
+        "2038": {
+          "affected": 2161
+        },
+        "2039": {
+          "affected": 2287
+        },
+        "2040": {
+          "affected": 2420
+        },
+        "2041": {
+          "affected": 2562
+        },
+        "2042": {
+          "affected": 2714
+        },
+        "2043": {
+          "affected": 2877
+        },
+        "2044": {
+          "affected": 3050
+        },
+        "2045": {
+          "affected": 3234
+        },
+        "2046": {
+          "affected": 3431
+        },
+        "2047": {
+          "affected": 3639
+        },
+        "2048": {
+          "affected": 3859
+        },
+        "2049": {
+          "affected": 4096
+        },
+        "2050": {
+          "affected": 4344
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 1509
+        },
+        "2026": {
+          "affected": 1687
+        },
+        "2027": {
+          "affected": 1887
+        },
+        "2028": {
+          "affected": 2113
+        },
+        "2029": {
+          "affected": 2369
+        },
+        "2030": {
+          "affected": 2654
+        },
+        "2031": {
+          "affected": 2980
+        },
+        "2032": {
+          "affected": 3346
+        },
+        "2033": {
+          "affected": 3761
+        },
+        "2034": {
+          "affected": 4228
+        },
+        "2035": {
+          "affected": 4758
+        },
+        "2036": {
+          "affected": 5357
+        },
+        "2037": {
+          "affected": 6035
+        },
+        "2038": {
+          "affected": 6804
+        },
+        "2039": {
+          "affected": 7674
+        },
+        "2040": {
+          "affected": 8653
+        },
+        "2041": {
+          "affected": 9763
+        },
+        "2042": {
+          "affected": 11023
+        },
+        "2043": {
+          "affected": 12453
+        },
+        "2044": {
+          "affected": 14073
+        },
+        "2045": {
+          "affected": 15899
+        },
+        "2046": {
+          "affected": 17980
+        },
+        "2047": {
+          "affected": 20324
+        },
+        "2048": {
+          "affected": 22968
+        },
+        "2049": {
+          "affected": 25983
+        },
+        "2050": {
+          "affected": 29372
+        }
+      },
+      "cumulative_affected": {
+        "central": 84232,
+        "low": 60358,
+        "high": 245653
+      },
+      "affected_2050_vs_baseline": 7.6,
+      "worst_historical_flood": {
+        "year": 2003,
+        "affected": 3,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 2.3
+      }
+    },
+    "WF": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 50,
+      "baseline_events": 1,
+      "baseline_exposed_pop": 4960,
+      "pct_below_10m": 38.0,
+      "af_central": 7.5,
+      "af_range": [
+        5.0,
+        24.9
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 4269,
+          "af": 1.4,
+          "affected": 60
+        },
+        "2026": {
+          "exposed": 4238,
+          "af": 1.5,
+          "affected": 64
+        },
+        "2027": {
+          "exposed": 4208,
+          "af": 1.6,
+          "affected": 68
+        },
+        "2028": {
+          "exposed": 4183,
+          "af": 1.71,
+          "affected": 72
+        },
+        "2029": {
+          "exposed": 4158,
+          "af": 1.83,
+          "affected": 77
+        },
+        "2030": {
+          "exposed": 4133,
+          "af": 1.96,
+          "affected": 82
+        },
+        "2031": {
+          "exposed": 4120,
+          "af": 2.09,
+          "affected": 87
+        },
+        "2032": {
+          "exposed": 4103,
+          "af": 2.24,
+          "affected": 93
+        },
+        "2033": {
+          "exposed": 4086,
+          "af": 2.39,
+          "affected": 99
+        },
+        "2034": {
+          "exposed": 4074,
+          "af": 2.56,
+          "affected": 105
+        },
+        "2035": {
+          "exposed": 4064,
+          "af": 2.74,
+          "affected": 112
+        },
+        "2036": {
+          "exposed": 4051,
+          "af": 2.93,
+          "affected": 120
+        },
+        "2037": {
+          "exposed": 4041,
+          "af": 3.13,
+          "affected": 128
+        },
+        "2038": {
+          "exposed": 4029,
+          "af": 3.35,
+          "affected": 136
+        },
+        "2039": {
+          "exposed": 4025,
+          "af": 3.58,
+          "affected": 146
+        },
+        "2040": {
+          "exposed": 4017,
+          "af": 3.83,
+          "affected": 155
+        },
+        "2041": {
+          "exposed": 4001,
+          "af": 4.1,
+          "affected": 166
+        },
+        "2042": {
+          "exposed": 3992,
+          "af": 4.38,
+          "affected": 177
+        },
+        "2043": {
+          "exposed": 3981,
+          "af": 4.69,
+          "affected": 188
+        },
+        "2044": {
+          "exposed": 3969,
+          "af": 5.01,
+          "affected": 201
+        },
+        "2045": {
+          "exposed": 3956,
+          "af": 5.36,
+          "affected": 214
+        },
+        "2046": {
+          "exposed": 3938,
+          "af": 5.73,
+          "affected": 228
+        },
+        "2047": {
+          "exposed": 3925,
+          "af": 6.13,
+          "affected": 243
+        },
+        "2048": {
+          "exposed": 3904,
+          "af": 6.56,
+          "affected": 258
+        },
+        "2049": {
+          "exposed": 3882,
+          "af": 7.01,
+          "affected": 275
+        },
+        "2050": {
+          "exposed": 3867,
+          "af": 7.5,
+          "affected": 293
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 56
+        },
+        "2026": {
+          "affected": 59
+        },
+        "2027": {
+          "affected": 62
+        },
+        "2028": {
+          "affected": 65
+        },
+        "2029": {
+          "affected": 68
+        },
+        "2030": {
+          "affected": 71
+        },
+        "2031": {
+          "affected": 75
+        },
+        "2032": {
+          "affected": 79
+        },
+        "2033": {
+          "affected": 83
+        },
+        "2034": {
+          "affected": 87
+        },
+        "2035": {
+          "affected": 92
+        },
+        "2036": {
+          "affected": 96
+        },
+        "2037": {
+          "affected": 102
+        },
+        "2038": {
+          "affected": 107
+        },
+        "2039": {
+          "affected": 113
+        },
+        "2040": {
+          "affected": 119
+        },
+        "2041": {
+          "affected": 125
+        },
+        "2042": {
+          "affected": 131
+        },
+        "2043": {
+          "affected": 138
+        },
+        "2044": {
+          "affected": 145
+        },
+        "2045": {
+          "affected": 153
+        },
+        "2046": {
+          "affected": 160
+        },
+        "2047": {
+          "affected": 169
+        },
+        "2048": {
+          "affected": 177
+        },
+        "2049": {
+          "affected": 186
+        },
+        "2050": {
+          "affected": 195
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 74
+        },
+        "2026": {
+          "affected": 81
+        },
+        "2027": {
+          "affected": 90
+        },
+        "2028": {
+          "affected": 100
+        },
+        "2029": {
+          "affected": 110
+        },
+        "2030": {
+          "affected": 122
+        },
+        "2031": {
+          "affected": 135
+        },
+        "2032": {
+          "affected": 150
+        },
+        "2033": {
+          "affected": 166
+        },
+        "2034": {
+          "affected": 184
+        },
+        "2035": {
+          "affected": 205
+        },
+        "2036": {
+          "affected": 227
+        },
+        "2037": {
+          "affected": 252
+        },
+        "2038": {
+          "affected": 280
+        },
+        "2039": {
+          "affected": 311
+        },
+        "2040": {
+          "affected": 346
+        },
+        "2041": {
+          "affected": 383
+        },
+        "2042": {
+          "affected": 426
+        },
+        "2043": {
+          "affected": 473
+        },
+        "2044": {
+          "affected": 525
+        },
+        "2045": {
+          "affected": 582
+        },
+        "2046": {
+          "affected": 645
+        },
+        "2047": {
+          "affected": 715
+        },
+        "2048": {
+          "affected": 792
+        },
+        "2049": {
+          "affected": 877
+        },
+        "2050": {
+          "affected": 972
+        }
+      },
+      "cumulative_affected": {
+        "central": 3847,
+        "low": 2913,
+        "high": 9223
+      },
+      "affected_2050_vs_baseline": 5.9,
+      "worst_historical_flood": null
+    },
+    "FM": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 2145,
+      "baseline_events": 6,
+      "baseline_exposed_pop": 44129,
+      "pct_below_10m": 40.0,
+      "af_central": 7.3,
+      "af_range": [
+        4.9,
+        23.9
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 45371,
+          "af": 1.39,
+          "affected": 3072
+        },
+        "2026": {
+          "exposed": 45575,
+          "af": 1.49,
+          "affected": 3297
+        },
+        "2027": {
+          "exposed": 45771,
+          "af": 1.59,
+          "affected": 3538
+        },
+        "2028": {
+          "exposed": 45989,
+          "af": 1.7,
+          "affected": 3799
+        },
+        "2029": {
+          "exposed": 46210,
+          "af": 1.82,
+          "affected": 4078
+        },
+        "2030": {
+          "exposed": 46430,
+          "af": 1.94,
+          "affected": 4378
+        },
+        "2031": {
+          "exposed": 46650,
+          "af": 2.07,
+          "affected": 4701
+        },
+        "2032": {
+          "exposed": 46872,
+          "af": 2.21,
+          "affected": 5047
+        },
+        "2033": {
+          "exposed": 47098,
+          "af": 2.37,
+          "affected": 5418
+        },
+        "2034": {
+          "exposed": 47317,
+          "af": 2.53,
+          "affected": 5816
+        },
+        "2035": {
+          "exposed": 47547,
+          "af": 2.7,
+          "affected": 6245
+        },
+        "2036": {
+          "exposed": 47767,
+          "af": 2.89,
+          "affected": 6704
+        },
+        "2037": {
+          "exposed": 47975,
+          "af": 3.08,
+          "affected": 7194
+        },
+        "2038": {
+          "exposed": 48193,
+          "af": 3.3,
+          "affected": 7722
+        },
+        "2039": {
+          "exposed": 48392,
+          "af": 3.52,
+          "affected": 8285
+        },
+        "2040": {
+          "exposed": 48578,
+          "af": 3.76,
+          "affected": 8887
+        },
+        "2041": {
+          "exposed": 48767,
+          "af": 4.02,
+          "affected": 9532
+        },
+        "2042": {
+          "exposed": 48957,
+          "af": 4.3,
+          "affected": 10225
+        },
+        "2043": {
+          "exposed": 49145,
+          "af": 4.59,
+          "affected": 10967
+        },
+        "2044": {
+          "exposed": 49342,
+          "af": 4.91,
+          "affected": 11766
+        },
+        "2045": {
+          "exposed": 49530,
+          "af": 5.24,
+          "affected": 12620
+        },
+        "2046": {
+          "exposed": 49722,
+          "af": 5.6,
+          "affected": 13537
+        },
+        "2047": {
+          "exposed": 49910,
+          "af": 5.98,
+          "affected": 14519
+        },
+        "2048": {
+          "exposed": 50098,
+          "af": 6.39,
+          "affected": 15572
+        },
+        "2049": {
+          "exposed": 50290,
+          "af": 6.83,
+          "affected": 16702
+        },
+        "2050": {
+          "exposed": 50472,
+          "af": 7.3,
+          "affected": 17911
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 2874
+        },
+        "2026": {
+          "affected": 3044
+        },
+        "2027": {
+          "affected": 3224
+        },
+        "2028": {
+          "affected": 3415
+        },
+        "2029": {
+          "affected": 3619
+        },
+        "2030": {
+          "affected": 3834
+        },
+        "2031": {
+          "affected": 4061
+        },
+        "2032": {
+          "affected": 4303
+        },
+        "2033": {
+          "affected": 4559
+        },
+        "2034": {
+          "affected": 4829
+        },
+        "2035": {
+          "affected": 5116
+        },
+        "2036": {
+          "affected": 5420
+        },
+        "2037": {
+          "affected": 5739
+        },
+        "2038": {
+          "affected": 6079
+        },
+        "2039": {
+          "affected": 6436
+        },
+        "2040": {
+          "affected": 6813
+        },
+        "2041": {
+          "affected": 7211
+        },
+        "2042": {
+          "affected": 7633
+        },
+        "2043": {
+          "affected": 8079
+        },
+        "2044": {
+          "affected": 8553
+        },
+        "2045": {
+          "affected": 9053
+        },
+        "2046": {
+          "affected": 9582
+        },
+        "2047": {
+          "affected": 10142
+        },
+        "2048": {
+          "affected": 10734
+        },
+        "2049": {
+          "affected": 11361
+        },
+        "2050": {
+          "affected": 12022
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 3743
+        },
+        "2026": {
+          "affected": 4180
+        },
+        "2027": {
+          "affected": 4666
+        },
+        "2028": {
+          "affected": 5212
+        },
+        "2029": {
+          "affected": 5821
+        },
+        "2030": {
+          "affected": 6501
+        },
+        "2031": {
+          "affected": 7261
+        },
+        "2032": {
+          "affected": 8110
+        },
+        "2033": {
+          "affected": 9059
+        },
+        "2034": {
+          "affected": 10116
+        },
+        "2035": {
+          "affected": 11300
+        },
+        "2036": {
+          "affected": 12619
+        },
+        "2037": {
+          "affected": 14088
+        },
+        "2038": {
+          "affected": 15732
+        },
+        "2039": {
+          "affected": 17559
+        },
+        "2040": {
+          "affected": 19594
+        },
+        "2041": {
+          "affected": 21865
+        },
+        "2042": {
+          "affected": 24400
+        },
+        "2043": {
+          "affected": 27227
+        },
+        "2044": {
+          "affected": 30387
+        },
+        "2045": {
+          "affected": 33906
+        },
+        "2046": {
+          "affected": 37836
+        },
+        "2047": {
+          "affected": 42217
+        },
+        "2048": {
+          "affected": 47105
+        },
+        "2049": {
+          "affected": 52563
+        },
+        "2050": {
+          "affected": 58640
+        }
+      },
+      "cumulative_affected": {
+        "central": 221532,
+        "low": 167735,
+        "high": 531707
+      },
+      "affected_2050_vs_baseline": 8.3,
+      "worst_historical_flood": {
+        "year": 2008,
+        "affected": 0,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 3.4
+      }
+    },
+    "KI": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 72,
+      "baseline_events": 3,
+      "baseline_exposed_pop": 82481,
+      "pct_below_10m": 74.0,
+      "af_central": 6.4,
+      "af_range": [
+        4.4,
+        19.7
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 100277,
+          "af": 1.36,
+          "affected": 120
+        },
+        "2026": {
+          "exposed": 101726,
+          "af": 1.45,
+          "affected": 129
+        },
+        "2027": {
+          "exposed": 103172,
+          "af": 1.54,
+          "affected": 139
+        },
+        "2028": {
+          "exposed": 104618,
+          "af": 1.64,
+          "affected": 150
+        },
+        "2029": {
+          "exposed": 106024,
+          "af": 1.75,
+          "affected": 162
+        },
+        "2030": {
+          "exposed": 107433,
+          "af": 1.86,
+          "affected": 175
+        },
+        "2031": {
+          "exposed": 108834,
+          "af": 1.98,
+          "affected": 188
+        },
+        "2032": {
+          "exposed": 110242,
+          "af": 2.1,
+          "affected": 203
+        },
+        "2033": {
+          "exposed": 111621,
+          "af": 2.24,
+          "affected": 218
+        },
+        "2034": {
+          "exposed": 112989,
+          "af": 2.38,
+          "affected": 235
+        },
+        "2035": {
+          "exposed": 114337,
+          "af": 2.53,
+          "affected": 253
+        },
+        "2036": {
+          "exposed": 115713,
+          "af": 2.69,
+          "affected": 273
+        },
+        "2037": {
+          "exposed": 117106,
+          "af": 2.86,
+          "affected": 293
+        },
+        "2038": {
+          "exposed": 118489,
+          "af": 3.05,
+          "affected": 316
+        },
+        "2039": {
+          "exposed": 119858,
+          "af": 3.24,
+          "affected": 340
+        },
+        "2040": {
+          "exposed": 121218,
+          "af": 3.45,
+          "affected": 366
+        },
+        "2041": {
+          "exposed": 122538,
+          "af": 3.67,
+          "affected": 393
+        },
+        "2042": {
+          "exposed": 123883,
+          "af": 3.9,
+          "affected": 423
+        },
+        "2043": {
+          "exposed": 125240,
+          "af": 4.15,
+          "affected": 455
+        },
+        "2044": {
+          "exposed": 126619,
+          "af": 4.42,
+          "affected": 489
+        },
+        "2045": {
+          "exposed": 127954,
+          "af": 4.7,
+          "affected": 526
+        },
+        "2046": {
+          "exposed": 129288,
+          "af": 5.0,
+          "affected": 565
+        },
+        "2047": {
+          "exposed": 130626,
+          "af": 5.32,
+          "affected": 608
+        },
+        "2048": {
+          "exposed": 131908,
+          "af": 5.66,
+          "affected": 653
+        },
+        "2049": {
+          "exposed": 133230,
+          "af": 6.02,
+          "affected": 702
+        },
+        "2050": {
+          "exposed": 134517,
+          "af": 6.4,
+          "affected": 754
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 112
+        },
+        "2026": {
+          "affected": 120
+        },
+        "2027": {
+          "affected": 128
+        },
+        "2028": {
+          "affected": 136
+        },
+        "2029": {
+          "affected": 145
+        },
+        "2030": {
+          "affected": 154
+        },
+        "2031": {
+          "affected": 164
+        },
+        "2032": {
+          "affected": 175
+        },
+        "2033": {
+          "affected": 186
+        },
+        "2034": {
+          "affected": 197
+        },
+        "2035": {
+          "affected": 210
+        },
+        "2036": {
+          "affected": 223
+        },
+        "2037": {
+          "affected": 237
+        },
+        "2038": {
+          "affected": 252
+        },
+        "2039": {
+          "affected": 268
+        },
+        "2040": {
+          "affected": 285
+        },
+        "2041": {
+          "affected": 303
+        },
+        "2042": {
+          "affected": 321
+        },
+        "2043": {
+          "affected": 341
+        },
+        "2044": {
+          "affected": 363
+        },
+        "2045": {
+          "affected": 385
+        },
+        "2046": {
+          "affected": 409
+        },
+        "2047": {
+          "affected": 434
+        },
+        "2048": {
+          "affected": 460
+        },
+        "2049": {
+          "affected": 488
+        },
+        "2050": {
+          "affected": 518
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 144
+        },
+        "2026": {
+          "affected": 162
+        },
+        "2027": {
+          "affected": 181
+        },
+        "2028": {
+          "affected": 203
+        },
+        "2029": {
+          "affected": 227
+        },
+        "2030": {
+          "affected": 254
+        },
+        "2031": {
+          "affected": 284
+        },
+        "2032": {
+          "affected": 318
+        },
+        "2033": {
+          "affected": 356
+        },
+        "2034": {
+          "affected": 397
+        },
+        "2035": {
+          "affected": 444
+        },
+        "2036": {
+          "affected": 497
+        },
+        "2037": {
+          "affected": 555
+        },
+        "2038": {
+          "affected": 620
+        },
+        "2039": {
+          "affected": 693
+        },
+        "2040": {
+          "affected": 774
+        },
+        "2041": {
+          "affected": 864
+        },
+        "2042": {
+          "affected": 965
+        },
+        "2043": {
+          "affected": 1077
+        },
+        "2044": {
+          "affected": 1203
+        },
+        "2045": {
+          "affected": 1343
+        },
+        "2046": {
+          "affected": 1498
+        },
+        "2047": {
+          "affected": 1672
+        },
+        "2048": {
+          "affected": 1865
+        },
+        "2049": {
+          "affected": 2080
+        },
+        "2050": {
+          "affected": 2320
+        }
+      },
+      "cumulative_affected": {
+        "central": 9128,
+        "low": 7014,
+        "high": 20996
+      },
+      "affected_2050_vs_baseline": 10.4,
+      "worst_historical_flood": {
+        "year": 2014,
+        "affected": 220,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 3.9
+      }
+    },
+    "NR": {
+      "no_emdat_records": true,
+      "note": "No EM-DAT disaster records for this country; projection not computed.",
+      "pct_below_10m": 76.0,
+      "af_central": 6.3,
+      "af_range": [
+        4.3,
+        18.9
+      ]
+    },
+    "VU": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 41006,
+      "baseline_events": 14,
+      "baseline_exposed_pop": 30189,
+      "pct_below_10m": 12.0,
+      "af_central": 5.6,
+      "af_range": [
+        3.9,
+        15.6
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 39776,
+          "af": 1.33,
+          "affected": 71997
+        },
+        "2026": {
+          "exposed": 40664,
+          "af": 1.41,
+          "affected": 77955
+        },
+        "2027": {
+          "exposed": 41551,
+          "af": 1.49,
+          "affected": 84363
+        },
+        "2028": {
+          "exposed": 42441,
+          "af": 1.58,
+          "affected": 91263
+        },
+        "2029": {
+          "exposed": 43336,
+          "af": 1.68,
+          "affected": 98695
+        },
+        "2030": {
+          "exposed": 44237,
+          "af": 1.78,
+          "affected": 106702
+        },
+        "2031": {
+          "exposed": 45146,
+          "af": 1.88,
+          "affected": 115331
+        },
+        "2032": {
+          "exposed": 46060,
+          "af": 1.99,
+          "affected": 124620
+        },
+        "2033": {
+          "exposed": 46978,
+          "af": 2.11,
+          "affected": 134618
+        },
+        "2034": {
+          "exposed": 47912,
+          "af": 2.23,
+          "affected": 145408
+        },
+        "2035": {
+          "exposed": 48853,
+          "af": 2.37,
+          "affected": 157028
+        },
+        "2036": {
+          "exposed": 49802,
+          "af": 2.51,
+          "affected": 169540
+        },
+        "2037": {
+          "exposed": 50761,
+          "af": 2.65,
+          "affected": 183018
+        },
+        "2038": {
+          "exposed": 51729,
+          "af": 2.81,
+          "affected": 197534
+        },
+        "2039": {
+          "exposed": 52707,
+          "af": 2.98,
+          "affected": 213165
+        },
+        "2040": {
+          "exposed": 53688,
+          "af": 3.15,
+          "affected": 229966
+        },
+        "2041": {
+          "exposed": 54675,
+          "af": 3.34,
+          "affected": 248033
+        },
+        "2042": {
+          "exposed": 55663,
+          "af": 3.54,
+          "affected": 267442
+        },
+        "2043": {
+          "exposed": 56659,
+          "af": 3.75,
+          "affected": 288320
+        },
+        "2044": {
+          "exposed": 57655,
+          "af": 3.97,
+          "affected": 310729
+        },
+        "2045": {
+          "exposed": 58659,
+          "af": 4.2,
+          "affected": 334824
+        },
+        "2046": {
+          "exposed": 59658,
+          "af": 4.45,
+          "affected": 360657
+        },
+        "2047": {
+          "exposed": 60660,
+          "af": 4.71,
+          "affected": 388385
+        },
+        "2048": {
+          "exposed": 61651,
+          "af": 4.99,
+          "affected": 418062
+        },
+        "2049": {
+          "exposed": 62643,
+          "af": 5.29,
+          "affected": 449901
+        },
+        "2050": {
+          "exposed": 63632,
+          "af": 5.6,
+          "affected": 484009
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 67784
+        },
+        "2026": {
+          "affected": 72513
+        },
+        "2027": {
+          "affected": 77534
+        },
+        "2028": {
+          "affected": 82870
+        },
+        "2029": {
+          "affected": 88544
+        },
+        "2030": {
+          "affected": 94580
+        },
+        "2031": {
+          "affected": 101003
+        },
+        "2032": {
+          "affected": 107830
+        },
+        "2033": {
+          "affected": 115084
+        },
+        "2034": {
+          "affected": 122818
+        },
+        "2035": {
+          "affected": 131044
+        },
+        "2036": {
+          "affected": 139789
+        },
+        "2037": {
+          "affected": 149093
+        },
+        "2038": {
+          "affected": 158989
+        },
+        "2039": {
+          "affected": 169514
+        },
+        "2040": {
+          "affected": 180682
+        },
+        "2041": {
+          "affected": 192541
+        },
+        "2042": {
+          "affected": 205119
+        },
+        "2043": {
+          "affected": 218481
+        },
+        "2044": {
+          "affected": 232639
+        },
+        "2045": {
+          "affected": 247674
+        },
+        "2046": {
+          "affected": 263585
+        },
+        "2047": {
+          "affected": 280447
+        },
+        "2048": {
+          "affected": 298258
+        },
+        "2049": {
+          "affected": 317125
+        },
+        "2050": {
+          "affected": 337078
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 85403
+        },
+        "2026": {
+          "affected": 95682
+        },
+        "2027": {
+          "affected": 107145
+        },
+        "2028": {
+          "affected": 119935
+        },
+        "2029": {
+          "affected": 134208
+        },
+        "2030": {
+          "affected": 150137
+        },
+        "2031": {
+          "affected": 167915
+        },
+        "2032": {
+          "affected": 187743
+        },
+        "2033": {
+          "affected": 209850
+        },
+        "2034": {
+          "affected": 234544
+        },
+        "2035": {
+          "affected": 262088
+        },
+        "2036": {
+          "affected": 292801
+        },
+        "2037": {
+          "affected": 327058
+        },
+        "2038": {
+          "affected": 365261
+        },
+        "2039": {
+          "affected": 407858
+        },
+        "2040": {
+          "affected": 455291
+        },
+        "2041": {
+          "affected": 508119
+        },
+        "2042": {
+          "affected": 566913
+        },
+        "2043": {
+          "affected": 632402
+        },
+        "2044": {
+          "affected": 705229
+        },
+        "2045": {
+          "affected": 786316
+        },
+        "2046": {
+          "affected": 876407
+        },
+        "2047": {
+          "affected": 976574
+        },
+        "2048": {
+          "affected": 1087715
+        },
+        "2049": {
+          "affected": 1211217
+        },
+        "2050": {
+          "affected": 1348311
+        }
+      },
+      "cumulative_affected": {
+        "central": 5751565,
+        "low": 4452618,
+        "high": 12302122
+      },
+      "affected_2050_vs_baseline": 11.8,
+      "worst_historical_flood": {
+        "year": 2002,
+        "affected": 3001,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 4.5
+      }
+    },
+    "TV": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 405,
+      "baseline_events": 2,
+      "baseline_exposed_pop": 9420,
+      "pct_below_10m": 91.0,
+      "af_central": 6.7,
+      "af_range": [
+        4.6,
+        20.8
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 8703,
+          "af": 1.37,
+          "affected": 513
+        },
+        "2026": {
+          "exposed": 8572,
+          "af": 1.46,
+          "affected": 538
+        },
+        "2027": {
+          "exposed": 8467,
+          "af": 1.56,
+          "affected": 567
+        },
+        "2028": {
+          "exposed": 8380,
+          "af": 1.66,
+          "affected": 598
+        },
+        "2029": {
+          "exposed": 8311,
+          "af": 1.77,
+          "affected": 631
+        },
+        "2030": {
+          "exposed": 8256,
+          "af": 1.89,
+          "affected": 668
+        },
+        "2031": {
+          "exposed": 8210,
+          "af": 2.01,
+          "affected": 708
+        },
+        "2032": {
+          "exposed": 8188,
+          "af": 2.14,
+          "affected": 752
+        },
+        "2033": {
+          "exposed": 8170,
+          "af": 2.28,
+          "affected": 800
+        },
+        "2034": {
+          "exposed": 8162,
+          "af": 2.43,
+          "affected": 851
+        },
+        "2035": {
+          "exposed": 8168,
+          "af": 2.59,
+          "affected": 908
+        },
+        "2036": {
+          "exposed": 8176,
+          "af": 2.76,
+          "affected": 968
+        },
+        "2037": {
+          "exposed": 8190,
+          "af": 2.94,
+          "affected": 1033
+        },
+        "2038": {
+          "exposed": 8215,
+          "af": 3.13,
+          "affected": 1104
+        },
+        "2039": {
+          "exposed": 8252,
+          "af": 3.34,
+          "affected": 1182
+        },
+        "2040": {
+          "exposed": 8298,
+          "af": 3.55,
+          "affected": 1266
+        },
+        "2041": {
+          "exposed": 8337,
+          "af": 3.79,
+          "affected": 1356
+        },
+        "2042": {
+          "exposed": 8384,
+          "af": 4.03,
+          "affected": 1452
+        },
+        "2043": {
+          "exposed": 8444,
+          "af": 4.3,
+          "affected": 1559
+        },
+        "2044": {
+          "exposed": 8504,
+          "af": 4.58,
+          "affected": 1672
+        },
+        "2045": {
+          "exposed": 8561,
+          "af": 4.88,
+          "affected": 1794
+        },
+        "2046": {
+          "exposed": 8617,
+          "af": 5.2,
+          "affected": 1924
+        },
+        "2047": {
+          "exposed": 8678,
+          "af": 5.54,
+          "affected": 2064
+        },
+        "2048": {
+          "exposed": 8749,
+          "af": 5.9,
+          "affected": 2217
+        },
+        "2049": {
+          "exposed": 8810,
+          "af": 6.29,
+          "affected": 2379
+        },
+        "2050": {
+          "exposed": 8871,
+          "af": 6.7,
+          "affected": 2552
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 482
+        },
+        "2026": {
+          "affected": 499
+        },
+        "2027": {
+          "affected": 519
+        },
+        "2028": {
+          "affected": 541
+        },
+        "2029": {
+          "affected": 564
+        },
+        "2030": {
+          "affected": 590
+        },
+        "2031": {
+          "affected": 617
+        },
+        "2032": {
+          "affected": 647
+        },
+        "2033": {
+          "affected": 680
+        },
+        "2034": {
+          "affected": 714
+        },
+        "2035": {
+          "affected": 752
+        },
+        "2036": {
+          "affected": 792
+        },
+        "2037": {
+          "affected": 835
+        },
+        "2038": {
+          "affected": 881
+        },
+        "2039": {
+          "affected": 931
+        },
+        "2040": {
+          "affected": 986
+        },
+        "2041": {
+          "affected": 1042
+        },
+        "2042": {
+          "affected": 1102
+        },
+        "2043": {
+          "affected": 1168
+        },
+        "2044": {
+          "affected": 1238
+        },
+        "2045": {
+          "affected": 1311
+        },
+        "2046": {
+          "affected": 1389
+        },
+        "2047": {
+          "affected": 1472
+        },
+        "2048": {
+          "affected": 1561
+        },
+        "2049": {
+          "affected": 1654
+        },
+        "2050": {
+          "affected": 1752
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 620
+        },
+        "2026": {
+          "affected": 675
+        },
+        "2027": {
+          "affected": 738
+        },
+        "2028": {
+          "affected": 808
+        },
+        "2029": {
+          "affected": 887
+        },
+        "2030": {
+          "affected": 975
+        },
+        "2031": {
+          "affected": 1073
+        },
+        "2032": {
+          "affected": 1184
+        },
+        "2033": {
+          "affected": 1307
+        },
+        "2034": {
+          "affected": 1445
+        },
+        "2035": {
+          "affected": 1600
+        },
+        "2036": {
+          "affected": 1772
+        },
+        "2037": {
+          "affected": 1964
+        },
+        "2038": {
+          "affected": 2179
+        },
+        "2039": {
+          "affected": 2422
+        },
+        "2040": {
+          "affected": 2695
+        },
+        "2041": {
+          "affected": 2996
+        },
+        "2042": {
+          "affected": 3333
+        },
+        "2043": {
+          "affected": 3715
+        },
+        "2044": {
+          "affected": 4140
+        },
+        "2045": {
+          "affected": 4611
+        },
+        "2046": {
+          "affected": 5135
+        },
+        "2047": {
+          "affected": 5722
+        },
+        "2048": {
+          "affected": 6383
+        },
+        "2049": {
+          "affected": 7112
+        },
+        "2050": {
+          "affected": 7923
+        }
+      },
+      "cumulative_affected": {
+        "central": 32056,
+        "low": 24719,
+        "high": 73414
+      },
+      "affected_2050_vs_baseline": 6.3,
+      "worst_historical_flood": null
+    },
+    "FJ": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 57535,
+      "baseline_events": 27,
+      "baseline_exposed_pop": 252374,
+      "pct_below_10m": 28.0,
+      "af_central": 6.2,
+      "af_range": [
+        4.3,
+        18.4
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 260687,
+          "af": 1.36,
+          "affected": 80551
+        },
+        "2026": {
+          "exposed": 261880,
+          "af": 1.44,
+          "affected": 85994
+        },
+        "2027": {
+          "exposed": 262998,
+          "af": 1.53,
+          "affected": 91777
+        },
+        "2028": {
+          "exposed": 264145,
+          "af": 1.63,
+          "affected": 97957
+        },
+        "2029": {
+          "exposed": 265261,
+          "af": 1.73,
+          "affected": 104539
+        },
+        "2030": {
+          "exposed": 266337,
+          "af": 1.84,
+          "affected": 111545
+        },
+        "2031": {
+          "exposed": 267403,
+          "af": 1.95,
+          "affected": 119014
+        },
+        "2032": {
+          "exposed": 268349,
+          "af": 2.07,
+          "affected": 126924
+        },
+        "2033": {
+          "exposed": 269293,
+          "af": 2.2,
+          "affected": 135357
+        },
+        "2034": {
+          "exposed": 270187,
+          "af": 2.34,
+          "affected": 144323
+        },
+        "2035": {
+          "exposed": 271071,
+          "af": 2.49,
+          "affected": 153874
+        },
+        "2036": {
+          "exposed": 271921,
+          "af": 2.65,
+          "affected": 164036
+        },
+        "2037": {
+          "exposed": 272765,
+          "af": 2.81,
+          "affected": 174863
+        },
+        "2038": {
+          "exposed": 273603,
+          "af": 2.99,
+          "affected": 186399
+        },
+        "2039": {
+          "exposed": 274390,
+          "af": 3.18,
+          "affected": 198657
+        },
+        "2040": {
+          "exposed": 275128,
+          "af": 3.37,
+          "affected": 211682
+        },
+        "2041": {
+          "exposed": 275832,
+          "af": 3.59,
+          "affected": 225532
+        },
+        "2042": {
+          "exposed": 276565,
+          "af": 3.81,
+          "affected": 240310
+        },
+        "2043": {
+          "exposed": 277178,
+          "af": 4.05,
+          "affected": 255945
+        },
+        "2044": {
+          "exposed": 277710,
+          "af": 4.3,
+          "affected": 272517
+        },
+        "2045": {
+          "exposed": 278229,
+          "af": 4.57,
+          "affected": 290146
+        },
+        "2046": {
+          "exposed": 278667,
+          "af": 4.86,
+          "affected": 308825
+        },
+        "2047": {
+          "exposed": 279079,
+          "af": 5.17,
+          "affected": 328676
+        },
+        "2048": {
+          "exposed": 279430,
+          "af": 5.49,
+          "affected": 349725
+        },
+        "2049": {
+          "exposed": 279764,
+          "af": 5.83,
+          "affected": 372099
+        },
+        "2050": {
+          "exposed": 279982,
+          "af": 6.2,
+          "affected": 395740
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 75785
+        },
+        "2026": {
+          "affected": 79925
+        },
+        "2027": {
+          "affected": 84265
+        },
+        "2028": {
+          "affected": 88849
+        },
+        "2029": {
+          "affected": 93670
+        },
+        "2030": {
+          "affected": 98736
+        },
+        "2031": {
+          "affected": 104070
+        },
+        "2032": {
+          "affected": 109641
+        },
+        "2033": {
+          "affected": 115509
+        },
+        "2034": {
+          "affected": 121666
+        },
+        "2035": {
+          "affected": 128146
+        },
+        "2036": {
+          "affected": 134953
+        },
+        "2037": {
+          "affected": 142116
+        },
+        "2038": {
+          "affected": 149654
+        },
+        "2039": {
+          "affected": 157562
+        },
+        "2040": {
+          "affected": 165858
+        },
+        "2041": {
+          "affected": 174567
+        },
+        "2042": {
+          "affected": 183751
+        },
+        "2043": {
+          "affected": 193333
+        },
+        "2044": {
+          "affected": 203355
+        },
+        "2045": {
+          "affected": 213885
+        },
+        "2046": {
+          "affected": 224895
+        },
+        "2047": {
+          "affected": 236449
+        },
+        "2048": {
+          "affected": 248541
+        },
+        "2049": {
+          "affected": 261236
+        },
+        "2050": {
+          "affected": 274465
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 96563
+        },
+        "2026": {
+          "affected": 106894
+        },
+        "2027": {
+          "affected": 118294
+        },
+        "2028": {
+          "affected": 130923
+        },
+        "2029": {
+          "affected": 144880
+        },
+        "2030": {
+          "affected": 160297
+        },
+        "2031": {
+          "affected": 177346
+        },
+        "2032": {
+          "affected": 196117
+        },
+        "2033": {
+          "affected": 216870
+        },
+        "2034": {
+          "affected": 239773
+        },
+        "2035": {
+          "affected": 265081
+        },
+        "2036": {
+          "affected": 293023
+        },
+        "2037": {
+          "affected": 323897
+        },
+        "2038": {
+          "affected": 358013
+        },
+        "2039": {
+          "affected": 395646
+        },
+        "2040": {
+          "affected": 437154
+        },
+        "2041": {
+          "affected": 482954
+        },
+        "2042": {
+          "affected": 533603
+        },
+        "2043": {
+          "affected": 589305
+        },
+        "2044": {
+          "affected": 650631
+        },
+        "2045": {
+          "affected": 718299
+        },
+        "2046": {
+          "affected": 792773
+        },
+        "2047": {
+          "affected": 874885
+        },
+        "2048": {
+          "affected": 965290
+        },
+        "2049": {
+          "affected": 1064968
+        },
+        "2050": {
+          "affected": 1174454
+        }
+      },
+      "cumulative_affected": {
+        "central": 5227007,
+        "low": 4064882,
+        "high": 11507933
+      },
+      "affected_2050_vs_baseline": 6.9,
+      "worst_historical_flood": {
+        "year": 2012,
+        "affected": 19545,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 4.0
+      }
+    },
+    "PF": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 337,
+      "baseline_events": 2,
+      "baseline_exposed_pop": 148095,
+      "pct_below_10m": 55.0,
+      "af_central": 5.4,
+      "af_range": [
+        3.8,
+        14.7
+      ],
+      "small_n_flag": true,
+      "series": {
+        "2025": {
+          "exposed": 155181,
+          "af": 1.32,
+          "affected": 467
+        },
+        "2026": {
+          "exposed": 155531,
+          "af": 1.4,
+          "affected": 495
+        },
+        "2027": {
+          "exposed": 155853,
+          "af": 1.48,
+          "affected": 525
+        },
+        "2028": {
+          "exposed": 156185,
+          "af": 1.57,
+          "affected": 557
+        },
+        "2029": {
+          "exposed": 156514,
+          "af": 1.66,
+          "affected": 590
+        },
+        "2030": {
+          "exposed": 156872,
+          "af": 1.75,
+          "affected": 626
+        },
+        "2031": {
+          "exposed": 157230,
+          "af": 1.86,
+          "affected": 663
+        },
+        "2032": {
+          "exposed": 157538,
+          "af": 1.96,
+          "affected": 703
+        },
+        "2033": {
+          "exposed": 157820,
+          "af": 2.08,
+          "affected": 745
+        },
+        "2034": {
+          "exposed": 158079,
+          "af": 2.2,
+          "affected": 789
+        },
+        "2035": {
+          "exposed": 158321,
+          "af": 2.32,
+          "affected": 836
+        },
+        "2036": {
+          "exposed": 158552,
+          "af": 2.46,
+          "affected": 886
+        },
+        "2037": {
+          "exposed": 158715,
+          "af": 2.6,
+          "affected": 938
+        },
+        "2038": {
+          "exposed": 158837,
+          "af": 2.75,
+          "affected": 993
+        },
+        "2039": {
+          "exposed": 158958,
+          "af": 2.91,
+          "affected": 1051
+        },
+        "2040": {
+          "exposed": 159036,
+          "af": 3.08,
+          "affected": 1113
+        },
+        "2041": {
+          "exposed": 159050,
+          "af": 3.26,
+          "affected": 1177
+        },
+        "2042": {
+          "exposed": 158989,
+          "af": 3.44,
+          "affected": 1245
+        },
+        "2043": {
+          "exposed": 158905,
+          "af": 3.64,
+          "affected": 1316
+        },
+        "2044": {
+          "exposed": 158750,
+          "af": 3.85,
+          "affected": 1391
+        },
+        "2045": {
+          "exposed": 158587,
+          "af": 4.08,
+          "affected": 1470
+        },
+        "2046": {
+          "exposed": 158358,
+          "af": 4.31,
+          "affected": 1552
+        },
+        "2047": {
+          "exposed": 158077,
+          "af": 4.56,
+          "affected": 1639
+        },
+        "2048": {
+          "exposed": 157743,
+          "af": 4.83,
+          "affected": 1730
+        },
+        "2049": {
+          "exposed": 157345,
+          "af": 5.1,
+          "affected": 1826
+        },
+        "2050": {
+          "exposed": 156864,
+          "af": 5.4,
+          "affected": 1925
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 441
+        },
+        "2026": {
+          "affected": 462
+        },
+        "2027": {
+          "affected": 484
+        },
+        "2028": {
+          "affected": 507
+        },
+        "2029": {
+          "affected": 531
+        },
+        "2030": {
+          "affected": 556
+        },
+        "2031": {
+          "affected": 583
+        },
+        "2032": {
+          "affected": 611
+        },
+        "2033": {
+          "affected": 640
+        },
+        "2034": {
+          "affected": 670
+        },
+        "2035": {
+          "affected": 701
+        },
+        "2036": {
+          "affected": 734
+        },
+        "2037": {
+          "affected": 769
+        },
+        "2038": {
+          "affected": 804
+        },
+        "2039": {
+          "affected": 841
+        },
+        "2040": {
+          "affected": 880
+        },
+        "2041": {
+          "affected": 920
+        },
+        "2042": {
+          "affected": 962
+        },
+        "2043": {
+          "affected": 1005
+        },
+        "2044": {
+          "affected": 1050
+        },
+        "2045": {
+          "affected": 1096
+        },
+        "2046": {
+          "affected": 1145
+        },
+        "2047": {
+          "affected": 1195
+        },
+        "2048": {
+          "affected": 1246
+        },
+        "2049": {
+          "affected": 1300
+        },
+        "2050": {
+          "affected": 1355
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 552
+        },
+        "2026": {
+          "affected": 605
+        },
+        "2027": {
+          "affected": 663
+        },
+        "2028": {
+          "affected": 727
+        },
+        "2029": {
+          "affected": 797
+        },
+        "2030": {
+          "affected": 873
+        },
+        "2031": {
+          "affected": 957
+        },
+        "2032": {
+          "affected": 1049
+        },
+        "2033": {
+          "affected": 1150
+        },
+        "2034": {
+          "affected": 1259
+        },
+        "2035": {
+          "affected": 1380
+        },
+        "2036": {
+          "affected": 1511
+        },
+        "2037": {
+          "affected": 1655
+        },
+        "2038": {
+          "affected": 1811
+        },
+        "2039": {
+          "affected": 1982
+        },
+        "2040": {
+          "affected": 2169
+        },
+        "2041": {
+          "affected": 2373
+        },
+        "2042": {
+          "affected": 2594
+        },
+        "2043": {
+          "affected": 2836
+        },
+        "2044": {
+          "affected": 3098
+        },
+        "2045": {
+          "affected": 3385
+        },
+        "2046": {
+          "affected": 3697
+        },
+        "2047": {
+          "affected": 4037
+        },
+        "2048": {
+          "affected": 4406
+        },
+        "2049": {
+          "affected": 4807
+        },
+        "2050": {
+          "affected": 5241
+        }
+      },
+      "cumulative_affected": {
+        "central": 27248,
+        "low": 21488,
+        "high": 55614
+      },
+      "affected_2050_vs_baseline": 5.7,
+      "worst_historical_flood": {
+        "year": 2017,
+        "affected": 5004,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 4.6
+      }
+    },
+    "PG": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 26111,
+      "baseline_events": 30,
+      "baseline_exposed_pop": 806681,
+      "pct_below_10m": 10.0,
+      "af_central": 4.4,
+      "af_range": [
+        3.2,
+        10.6
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 1066994,
+          "af": 1.28,
+          "affected": 44210
+        },
+        "2026": {
+          "exposed": 1085569,
+          "af": 1.34,
+          "affected": 47257
+        },
+        "2027": {
+          "exposed": 1104000,
+          "af": 1.41,
+          "affected": 50493
+        },
+        "2028": {
+          "exposed": 1122254,
+          "af": 1.48,
+          "affected": 53926
+        },
+        "2029": {
+          "exposed": 1140325,
+          "af": 1.56,
+          "affected": 57568
+        },
+        "2030": {
+          "exposed": 1158236,
+          "af": 1.64,
+          "affected": 61433
+        },
+        "2031": {
+          "exposed": 1176049,
+          "af": 1.72,
+          "affected": 65536
+        },
+        "2032": {
+          "exposed": 1193595,
+          "af": 1.81,
+          "affected": 69881
+        },
+        "2033": {
+          "exposed": 1211030,
+          "af": 1.9,
+          "affected": 74491
+        },
+        "2034": {
+          "exposed": 1228299,
+          "af": 2.0,
+          "affected": 79378
+        },
+        "2035": {
+          "exposed": 1245552,
+          "af": 2.1,
+          "affected": 84568
+        },
+        "2036": {
+          "exposed": 1262568,
+          "af": 2.2,
+          "affected": 90064
+        },
+        "2037": {
+          "exposed": 1279568,
+          "af": 2.32,
+          "affected": 95897
+        },
+        "2038": {
+          "exposed": 1296380,
+          "af": 2.43,
+          "affected": 102076
+        },
+        "2039": {
+          "exposed": 1313045,
+          "af": 2.56,
+          "affected": 108622
+        },
+        "2040": {
+          "exposed": 1329489,
+          "af": 2.69,
+          "affected": 115551
+        },
+        "2041": {
+          "exposed": 1345743,
+          "af": 2.82,
+          "affected": 122885
+        },
+        "2042": {
+          "exposed": 1361731,
+          "af": 2.96,
+          "affected": 130640
+        },
+        "2043": {
+          "exposed": 1377498,
+          "af": 3.11,
+          "affected": 138843
+        },
+        "2044": {
+          "exposed": 1393186,
+          "af": 3.27,
+          "affected": 147534
+        },
+        "2045": {
+          "exposed": 1408801,
+          "af": 3.44,
+          "affected": 156740
+        },
+        "2046": {
+          "exposed": 1424316,
+          "af": 3.61,
+          "affected": 166489
+        },
+        "2047": {
+          "exposed": 1439462,
+          "af": 3.79,
+          "affected": 176778
+        },
+        "2048": {
+          "exposed": 1454382,
+          "af": 3.99,
+          "affected": 187652
+        },
+        "2049": {
+          "exposed": 1469092,
+          "af": 4.19,
+          "affected": 199147
+        },
+        "2050": {
+          "exposed": 1483629,
+          "af": 4.4,
+          "affected": 211299
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 41925
+        },
+        "2026": {
+          "affected": 44341
+        },
+        "2027": {
+          "affected": 46877
+        },
+        "2028": {
+          "affected": 49536
+        },
+        "2029": {
+          "affected": 52323
+        },
+        "2030": {
+          "affected": 55246
+        },
+        "2031": {
+          "affected": 58313
+        },
+        "2032": {
+          "affected": 61523
+        },
+        "2033": {
+          "affected": 64889
+        },
+        "2034": {
+          "affected": 68416
+        },
+        "2035": {
+          "affected": 72120
+        },
+        "2036": {
+          "affected": 75995
+        },
+        "2037": {
+          "affected": 80064
+        },
+        "2038": {
+          "affected": 84322
+        },
+        "2039": {
+          "affected": 88783
+        },
+        "2040": {
+          "affected": 93448
+        },
+        "2041": {
+          "affected": 98330
+        },
+        "2042": {
+          "affected": 103432
+        },
+        "2043": {
+          "affected": 108766
+        },
+        "2044": {
+          "affected": 114353
+        },
+        "2045": {
+          "affected": 120206
+        },
+        "2046": {
+          "affected": 126335
+        },
+        "2047": {
+          "affected": 132726
+        },
+        "2048": {
+          "affected": 139403
+        },
+        "2049": {
+          "affected": 146379
+        },
+        "2050": {
+          "affected": 153672
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 51188
+        },
+        "2026": {
+          "affected": 56343
+        },
+        "2027": {
+          "affected": 61991
+        },
+        "2028": {
+          "affected": 68175
+        },
+        "2029": {
+          "affected": 74945
+        },
+        "2030": {
+          "affected": 82354
+        },
+        "2031": {
+          "affected": 90467
+        },
+        "2032": {
+          "affected": 99334
+        },
+        "2033": {
+          "affected": 109037
+        },
+        "2034": {
+          "affected": 119646
+        },
+        "2035": {
+          "affected": 131261
+        },
+        "2036": {
+          "affected": 143948
+        },
+        "2037": {
+          "affected": 157830
+        },
+        "2038": {
+          "affected": 172996
+        },
+        "2039": {
+          "affected": 189566
+        },
+        "2040": {
+          "affected": 207655
+        },
+        "2041": {
+          "affected": 227403
+        },
+        "2042": {
+          "affected": 248944
+        },
+        "2043": {
+          "affected": 272445
+        },
+        "2044": {
+          "affected": 298108
+        },
+        "2045": {
+          "affected": 326130
+        },
+        "2046": {
+          "affected": 356718
+        },
+        "2047": {
+          "affected": 390027
+        },
+        "2048": {
+          "affected": 426334
+        },
+        "2049": {
+          "affected": 465905
+        },
+        "2050": {
+          "affected": 509039
+        }
+      },
+      "cumulative_affected": {
+        "central": 2838958,
+        "low": 2281723,
+        "high": 5337789
+      },
+      "affected_2050_vs_baseline": 8.1,
+      "worst_historical_flood": {
+        "year": 2012,
+        "affected": 200000,
+        "return_period_today_yrs": 25,
+        "return_period_2050_yrs": 5.7
+      }
+    },
+    "CK": {
+      "baseline_window": [
+        2000,
+        2024
+      ],
+      "baseline_annual_affected": 142,
+      "baseline_events": 3,
+      "baseline_exposed_pop": 4974,
+      "pct_below_10m": 31.0,
+      "af_central": 5.6,
+      "af_range": [
+        4.0,
+        15.8
+      ],
+      "small_n_flag": false,
+      "series": {
+        "2025": {
+          "exposed": 4182,
+          "af": 1.33,
+          "affected": 159
+        },
+        "2026": {
+          "exposed": 4041,
+          "af": 1.41,
+          "affected": 163
+        },
+        "2027": {
+          "exposed": 3911,
+          "af": 1.49,
+          "affected": 167
+        },
+        "2028": {
+          "exposed": 3798,
+          "af": 1.58,
+          "affected": 172
+        },
+        "2029": {
+          "exposed": 3696,
+          "af": 1.68,
+          "affected": 177
+        },
+        "2030": {
+          "exposed": 3603,
+          "af": 1.78,
+          "affected": 183
+        },
+        "2031": {
+          "exposed": 3524,
+          "af": 1.88,
+          "affected": 189
+        },
+        "2032": {
+          "exposed": 3457,
+          "af": 1.99,
+          "affected": 197
+        },
+        "2033": {
+          "exposed": 3397,
+          "af": 2.11,
+          "affected": 205
+        },
+        "2034": {
+          "exposed": 3342,
+          "af": 2.23,
+          "affected": 213
+        },
+        "2035": {
+          "exposed": 3293,
+          "af": 2.37,
+          "affected": 223
+        },
+        "2036": {
+          "exposed": 3241,
+          "af": 2.51,
+          "affected": 232
+        },
+        "2037": {
+          "exposed": 3198,
+          "af": 2.65,
+          "affected": 243
+        },
+        "2038": {
+          "exposed": 3163,
+          "af": 2.81,
+          "affected": 254
+        },
+        "2039": {
+          "exposed": 3125,
+          "af": 2.98,
+          "affected": 266
+        },
+        "2040": {
+          "exposed": 3100,
+          "af": 3.15,
+          "affected": 279
+        },
+        "2041": {
+          "exposed": 3067,
+          "af": 3.34,
+          "affected": 293
+        },
+        "2042": {
+          "exposed": 3046,
+          "af": 3.54,
+          "affected": 308
+        },
+        "2043": {
+          "exposed": 3029,
+          "af": 3.75,
+          "affected": 324
+        },
+        "2044": {
+          "exposed": 3012,
+          "af": 3.97,
+          "affected": 342
+        },
+        "2045": {
+          "exposed": 2993,
+          "af": 4.2,
+          "affected": 360
+        },
+        "2046": {
+          "exposed": 2974,
+          "af": 4.45,
+          "affected": 378
+        },
+        "2047": {
+          "exposed": 2959,
+          "af": 4.71,
+          "affected": 399
+        },
+        "2048": {
+          "exposed": 2938,
+          "af": 4.99,
+          "affected": 419
+        },
+        "2049": {
+          "exposed": 2923,
+          "af": 5.29,
+          "affected": 442
+        },
+        "2050": {
+          "exposed": 2904,
+          "af": 5.6,
+          "affected": 465
+        }
+      },
+      "series_low": {
+        "2025": {
+          "affected": 151
+        },
+        "2026": {
+          "affected": 152
+        },
+        "2027": {
+          "affected": 154
+        },
+        "2028": {
+          "affected": 157
+        },
+        "2029": {
+          "affected": 160
+        },
+        "2030": {
+          "affected": 163
+        },
+        "2031": {
+          "affected": 167
+        },
+        "2032": {
+          "affected": 172
+        },
+        "2033": {
+          "affected": 177
+        },
+        "2034": {
+          "affected": 182
+        },
+        "2035": {
+          "affected": 188
+        },
+        "2036": {
+          "affected": 194
+        },
+        "2037": {
+          "affected": 201
+        },
+        "2038": {
+          "affected": 208
+        },
+        "2039": {
+          "affected": 215
+        },
+        "2040": {
+          "affected": 223
+        },
+        "2041": {
+          "affected": 231
+        },
+        "2042": {
+          "affected": 241
+        },
+        "2043": {
+          "affected": 251
+        },
+        "2044": {
+          "affected": 261
+        },
+        "2045": {
+          "affected": 272
+        },
+        "2046": {
+          "affected": 283
+        },
+        "2047": {
+          "affected": 294
+        },
+        "2048": {
+          "affected": 306
+        },
+        "2049": {
+          "affected": 319
+        },
+        "2050": {
+          "affected": 332
+        }
+      },
+      "series_high": {
+        "2025": {
+          "affected": 189
+        },
+        "2026": {
+          "affected": 201
+        },
+        "2027": {
+          "affected": 213
+        },
+        "2028": {
+          "affected": 227
+        },
+        "2029": {
+          "affected": 242
+        },
+        "2030": {
+          "affected": 258
+        },
+        "2031": {
+          "affected": 277
+        },
+        "2032": {
+          "affected": 298
+        },
+        "2033": {
+          "affected": 321
+        },
+        "2034": {
+          "affected": 346
+        },
+        "2035": {
+          "affected": 374
+        },
+        "2036": {
+          "affected": 404
+        },
+        "2037": {
+          "affected": 437
+        },
+        "2038": {
+          "affected": 474
+        },
+        "2039": {
+          "affected": 513
+        },
+        "2040": {
+          "affected": 558
+        },
+        "2041": {
+          "affected": 605
+        },
+        "2042": {
+          "affected": 659
+        },
+        "2043": {
+          "affected": 718
+        },
+        "2044": {
+          "affected": 783
+        },
+        "2045": {
+          "affected": 853
+        },
+        "2046": {
+          "affected": 930
+        },
+        "2047": {
+          "affected": 1014
+        },
+        "2048": {
+          "affected": 1104
+        },
+        "2049": {
+          "affected": 1204
+        },
+        "2050": {
+          "affected": 1311
+        }
+      },
+      "cumulative_affected": {
+        "central": 7052,
+        "low": 5654,
+        "high": 14513
+      },
+      "affected_2050_vs_baseline": 3.3,
+      "worst_historical_flood": null
+    }
+  },
+  "regional": {
+    "series": {
+      "2025": {
+        "affected": 240806
+      },
+      "2026": {
+        "affected": 258395
+      },
+      "2027": {
+        "affected": 277184
+      },
+      "2028": {
+        "affected": 297313
+      },
+      "2029": {
+        "affected": 318842
+      },
+      "2030": {
+        "affected": 341870
+      },
+      "2031": {
+        "affected": 366518
+      },
+      "2032": {
+        "affected": 392831
+      },
+      "2033": {
+        "affected": 420983
+      },
+      "2034": {
+        "affected": 451080
+      },
+      "2035": {
+        "affected": 483284
+      },
+      "2036": {
+        "affected": 517691
+      },
+      "2037": {
+        "affected": 554490
+      },
+      "2038": {
+        "affected": 593829
+      },
+      "2039": {
+        "affected": 635856
+      },
+      "2040": {
+        "affected": 680686
+      },
+      "2041": {
+        "affected": 728546
+      },
+      "2042": {
+        "affected": 779671
+      },
+      "2043": {
+        "affected": 834198
+      },
+      "2044": {
+        "affected": 892341
+      },
+      "2045": {
+        "affected": 954455
+      },
+      "2046": {
+        "affected": 1020639
+      },
+      "2047": {
+        "affected": 1091206
+      },
+      "2048": {
+        "affected": 1166321
+      },
+      "2049": {
+        "affected": 1246448
+      },
+      "2050": {
+        "affected": 1331694
+      }
+    },
+    "series_low": {
+      "2025": {
+        "affected": 227050
+      },
+      "2026": {
+        "affected": 240784
+      },
+      "2027": {
+        "affected": 255278
+      },
+      "2028": {
+        "affected": 270614
+      },
+      "2029": {
+        "affected": 286816
+      },
+      "2030": {
+        "affected": 303934
+      },
+      "2031": {
+        "affected": 322039
+      },
+      "2032": {
+        "affected": 341120
+      },
+      "2033": {
+        "affected": 361291
+      },
+      "2034": {
+        "affected": 382591
+      },
+      "2035": {
+        "affected": 405109
+      },
+      "2036": {
+        "affected": 428867
+      },
+      "2037": {
+        "affected": 453977
+      },
+      "2038": {
+        "affected": 480483
+      },
+      "2039": {
+        "affected": 508463
+      },
+      "2040": {
+        "affected": 537929
+      },
+      "2041": {
+        "affected": 568999
+      },
+      "2042": {
+        "affected": 601781
+      },
+      "2043": {
+        "affected": 636308
+      },
+      "2044": {
+        "affected": 672666
+      },
+      "2045": {
+        "affected": 711034
+      },
+      "2046": {
+        "affected": 751405
+      },
+      "2047": {
+        "affected": 793914
+      },
+      "2048": {
+        "affected": 838582
+      },
+      "2049": {
+        "affected": 885647
+      },
+      "2050": {
+        "affected": 935079
+      }
+    },
+    "series_high": {
+      "2025": {
+        "affected": 285510
+      },
+      "2026": {
+        "affected": 316982
+      },
+      "2027": {
+        "affected": 351817
+      },
+      "2028": {
+        "affected": 390447
+      },
+      "2029": {
+        "affected": 433241
+      },
+      "2030": {
+        "affected": 480634
+      },
+      "2031": {
+        "affected": 533168
+      },
+      "2032": {
+        "affected": 591274
+      },
+      "2033": {
+        "affected": 655652
+      },
+      "2034": {
+        "affected": 726929
+      },
+      "2035": {
+        "affected": 805896
+      },
+      "2036": {
+        "affected": 893291
+      },
+      "2037": {
+        "affected": 990073
+      },
+      "2038": {
+        "affected": 1097225
+      },
+      "2039": {
+        "affected": 1215815
+      },
+      "2040": {
+        "affected": 1346901
+      },
+      "2041": {
+        "affected": 1491886
+      },
+      "2042": {
+        "affected": 1652317
+      },
+      "2043": {
+        "affected": 1829632
+      },
+      "2044": {
+        "affected": 2025565
+      },
+      "2045": {
+        "affected": 2242332
+      },
+      "2046": {
+        "affected": 2481747
+      },
+      "2047": {
+        "affected": 2746269
+      },
+      "2048": {
+        "affected": 3038197
+      },
+      "2049": {
+        "affected": 3360804
+      },
+      "2050": {
+        "affected": 3716662
+      }
+    },
+    "cumulative_affected": {
+      "central": 16877177,
+      "low": 13201760,
+      "high": 35700266
+    }
+  }
+}
