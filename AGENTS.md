@@ -6,7 +6,7 @@ Always use Bun by default (`bun run`, `bun install`, `bunx`, etc).
 packages/api/    — Go service (module: crushingviz.info/api)
 packages/data/   — Bun scripts that fetch/ingest external data into Postgres
 packages/types/  — Shared TS types (@crushingviz/types)
-packages/web/    — Astro site (⚠ uses npm internally, has its own package-lock.json)
+packages/web/    — Astro site (own bun.lock, not in root workspaces)
 ```
 
 Root `go.work` includes `./packages/api`.
@@ -17,13 +17,13 @@ Root `go.work` includes `./packages/api`.
 - `./dev db` — start Postgres via Docker Compose + run migrations
 - `./dev all` — db, api, and web concurrently
 - `./dev api` — `go run main.go` in packages/api
-- `./dev web` — `npm run dev` (Astro dev server)
+- `./dev web` — `bun run dev` (Astro dev server)
 
 ## Type generation (tygo)
 
-`npm run types:generate` — runs `tygo generate` in `packages/api` → outputs `packages/types/acled.ts`.
+`bun run types:generate` — runs `tygo generate` in `packages/api` → outputs `packages/types/acled.ts`.
 
-This must run before building the web app (`npm run build` and `npm run dev:web` auto-run it).
+This must run before building the web app (`bun run build` and `bun run dev:web` auto-run it).
 
 ## Dependencies
 
@@ -45,8 +45,7 @@ Use `./run_with_env <command>` to load .env (dotenvx) before running data script
 
 ## Quirks
 
-- `packages/web` uses npm, not bun. Do not `bun install` there.
-- `packages/web` is NOT in root npm workspaces (it has its own `package-lock.json`). Run `npm install` inside `packages/web/`, never from root.
+- `packages/web` is NOT in root bun workspaces (it has its own `bun.lock`). Run `bun install` inside `packages/web/`, never from root.
 - `Bun.SQL()` is used for Postgres in data scripts (not the `pg` npm package).
 - No tests, lint, or typecheck scripts configured yet.
 

@@ -69,7 +69,7 @@ start_api() {
 start_web() {
   echo "Starting Astro web app..."
   pushd packages/web > /dev/null
-  npm run dev
+  bun run dev
   popd > /dev/null
 }
 
@@ -90,7 +90,7 @@ start_all() {
 
   # Start web in background with prefixed output
   pushd packages/web > /dev/null
-  (npm run dev 2>&1 | sed 's/^/[web] /') &
+  (bun run dev 2>&1 | sed 's/^/[web] /') &
   WEB_PID=$!
   popd > /dev/null
 

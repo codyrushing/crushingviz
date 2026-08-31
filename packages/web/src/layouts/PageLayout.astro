@@ -115,7 +115,7 @@ export type WindowExtended = Window & {
 <style>
   @reference "../styles/global.css";
   main {
-    h1:not(.unstyledd) {
+    h1:not(.unstyled) {
       /*@apply text-6xl;*/
       @apply font-serif;
       @apply leading-none;
@@ -127,7 +127,7 @@ export type WindowExtended = Window & {
       @apply font-serif;
       @apply leading-none;
       @apply text-lg md:text-xl;
-      @apply mt-8;
+      @apply mt-4;
       font-size: clamp(2rem,8vw,3rem);
     }
 
@@ -137,7 +137,51 @@ export type WindowExtended = Window & {
 
     a {
       @apply text-blue-500 underline;
+      &:hover {
+        opacity: 0.75;
+      }
     }
+
+    .modal-dialog::backdrop {
+      background-color: rgb(0 0 0 / 0.5);
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-dialog {
+      h1 {
+        @apply text-xl;
+      }
+      h2 {
+        @apply text-lg;
+      }
+
+      /* Markdown body rendered inside the modal */
+      .modal-markdown {
+        @apply text-sm leading-relaxed flex flex-col gap-3;
+      }
+
+      .modal-markdown p {
+        @apply mt-2;
+      }
+
+      .modal-markdown h1 {
+        @apply text-base font-serif font-bold mb-2;
+      }
+      .modal-markdown hr {
+        @apply border-border my-4;
+      }
+      .modal-markdown ul {
+        @apply list-disc pl-5 flex flex-col gap-2;
+      }
+      .modal-markdown a {
+        @apply text-accent underline underline-offset-2;
+      }
+      .modal-markdown code {
+        @apply font-mono text-xs bg-surface px-1 rounded;
+      }
+
+    }
+
   }
 </style>
 <script>

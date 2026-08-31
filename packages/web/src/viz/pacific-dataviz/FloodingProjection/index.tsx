@@ -15,6 +15,7 @@ import {
   disasterEmdatByType,
   type AffectedProjectionCountryProjected,
 } from "../data";
+import { FloodingProjectionSourcesModal } from "./FloodingProjectionSourcesModal";
 
 // Historical window shown as solid lines (EM-DAT full years). The projection
 // continues the cumulative total from the year AFTER history ends, so no
@@ -122,7 +123,7 @@ export function FloodingProjection() {
   });
 
   return (
-    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
+    <div class="h-screen min-h-128 py-8 flex flex-col font-monospace gap-1" ref={ref}>
       <h2 class="unstyled text-xl sm:text-2xl leading-none font-serif font-bold text-center">Flood-Affected Population to 2050</h2>
       <div class="flex flex-col relative flex-1 min-h-0">
         <h3 class="unstyle text-sm font-serif font-semibold text-center opacity-80">
@@ -146,6 +147,7 @@ export function FloodingProjection() {
           <div class="chart-container flex-1" ref={(el) => { sizeRef(el); chartContainer = el; }} />
         </div>
       </div>
+      <FloodingProjectionSourcesModal />
     </div>
   );
 }

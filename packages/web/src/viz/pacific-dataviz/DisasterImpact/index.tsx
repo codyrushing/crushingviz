@@ -27,6 +27,7 @@ import {
   setSelectedYear,
   toggleSelectedCountry,
 } from "./shared";
+import { DisasterImpactSourcesModal } from "./DisasterImpactSourcesModal";
 
 export { activeCountry, GDP_LABEL, hoveredCountry, maxYear, minYear, selectedCountry, selectedYear, setHoveredCountry, setSelectedCountry, setSelectedYear, toggleSelectedCountry };
 
@@ -67,7 +68,7 @@ export function DisasterImpact() {
   );
 
   return (
-    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
+    <div class="h-screen min-h-128 py-8 flex flex-col font-monospace gap-1" ref={ref}>
       <h2 class="unstyled text-xl sm:text-2xl font-serif font-bold text-center">Disaster Impact and GDP</h2>
       <div class="flex flex-col flex-1 gap-6 min-w-0">
         <div class="flex flex-col relative flex-1">
@@ -90,6 +91,7 @@ export function DisasterImpact() {
         </div>
         <div class="countries flex-1"><CountryBars metric={metric} /></div>
       </div>
+      <DisasterImpactSourcesModal />
     </div>
   );
 }

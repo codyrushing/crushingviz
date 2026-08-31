@@ -10,6 +10,7 @@ import { hierarchy, treemap, treemapBinary, pack, type HierarchyRectangularNode,
 import { useElementVisibility } from "../../../hooks/useElementVisibility";
 import { useScreenSize } from "../../../hooks/useScreenSize";
 import { countries, disasterEmdatByType, disasterEmdatRegionalEvents, type EmdatDamageableDisasterTypeName, type EmdatDisasterTypeName, type EmdatDisasterTypeWithSubtypes, type RegionalEmdatEvent } from "../data";
+import { DisastersByTypeSourcesModal } from "./DisastersByTypeSourcesModal";
 
 // Disaster types rendered in the chart. `flood_relevant` (Storm + Flood +
 // Mass movement (wet), per `flood_relevant_definition`) is included as a
@@ -86,7 +87,7 @@ export function DisastersByType() {
   });
 
   return (
-    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
+    <div class="h-screen min-h-128 py-8 flex flex-col font-monospace gap-1" ref={ref}>
       <h2 class="unstyled text-xl sm:text-2xl leading-none font-serif font-bold text-center">Disasters by Type</h2>
 
       {/* People affected — stacked area chart */}
@@ -119,6 +120,7 @@ export function DisastersByType() {
         </Show>
         <div class="chart-container flex-1" ref={(el) => { sizeRef(el); affectedContainer = el; }} />
       </div>
+      <DisastersByTypeSourcesModal />
     </div>
   );
 }

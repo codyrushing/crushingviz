@@ -11,8 +11,8 @@
     "secrets:push": "dotenv-vault push",
     "types:generate": "cd packages/api && tygo generate",
     "dev:api": "cd packages/api && go run .",
-    "dev:web": "npm run types:generate && cd packages/web && astro dev",
-    "build": "npm run types:generate && cd packages/web && astro build"
+    "dev:web": "bun run types:generate && cd packages/web && astro dev",
+    "build": "bun run types:generate && cd packages/web && astro build"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.19.1",
