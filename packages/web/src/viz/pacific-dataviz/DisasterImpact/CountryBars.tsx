@@ -259,6 +259,7 @@ function CountryBarsChart(container: HTMLElement) {
       let mBarX: number, mBarY: number, mBarW: number, mBarH: number;
       let gBarX: number, gBarY: number, gBarW: number, gBarH: number;
       let flagCx: number, flagCy: number;
+      let hitX: number, hitY: number, hitW: number, hitH: number;
 
       if (horizontal) {
         const metricTop = Number.isFinite(metricVal) ? ms(metricVal) : innerHeight;
@@ -266,15 +267,17 @@ function CountryBarsChart(container: HTMLElement) {
         mBarX = bandStart + metricSlot; mBarY = metricTop; mBarW = barW; mBarH = Math.max(0, innerHeight - metricTop);
         gBarX = bandStart + gdpSlot; gBarY = gdpTop; gBarW = barW; gBarH = Math.max(0, innerHeight - gdpTop);
         flagCx = bandStart + bandW / 2; flagCy = innerHeight + fs / 2 + 4;
+        hitX = bandStart; hitY = 0; hitW = bandW; hitH = innerHeight + fs + 8;
       } else {
         const metricEnd = Number.isFinite(metricVal) ? ms(metricVal) : 0;
         const gdpEnd = Number.isFinite(d.gdp) ? gs(d.gdp) : 0;
         mBarX = 0; mBarY = bandStart + metricSlot; mBarW = Math.max(0, metricEnd); mBarH = barW;
         gBarX = 0; gBarY = bandStart + gdpSlot; gBarW = Math.max(0, gdpEnd); gBarH = barW;
         flagCx = -fs / 2 - 4; flagCy = bandStart + bandW / 2;
+        hitX = -(fs + 8); hitY = bandStart; hitW = innerWidth + fs + 8; hitH = bandW;
       }
 
-      return { ...d, mBarX, mBarY, mBarW, mBarH, gBarX, gBarY, gBarW, gBarH, flagCx, flagCy, fs };
+      return { ...d, mBarX, mBarY, mBarW, mBarH, gBarX, gBarY, gBarW, gBarH, flagCx, flagCy, hitX, hitY, hitW, hitH, fs };
     });
 
     // Data join with key on country code for object constancy
@@ -289,6 +292,13 @@ function CountryBarsChart(container: HTMLElement) {
     // Enter elements at their final geometry so the initial render doesn't
     // animate from 0. The transitions below are then a visual no-op for
     // newly entered elements, but still animate meaningful updates.
+    // An invisible hit rect covers the whole band (bars + flag label) so the
+    // entire band is hoverable, avoiding unhover/rehover gaps between bars.
+    groupsEnter.append("rect").attr("class", "hit")
+      .attr("fill", "none")
+      .style("pointer-events", "all")
+      .attr("x", d => d.hitX).attr("y", d => d.hitY)
+      .attr("width", d => d.hitW).attr("height", d => d.hitH);
     groupsEnter.append("rect").attr("class", "metric-bar").attr("fill", METRIC_COLOR).attr("fill-opacity", 0.8)
       .attr("x", d => d.mBarX).attr("y", d => d.mBarY)
       .attr("width", d => d.mBarW).attr("height", d => d.mBarH);
@@ -313,6 +323,13 @@ function CountryBarsChart(container: HTMLElement) {
     allGroups.attr("opacity", 1);
 
     // Bar geometry transitions
+    allGroups.select<SVGRectElement>(".hit")
+      .transition().duration(400)
+      .attr("x", d => d.hitX)
+      .attr("y", d => d.hitY)
+      .attr("width", d => d.hitW)
+      .attr("height", d => d.hitH);
+
     allGroups.select<SVGRectElement>(".metric-bar")
       .transition().duration(400)
       .attr("x", d => d.mBarX)
