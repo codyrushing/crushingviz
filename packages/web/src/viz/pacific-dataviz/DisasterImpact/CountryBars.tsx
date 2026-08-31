@@ -286,11 +286,22 @@ function CountryBarsChart(container: HTMLElement) {
       .style("cursor", "pointer")
       .attr("opacity", 1);
 
-    groupsEnter.append("rect").attr("class", "metric-bar").attr("fill", METRIC_COLOR).attr("fill-opacity", 0.8);
-    groupsEnter.append("rect").attr("class", "gdp-bar").attr("fill", GDP_COLOR).attr("fill-opacity", 0.8);
+    // Enter elements at their final geometry so the initial render doesn't
+    // animate from 0. The transitions below are then a visual no-op for
+    // newly entered elements, but still animate meaningful updates.
+    groupsEnter.append("rect").attr("class", "metric-bar").attr("fill", METRIC_COLOR).attr("fill-opacity", 0.8)
+      .attr("x", d => d.mBarX).attr("y", d => d.mBarY)
+      .attr("width", d => d.mBarW).attr("height", d => d.mBarH);
+    groupsEnter.append("rect").attr("class", "gdp-bar").attr("fill", GDP_COLOR).attr("fill-opacity", 0.8)
+      .attr("x", d => d.gBarX).attr("y", d => d.gBarY)
+      .attr("width", d => d.gBarW).attr("height", d => d.gBarH);
     groupsEnter.append("text").attr("class", "flag-text")
       .attr("text-anchor", "middle").attr("dominant-baseline", "central")
-      .style("user-select", "none");
+      .style("user-select", "none")
+      .attr("x", d => d.flagCx).attr("y", d => d.flagCy)
+      .attr("font-size", d => d.fs)
+      .attr("fill", "var(--muted)")
+      .text(d => d.code);
 
     const allGroups = groupsEnter.merge(groups as any);
 
