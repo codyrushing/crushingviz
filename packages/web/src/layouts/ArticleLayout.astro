@@ -1,7 +1,11 @@
 ---
 import PageLayout from "./PageLayout.astro";
+const { frontmatter }: {
+  frontmatter?: { title?: string }
+} = Astro.props;
+const title = frontmatter?.title;
 ---
-<PageLayout>
+<PageLayout title={title}>
   <article>
     <slot />
   </article>

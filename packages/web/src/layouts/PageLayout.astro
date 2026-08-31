@@ -2,7 +2,8 @@
 import '../styles/global.css';
 import SiteHeader from "./structures/SiteHeader.astro";
 
-const { showFooter }: {
+const { showFooter, title }: {
+  title?: string,
   showFooter?: boolean
 } = Astro.props;
 
@@ -26,7 +27,7 @@ export type WindowExtended = Window & {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{title ?? "Unknown page"} - crushingviz</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Inconsolata:wght@200..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
