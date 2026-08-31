@@ -122,7 +122,7 @@ export function FloodingProjection() {
   });
 
   return (
-    <div class="h-screen py-12 flex flex-col font-monospace gap-1" ref={ref}>
+    <div class="h-screen py-8 flex flex-col font-monospace gap-1" ref={ref}>
       <h2 class="unstyled text-xl sm:text-2xl leading-none font-serif font-bold text-center">Flood-Affected Population to 2050</h2>
       <div class="flex flex-col relative flex-1 min-h-0">
         <h3 class="unstyle text-sm font-serif font-semibold text-center opacity-80">

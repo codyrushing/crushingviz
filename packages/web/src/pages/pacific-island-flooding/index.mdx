@@ -5,9 +5,9 @@ import { DisasterImpact } from "../../viz/pacific-dataviz/DisasterImpact";
 import { DisastersByType } from "../../viz/pacific-dataviz/DisastersByType";
 import { FloodingProjection } from "../../viz/pacific-dataviz/FloodingProjection";
 
-# Flooding in the Pacific Islands
+# Disaster Impact in the Pacific
 
-To begin to understand who is most negatively affected by natural disasters in the Pacific region today, let's first explore the last 25 years disaster exposure of countries in the region measured alongside their relative economic power.
+To understand who is most negatively affected by natural disasters in the Pacific region today, let's begin by exploring the last 25 years disaster exposure of countries in the region measured alongside their relative economic power.
 
 <DisasterImpact client:load />
 
@@ -27,19 +27,23 @@ Still, despite a major drought event in a country with 10x the population of any
 
 Because flooding is a major disaster category in the region, forecasting future flood exposure could prove valuable. We have 25 years of flood impact data, but in the context of the changing climate, we have to account for how flooding frequencies may change.
 
-To do this, we can use a method described by [Vitousek et al. 2017](https://www.nature.com/articles/s41598-017-01362-7) to determine a _flood amplification factor (AF)_ for each country in the region:
+To do this, we can use a method described by [in a paper by Vitousek et al. 2017](https://www.nature.com/articles/s41598-017-01362-7) to determine a _flood amplification factor (AF)_ for each country in the region:
 
-<div class="font-monospace text-lg font-bold text-center">
+<div class="font-monospace text-xl font-bold text-center">
   AF = 2^(SLR / D)
 </div>
 
 * __SLR__ - relative sea-level rise. This is determined per-country from the nearest IPCC AR6 sensors.
 * __D__ - the regionally-defined doubling interval.
 
-__AF__ does not predict a change in storm frequency. It describes a change in flooding frequency with the same level of storm frequency/intensity. It produces a range of expected values, and the plot below plots the central point in the range (represented by the dotted line). Hovering or tapping a projection will show the upper and lower bounds of the expected range.
+The __SLR__ sea level projections for the 2050 horizon are essentially locked in, meaning that the window to reduce them by cutting emissions has already closed. Because of this, __AF__ is likely conservative.
 
-The __SLR__ sea level projections for the 2050 horizon are essentially locked in, meaning that the window to reduce them by cutting emissions has already closed. Because of this, the __AF__ range is likely more conservative reality.
+__AF__ does not predict a change in storm frequency. It describes a change in coastal flooding frequency for a given storm frequency/intensity. Because virtually all flooding in the Pacific is coastal flooding, it is appropiate to use this multiplier against all of the baseline flooding measured in the region. The way it is typically described is that a flood amplification factor of 10 would predict that flooding events that only occur once in 50 years at the baseline would be expected to occur every 5 years.
 
-Using the 2000 - 2025 data to establish a baseline of observed average flood impact, we can apply the amplification factor to create a projection of the number of flood affected people through 2050.
+__AF__  produces a range of expected values, and the chart below plots the central point in the range (represented by the dotted line). Hovering or tapping a projection will show the upper and lower bounds of the expected range.
 
 <FloodingProjection client:load />
+
+The projections are computed by calculating __AF__ per year based on a linearly scaling __SLR__ value over the period between 2025 and 2050. That yearly __AF__ value is then applied to the average number of flood affected people per year during the baseline period and multiplied by the projected population. The projection represents a trend line, not the actual expected shape of future flooding. Flooding will continue to occur as punctuated events, but with greater frequency.
+
+These curves are shaped both by the climate-driven flood __AF__ _and_ expected changes in population. The countries with the sharpest curves upwards have both high expected flood amplification and a growing population. If flooding continues to grow in this way, that might cause population growth to slow, which would help flatten the curve. Some countries, like Palau, are expecting to decrease their population, which will help mitigate the human cost of increased coastal flooding.

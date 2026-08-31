@@ -442,8 +442,9 @@ function DisastersByTypeStreamGraph(
     sectionLabel.enter().append("text").attr("class", "section").merge(sectionLabel as any)
       .attr("x", 0)
       .attr("y", -14)
+      .attr("class", "font-serif")
       .attr("fill", "var(--muted)")
-      .style("font-size", "12px")
+      .style("font-size", "14px")
       .style("font-weight", "600")
       .text("Disaster events");
 
