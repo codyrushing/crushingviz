@@ -8,9 +8,16 @@ const { href, title } = Astro.props;
 ---
 
 <a href={href} class="card group">
-  {title && <h3 class="card-title">{title}</h3>}
-  <div class="card-body">
-    <slot />
+  {Astro.slots.has("image") && (
+    <div class="card-image">
+      <slot name="image" />
+    </div>
+  )}
+  <div class="card-content">
+    {title && <h3 class="card-title">{title}</h3>}
+    <div class="card-body">
+      <slot />
+    </div>
   </div>
 </a>
 
@@ -18,7 +25,7 @@ const { href, title } = Astro.props;
 @reference "../styles/global.css";
 
 .card {
-  @apply block rounded-lg border border-border bg-surface p-6 no-underline;
+  @apply block rounded-lg border border-border bg-surface no-underline overflow-hidden;
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
 
@@ -27,6 +34,8 @@ const { href, title } = Astro.props;
   transform: translateY(-2px);
 }
 
+.card-image {}
+
 .card-title {
   @apply font-serif leading-none text-foreground;
   @apply text-xl md:text-2xl;
@@ -34,8 +43,8 @@ const { href, title } = Astro.props;
   transition: color 0.15s ease;
 }
 
-.card-body {
-  @apply text-sm text-muted;
+.card-content {
+  @apply text-sm text-muted p-6;
   line-height: 1.5;
 }
 

@@ -10,5 +10,8 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [mdx(), solidJs()]
+  integrations: [mdx(), solidJs()],
+  image: {
+    layout: "constrained",
+  }
 });
