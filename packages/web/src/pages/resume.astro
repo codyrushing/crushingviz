@@ -1,0 +1,294 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import EnvelopeIcon from "../icons/envelope.astro";
+import GithubIcon from "../icons/github.astro";
+import LinkedinIcon from "../icons/linkedin.astro";
+import FilePDF from "../icons/file-pdf.astro";
+---
+<style>
+  @reference "../styles/global.css";
+
+	.brief {
+		@apply leading-6 mb-3 flex flex-col gap-1 lg:flex-row lg:gap-4 items-baseline;
+	}
+
+	.brief .company,
+	.brief .position,
+	.brief .duration {
+		@apply block;
+		@apply lg:inline;
+	}
+
+	.brief h3 {
+		@apply text-xl leading-none font-sans font-bold;
+	}
+
+	.brief h3, .brief > span {
+		white-space: nowrap;
+	}
+
+	.brief .position {
+		@apply text-muted-medium font-sans font-bold;
+	}
+
+	.brief .duration {
+		@apply text-xs text-muted-medium;
+	}
+
+	.brief .duration span:last-child:before {
+		content: '-';
+		display: inline;
+		@apply px-1;
+		margin-right: 2px;
+	}
+
+	.role-item {
+	  @apply py-4 md:py-6 lg:py-8 border-muted first:pt-0;
+	}
+
+	.role-details ul {
+		@apply list-outside pl-4;
+	}
+
+	.role-details ul ul {
+	  list-style: square;
+		@apply text-sm pl-4 text-muted-medium;
+	}
+
+	.role-details > ul > li:not(:first-child){
+		@apply mt-3;
+	}
+
+	.skills-list > li {
+		@apply whitespace-nowrap list-none px-3 py-0.5 rounded-full bg-accent-500 text-center font-bold text-gray-100;
+	}
+
+	a.icon-link:hover span {
+		text-decoration-style: solid;
+	}
+
+	nav a.icon-link span {
+		text-decoration: none;
+	}
+
+	@media print {
+		html,
+		body {
+			font-size: 12px;
+			background: white;
+			color: #222 !important;
+		}
+
+		.brief {
+		  @apply flex-row gap-4;
+		}
+
+		a {
+			color: inherit !important;
+		}
+
+		.role-details ul {
+			@apply ml-2;
+		}
+
+		.hide-from-print {
+			display: none;
+		}
+
+		.skills-list > li {
+			@apply px-0 flex items-center gap-2 leading-none;
+			color: #222;
+			background: none;
+			border: none;
+		}
+
+		.skills-list > li:not(:first-child):before {
+		  content: '•';
+			@apply inline-block self-center;
+		}
+
+		.education .info {
+		  flex-direction: row;
+		  @apply flex-row;
+		}
+
+	}
+</style>
+<PageLayout title="Cody Rushing - Resume/CV">
+	<div class="flex flex-col gap-4 md:gap-6 lg:gap-10 print:gap-8">
+    <header class="flex flex-col gap-1">
+      <h1 class="unstyled text-4xl font-bold font-sans text-center">Cody Rushing</h1>
+			<h2 class="unstyled text-2xl font-serif text-center leading-none">Senior Software Engineer</h2>
+      <section class="contact flex flex-wrap gap-x-4 gap-y-1 justify-center items-center text-sm">
+        <a title="Download as PDF" class="flex items-center gap-1 px-2 py-1 print:hidden" target="_blank" href="/CodyRushingResumeCV.pdf"><FilePDF class="size-4" /> <span class="hidden md:inline print:inline">Download</span></a>
+        <a title="Email" class="flex items-center gap-1 px-2 py-1" href="mailto:codyrushing@pm.me" class="inline"><EnvelopeIcon class="size-4" /> <span class="hidden md:inline print:inline">codyrushing@pm.me</span></a>
+        <a title="LinkedIn" class="flex items-center gap-1 px-2 py-1" target="_blank" href="https://linkedin.com/in/crushing"><LinkedinIcon class="size-4" /> <span class="hidden md:inline print:inline">linkedin.com/in/crushing</span></a>
+        <a title="Github" class="flex items-center gap-1 px-2 py-1" target="_blank" href="https://github.com/codyrushing"><GithubIcon class="size-4" /> <span class="hidden md:inline print:inline">github.com/codyrushing</span></a>
+      </section>
+    </header>
+
+    <section class="work-history flex flex-col gap-4">
+      <h2 class="unstyled font-serif text-2xl lg:text-4xl print:hidden">Work history</h2>
+      <ul class="roles list-none flex flex-col divide-y">
+        <div class="role-item pt-0">
+     			<div class="brief">
+     			  <h3 class="company">AidKit</h3>
+     			  <span class="position">Platform Engineer</span>
+     			  <span class="duration">
+      				<span>January 2024</span>
+      				<span>present</span>
+     			  </span>
+     			</div>
+     			<div class="role-details">
+     			  <ul>
+     					<!-- <li>Led the integration of GiveCard bank transfers into the AidKit platform, including realtime updates via webhooks.</li> -->
+     					<li>
+     					  Member of the Conversational AI team which delivered a suite of tools including:
+      						<ul>
+      						  <li>Automated message drafting to streamline support case management.</li>
+      						  <li>Document classification pipeline with custom document validation and real-time updates.</li>
+     							<li>Bespoke prompt management and conversation generation pipeline allowing partners to author, iterate, and test prompts at scale.</li>
+      						</ul>
+     					</li>
+     					<li>Designed and delivered a privacy-focused video calling solution with end-to-end data ownership using WebRTC and AWS Chime.</li>
+     			  </ul>
+     			</div>
+        </div>
+
+		    <div class="role-item">
+          <div class="brief">
+            <h3 class="company">Elevation <span class="text-sm">(formerly Curb)</span></h3>
+            <span class="position">Software Team Lead</span>
+            <span class="duration">
+              <span>July 2016</span>
+              <span>December 2023</span>
+            </span>
+          </div>
+          <div class="role-details">
+            <ul>
+							<li>Assisted in architecting the Curb cloud system of microservices supporting 10K+ IoT smart meters and 800+ daily active users.</li>
+							<li>Built project roadmaps, led engineering initiatives, and mentored junior engineers.</li>
+							<li>Designed and implemented internal and public APIs to securely provide historical and real-time energy data using Node.js (Express) and Python (Flask).</li>
+							<li>Built UI dashboards for users to monitor their fleets of IoT devices and customers utilizing React and D3.js.</li>
+							<!-- <li>Developing a demand response system to shift peak demand through automated smart thermostat controls, including a fleet-wide management web portal utilizing Serverless, GraphQL, and Next.js.</li> -->
+							<li>Worked closely with the product team to develop functional product specs and translated those into technical design documents.</li>
+							<!-- <li>Writing automated API integration tests.</li> -->
+							<li>Implemented a timeseries data API for all IoT sensor data utilizing Node.js and AWS Timestream to perform custom binning, aggregations, and interpolation.</li>
+							<!-- <li>Wrote infrastructure-as-code with AWS CDK to manage the deployment of ECS services, Lambdas, single-page apps, and custom third-party resources.</li> -->
+            </ul>
+          </div>
+				</div>
+
+        <div class="role-item">
+          <div class="brief">
+						<h3 class="company">GreenSync</h3>
+            <span class="position">Software Engineer</span>
+            <span class="duration text-sm">
+							<span>October 2015</span>
+              <span>March 2016</span>
+            </span>
+          </div>
+          <div class="role-details">
+            <ul>
+							<li>Maintained a customer-facing web app providing real-time electricity metering data and interactive visualizations with D3.js.</li>
+							<li>Wrote and maintained a suite of automated browser tests.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-item">
+          <div class="brief">
+						<h3 class="company">Atlassian</h3>
+            <span class="position">Web Developer</span>
+            <span class="duration">
+							<span>November 2014</span>
+              <span>August 2015</span>
+            </span>
+          </div>
+          <div class="role-details">
+            <ul>
+							<li>Developed front-end codebase for atlassian.com and associated web properties.</li>
+							<li>Implemented a lightweight jQuery-based component library, custom CMS extensions, and streamlined development and build workflows.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-item print:border-b-0">
+          <div class="brief">
+						<h3 class="company">Razorfish</h3>
+            <span class="position">Senior Presentation Layer Engineer</span>
+            <span class="duration">
+              <span>April 2012</span>
+              <span>October 2014</span>
+            </span>
+          </div>
+          <div class="role-details">
+            <ul>
+							<li>Developed public-facing custom web applications and CMS-backed websites for clients such as Samsung, Southwest Airlines, BlackBerry, and others.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role-item print:hidden">
+          <div class="brief">
+            <h3 class="company">Monkee-Boy Web Design</h3>
+            <span class="position">Front-End Developer</span>
+            <span class="duration">
+              <span>July 2008</span>
+              <span>April 2012</span>
+            </span>
+          </div>
+          <div class="role-details">
+            <ul>
+							<li>Client projects consisting mostly of PHP and WordPress-backed websites.</li>
+							<li>Translated custom UI designs into mobile-first websites and web applications.</li>
+            </ul>
+          </div>
+        </div>
+      </ul>
+    </section>
+
+    <section class="skills row flex flex-col gap-3 lg:gap-4">
+			<h2 class="unstyled font-serif text-2xl lg:text-4xl">Skills and technologies</h2>
+      <ul class="skills-list flex flex-wrap gap-2 list-none">
+				<li>TypeScript</li>
+				<li>React</li>
+				<li>Node.js</li>
+				<li>Python</li>
+				<li>Go</li>
+				<li>PostgreSQL</li>
+				<li>MongoDB</li>
+				<li>Redis</li>
+				<li>AWS</li>
+				<li>API design</li>
+				<li>Web accessibility</li>
+				<!-- <li>Websockets</li> -->
+				<li>D3.js</li>
+				<!-- <li>OpenAPI</li> -->
+				<!-- <li>OAuth</li> -->
+				<li>Headless CMS</li>
+				<li>Event driven systems</li>
+				<li>Three.js</li>
+				<li>OAuth</li>
+				<!-- <li>WebGL</li> -->
+				<li>Devops</li>
+        <!-- <li>WebGL</li> -->
+        <!-- <li>CI/CD</li> -->
+      </ul>
+    </section>
+
+    <section class="education row flex flex-col gap-3 lg:gap-4">
+      <h2 class="unstyled text-2xl lg:text-4xl font-serif">Education</h2>
+      <div class="info flex flex-col md:flex-row gap-2 items-baseline">
+        <h3 class="text-lg font-bold">University of Texas at Austin</h3>
+        <span class="text-lg hidden md:block print:block">•</span>
+        <p>B.S. in General Kinesiology (Biology minor)</p>
+      </div>
+    </section>
+
+    <section class="references italic print:hidden">
+      <p>References available upon request.</p>
+    </section>
+
+	</div>
+</PageLayout>

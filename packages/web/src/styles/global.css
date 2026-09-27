@@ -67,6 +67,7 @@
   --color-surface:    var(--surface);
   --color-foreground: var(--foreground);
   --color-muted:      var(--muted);
+  --color-muted-medium:      var(--muted-medium);
   --color-border:     var(--border);
   --color-accent:     var(--accent);
   --color-accent-fg:  var(--accent-fg);
@@ -78,6 +79,7 @@
   --surface:    var(--color-sand-200);
   --foreground: var(--color-sand-800);
   --muted:      var(--color-sand-400);
+  --muted-medium:      var(--color-sand-600);
   --border:     var(--color-sand-300);
   --accent:     var(--color-accent-700);
   --accent-fg:  #ffffff;
@@ -90,6 +92,7 @@
   --surface:    var(--color-sand-800);
   --foreground: var(--color-sand-200);
   --muted:      var(--color-sand-400);
+  --muted-medium:      var(--color-sand-300);
   --border:     var(--color-sand-700);
   --accent:     var(--color-accent-400);
   --accent-fg:  var(--color-sand-950);
