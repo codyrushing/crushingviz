@@ -96,7 +96,7 @@ const titleContent = [
 	<body class="min-h-screen flex flex-col">
 	  <SiteHeader />
 
-		<main class="flex-1 flex flex-col container mx-auto p-4 lg:p-8">
+		<main class="flex-1 flex flex-col">
 			<slot />
 		</main>
 
@@ -114,10 +114,14 @@ const titleContent = [
         </div>
 			</div>
 		</footer>}
+
+		<slot name="end" />
+
 	</body>
 </html>
 <style>
   @reference "../styles/global.css";
+
   main {
     h1:not(.unstyled) {
       /*@apply text-6xl;*/

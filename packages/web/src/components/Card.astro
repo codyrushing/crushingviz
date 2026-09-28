@@ -7,7 +7,7 @@ interface Props {
 const { href, title } = Astro.props;
 ---
 
-<a href={href} class="card group">
+<a href={href} title={title ?? null} class="card group">
   {Astro.slots.has("image") && (
     <div class="card-image">
       <slot name="image" />
@@ -32,6 +32,7 @@ const { href, title } = Astro.props;
 .card:hover {
   border-color: var(--color-accent);
   transform: translateY(-2px);
+  opacity: 1;
 }
 
 .card-image {}

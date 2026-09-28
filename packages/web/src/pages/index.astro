@@ -5,13 +5,33 @@ import { Image } from 'astro:assets';
 import PacificFloodingThumbDark from "../images/pacific-flooding-thumb-dark.png";
 import PacificFloodingThumbLight from "../images/pacific-flooding-thumb-light.png";
 import CovidDashboardThumb from "../images/covid-dashboard-thumb.png";
-
+import AnimatedBackground from "../components/AnimatedBackground.astro";
 ---
 
 <PageLayout title="Data viz portfolio by Cody Rushing" showFooter={true}>
-  <div class="flex-1 flex flex-col justify-center">
-    <div class="container flex flex-col gap-6">
-      <h2 class="font-serif text-xl">Works</h2>
+
+  <!-- BIO  -->
+  <section class="standard-spacing container flex flex-col gap-4">
+    <h2 class="font-monospace">CrushingViz Projects</h2>
+    <p class="text-lg md:text-2xl">
+      Below is a collection of data apps and visualizations created by <a href="https://github.com/codyrushing" title="GitHub" target="_blank">Cody Rushing</a>
+		</p>
+		<div class="bg-surface border-border border py-4 px-2 rounded-full">
+ 			<nav class="links flex flex-wrap gap-4 justify-center text-sm">
+				<a href="https://github.com/codyrushing" title="GitHub" target="_blank">github</a>
+				<a href="mailto:codyrushing@pm.me">email</a>
+				<a href="https://www.linkedin.com/in/crushing/" title="LinkedIn" target="_blank">linkedin</a>
+				<a href="/resume" title="Resume/CV">resume/cv</a>
+ 			</nav>
+		</div>
+	</section>
+
+	<AnimatedBackground class="w-full h-20" />
+
+  <!-- WORKS SECTION  -->
+  <div class="container standard-spacing flex-1 flex flex-col justify-center relative">
+    <div class="flex flex-col gap-6">
+      <!-- <h2 class="font-serif text-xl">Projects</h2> -->
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         <Card href="/pacific-disaster-impact" title="Disaster Impact in the Pacific">

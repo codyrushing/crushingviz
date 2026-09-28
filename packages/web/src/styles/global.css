@@ -132,3 +132,7 @@ body {
   @apply mx-auto;
   max-width: var(--container-width);
 }
+
+.standard-spacing {
+  @apply p-4 lg:p-8;
+}

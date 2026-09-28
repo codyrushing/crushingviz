@@ -6,7 +6,7 @@ const { frontmatter }: {
 const title = frontmatter?.title;
 ---
 <PageLayout title={title}>
-  <article>
+  <article class="container standard-spacing">
     <slot />
   </article>
 </PageLayout>
