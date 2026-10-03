@@ -36,11 +36,11 @@ Use `bun` to install dependencies in packages. Do not use npm.
 - Migrations: `packages/api/migrate/migrations/` (numbered SQL files). Run via `./dev db` or `cd packages/api/migrate && go run . up`.
 - Schema source of truth: `crushingviz.dbml`.
 
-## Data scripts
+## Environment variables
 
-Use `./run_with_env <command>` to load .env (dotenvx) before running data scripts:
+`.env` is loaded automatically by [direnv](https://direnv.net/) via `.envrc` at the repo root. Run `direnv allow` once after cloning. Variables are then available to every command (`bun`, `go`, `psql`, `./dev`) with no wrapper:
 ```
-./run_with_env bun packages/data/acled/fetch-weekly-aggregates.ts
+bun packages/data/acled/fetch-weekly-aggregates.ts
 ```
 
 ## Quirks
@@ -52,3 +52,7 @@ Use `./run_with_env <command>` to load .env (dotenvx) before running data script
 ## Coding conventions
 
 - When writing sufficiently complex code, it is helpful to add a brief comment explaining its purpose. Not every change requires a comment.
+
+## `AGENTS.md`
+
+Update this file when there are any changes or additions to any of the conventions defined here.
