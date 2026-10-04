@@ -1,45 +1,26 @@
 #!/usr/bin/env bun
 
 /**
-This script fetches the ACLED weekly aggregates.
+Reads ACLED weekly aggregate .xlsx files downloaded by
+download-weekly-aggregates.ts and ingests them into Postgres.
 
-This data is available as static .xslx files per region which are updated weekly. Use playwright to navigate to the ACLED website, login with email and password, and download those files
+For each file listed in the download manifest:
+- skips files whose filename is unchanged since the last successful data_job run
+- parses the xlsx and upserts geographic areas and acled_weekly_agg rows in a
+  single transaction per region, committed only if there were no errors
+- records a data_job row for the region whether processing succeeded or failed
 
-Here is a list of operations this script should complete:
-
-- login with email/password at https://acleddata.com/
-- navigate to https://acleddata.com/conflict-data/download-data-files
-- for each of the links titled "Aggregated data on [region]"
-  - click the link to open the region aggregate page
-  - if the filename has not changed since the last successful data_job run for this region, continue
-  - download the .xlsx file
-  - parse the contents of the file
-  - for each row (aggregate) in the file
-    - insert a new row in the acled_weekly_agg postgres table
-    - insert a new geographic area for the region, country, and admin_1 values for the aggregate if they don't already exist
-  - after processing all rows, delete any preexisting acled_weekly_agg rows for this region
-  - save a new data_job row for this region. the `status` should only be successful if there were no errors. the filename can be saved to the `meta` jsonb column so that it can be queried by future runs
-
-Other notes:
-* All database operations for each region and associated .xlsx file should be done as part of a transaction. The transaction should only be committed if there were no errors
-* Trim whitespace from all strings before inserting into the database
-* The `week` row of each item in the xlsx file may appear in different formats (eg. "11/19/2022", "Nov 19 2022", "2022-11-19", etc).
+This process never talks to the ACLED website; it only reads files from disk.
 **/
 
-import { chromium, type Browser, type Page } from 'playwright';
 import * as XLSX from 'xlsx';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { DisorderType, EventType, SubEventType, GeographicAreaType, GeographicArea } from '@crushingviz/types'
+import { existsSync, readFileSync } from 'fs';
+import assert from 'node:assert';
+import { DisorderType, EventType, SubEventType, GeographicAreaType, GeographicArea } from '@crushingviz/types';
+import { MANIFEST_PATH, type WeeklyAggManifest } from './shared';
 
 // Environment variables
-const ACLED_EMAIL = process.env.ACLED_EMAIL!;
-const ACLED_PASSWORD = process.env.ACLED_PASSWORD || process.env.ACLED_KEY!;
 const POSTGRES_CONNECTION_STRING = process.env.POSTGRES_CONNECTION_STRING!;
-
-if (!ACLED_EMAIL || !ACLED_PASSWORD) {
-  throw new Error('ACLED_EMAIL and ACLED_PASSWORD (or ACLED_KEY) environment variables are required');
-}
 
 if (!POSTGRES_CONNECTION_STRING) {
   throw new Error('POSTGRES_CONNECTION_STRING environment variable is required');
@@ -95,14 +76,16 @@ async function getOrCreateGeographicArea(
     existing = await tx`SELECT id FROM geographic_area WHERE name = ${trimmedName} AND type = ${type} AND parent IS NULL LIMIT 1`;
   }
 
-  if (existing.length > 0) {
-    return existing[0].id;
+  if (existing[0]?.id) {
+    return existing[0]?.id;
   }
 
   // Create new area
   const inserted: GeographicArea[] = await tx`
     INSERT INTO geographic_area (name, type, parent) VALUES (${trimmedName}, ${type}, ${parentId ?? null}) RETURNING id
   `;
+
+  assert(inserted[0], `Inserting geographic area failed ${JSON.stringify({trimmedName, type, parentId})}`, )
 
   return inserted[0].id;
 }
@@ -126,14 +109,14 @@ async function hasFilenameChanged(region: string, filename: string): Promise<boo
   return lastFilename !== filename;
 }
 
-// Process a single region's XLSX file
+// Ingest a single region's XLSX file
 async function processRegionFile(region: string, filePath: string, filename: string): Promise<void> {
   const startTime = Date.now();
   let status = 'successful';
   let errorMessage: string | undefined;
 
   try {
-    console.log(`Processing ${region} from ${filename}...`);
+    console.log(`  Ingesting ${filename}...`);
 
     // Parse XLSX file
     const fileBuffer = readFileSync(filePath);
@@ -276,130 +259,38 @@ async function processRegionFile(region: string, filePath: string, filename: str
 
 // Main function
 async function main() {
-  let browser: Browser | undefined;
-
   try {
-    console.log('Starting ACLED weekly aggregates fetch...');
-
-    // Launch browser
-    browser = await chromium.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-
-    const context = await browser.newContext();
-    const page = await context.newPage();
-
-    // Login
-    console.log('Logging in to ACLED...');
-    await page.goto('https://acleddata.com/user/login');
-
-    // Wait for and click login link/button
-    const loginWithEmailButton = page.locator('button', { hasText: 'Login with email' });
-    await loginWithEmailButton.click();
-
-    // Fill in credentials
-    console.log('Filling out login form');
-    await page.fill('input[type="email"], input[name="email"]', ACLED_EMAIL);
-    await page.fill('input[type="password"], input[name="password"]', ACLED_PASSWORD);
-
-    // Submit form
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('input[type="submit"]'),
-    ]);
-
-    console.log('Logged in successfully');
-
-    // Navigate to download page
-    console.log('Navigating to download page...');
-    await page.goto('https://acleddata.com/conflict-data/download-data-files');
-    await page.waitForSelector('a');
-
-    // Find all "Aggregated data on [region]" links
-    const regionLinks = await page.evaluate(() => {
-      const links: { region: string; url: string }[] = [];
-      const anchors = Array.from(document.querySelectorAll('a'));
-
-      for (const anchor of anchors) {
-        const text = anchor.textContent || '';
-        const match = text.match(/Aggregated data on (.+)/i);
-        if (match) {
-          links.push({
-            region: match[1].trim(),
-            url: anchor.href
-          });
-        }
-      }
-
-      return links;
-    });
-
-    if (!regionLinks.length) {
-      throw new Error("Failed to find links for region aggregate pages");
+    if (!existsSync(MANIFEST_PATH)) {
+      throw new Error(`No download manifest at ${MANIFEST_PATH} — run download-weekly-aggregates.ts first`);
     }
 
-    console.log(`Found ${regionLinks.length} regions:`, regionLinks.map(r => r.region).join(', '));
+    const manifest: WeeklyAggManifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
 
-    // Process each region
-    for (const { region, url } of regionLinks) {
+    if (!manifest.files.length) {
+      console.log('Manifest contains no files, nothing to ingest');
+      return;
+    }
+
+    console.log(`Ingesting ${manifest.files.length} file(s) from manifest`);
+
+    for (const file of manifest.files) {
       try {
-        console.log(`\nProcessing region: ${region}`);
-        await page.goto(url);
-        await page.waitForSelector('a[href$=".xlsx"], a[download]');
+        console.log(`\nRegion: ${file.region}`);
 
-        // Get the filename
-        const downloadInfo = await page.evaluate(() => {
-          const link = document.querySelector('a[href$=".xlsx"], a[download]') as HTMLAnchorElement;
-          if (!link) return null;
-
-          const href = link.href;
-          const filename = href.split('/').pop() || link.getAttribute('download') || 'unknown.xlsx';
-
-          return { href, filename };
-        });
-
-        if (!downloadInfo) {
-          console.warn(`  No download link found for ${region}, skipping`);
+        if (!await hasFilenameChanged(file.region, file.filename)) {
+          console.log('  Filename unchanged since last successful run, skipping');
           continue;
         }
 
-        const { href, filename } = downloadInfo;
-        console.log(`  Found file: ${filename}`);
-
-        // Check if filename has changed
-        if (!await hasFilenameChanged(region, filename)) {
-          console.log(`  Filename unchanged since last run, skipping`);
-          continue;
-        }
-
-        // Download file (uses the context's authenticated cookies)
-        const downloadPath = join('/tmp', filename);
-        const response = await page.request.get(href);
-        if (!response.ok()) {
-          throw new Error(`Failed to download ${filename}: ${response.status()} ${response.statusText()}`);
-        }
-        const buffer = await response.body();
-        await Bun.write(downloadPath, buffer);
-
-        console.log(`  Downloaded to ${downloadPath}`);
-
-        // Process the file
-        await processRegionFile(region, downloadPath, filename);
+        await processRegionFile(file.region, file.path, file.filename);
       } catch (error) {
-        console.error(`Failed to process region ${region}:`, error);
+        console.error(`Failed to process region ${file.region}:`, error);
         // Continue with next region
       }
     }
 
-    console.log('\nCompleted successfully!');
-  } catch (error) {
-    console.error('Fatal error:', error);
-    throw error;
+    console.log('\nIngest completed!');
   } finally {
-    if (browser) {
-      await browser.close();
-    }
     await sql.end();
   }
 }

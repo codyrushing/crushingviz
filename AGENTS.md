@@ -40,8 +40,15 @@ Use `bun` to install dependencies in packages. Do not use npm.
 
 `.env` is loaded automatically by [direnv](https://direnv.net/) via `.envrc` at the repo root. Run `direnv allow` once after cloning. Variables are then available to every command (`bun`, `go`, `psql`, `./dev`) with no wrapper:
 ```
-bun packages/data/acled/fetch-weekly-aggregates.ts
+bun packages/data/acled/download-weekly-aggregates.ts
 ```
+
+## ACLED data pipeline (`packages/data/acled/`)
+
+Split into two processes, shared via `downloads/manifest.json` (both `downloads/` and `.acled-auth.json` are gitignored):
+- `download-weekly-aggregates.ts` — Playwright browser: reuses the saved session in `.acled-auth.json`, only runs the credential login when it's missing/expired, downloads each region's `.xlsx` into `downloads/`
+- `ingest-weekly-aggregates.ts` — reads the manifest, skips unchanged filenames, ingests into Postgres. Never touches the network.
+
 
 ## Quirks
 
