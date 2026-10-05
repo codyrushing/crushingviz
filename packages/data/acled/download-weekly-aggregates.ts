@@ -6,24 +6,30 @@ Downloads ACLED weekly aggregate .xlsx files to disk for later ingestion.
 This process owns the browser. It reuses the saved session in .acled-auth.json
 when available and only performs the credential login when the session is
 missing or expired. Each run downloads every region's .xlsx file into
-./downloads and writes a manifest.json consumed by
-ingest-weekly-aggregates.ts, which decides whether anything actually changed.
-
-This process never touches the database.
+./downloads, keeping only the latest file per region, and records the files it
+saved in an `async_job` row (type `acled_weekly_agg_download`). The ingest
+process reads that row to decide what to process from disk.
 **/
 
 import { chromium, type Browser, type Page } from 'playwright';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, readdirSync, rmSync } from 'fs';
 import { join } from 'path';
-import { DOWNLOADS_DIR, MANIFEST_PATH, type DownloadedFile, type WeeklyAggManifest } from './shared';
+import { DOWNLOADS_DIR } from './shared';
 
 // Environment variables
 const ACLED_EMAIL = process.env.ACLED_EMAIL!;
 const ACLED_PASSWORD = process.env.ACLED_PASSWORD || process.env.ACLED_KEY!;
+const POSTGRES_CONNECTION_STRING = process.env.POSTGRES_CONNECTION_STRING!;
 
 if (!ACLED_EMAIL || !ACLED_PASSWORD) {
   throw new Error('ACLED_EMAIL and ACLED_PASSWORD (or ACLED_KEY) environment variables are required');
 }
+
+if (!POSTGRES_CONNECTION_STRING) {
+  throw new Error('POSTGRES_CONNECTION_STRING environment variable is required');
+}
+
+const sql = new Bun.SQL(POSTGRES_CONNECTION_STRING);
 
 // Saved browser session so the credential login only runs when this is missing or expired
 const AUTH_STATE_PATH = join(import.meta.dir, '.acled-auth.json');
@@ -57,6 +63,7 @@ async function main() {
 
   try {
     console.log('Starting ACLED weekly aggregates download...');
+    const startTime = Date.now();
 
     // Launch browser (headed so a first-run login / Cloudflare challenge can be handled manually)
     browser = await chromium.launch({
@@ -114,8 +121,8 @@ async function main() {
 
     console.log(`Found ${regionLinks.length} regions:`, regionLinks.map(r => r.region).join(', '));
 
-    // Fresh manifest each run so it only lists files downloaded this run
-    const manifest: WeeklyAggManifest = { files: [] };
+    // Files saved this run; recorded in the async_job table when the run completes
+    const savedFiles: { region: string; filename: string }[] = [];
 
     // Download each region's file
     for (const { region, url } of regionLinks) {
@@ -152,24 +159,29 @@ async function main() {
         const filePath = join(DOWNLOADS_DIR, filename);
         await Bun.write(filePath, await response.body());
         console.log(`  Downloaded to ${filePath}`);
-
-        // Record in the manifest immediately so partial runs stay usable
-        const entry: DownloadedFile = {
-          region,
-          filename,
-          path: filePath,
-          href,
-          downloadedAt: new Date().toISOString(),
-        };
-        manifest.files.push(entry);
-        await Bun.write(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
+        savedFiles.push({ region, filename });
       } catch (error) {
         console.error(`Failed to download region ${region}:`, error);
         // Continue with next region
       }
     }
 
-    console.log(`\nDownload complete: ${manifest.files.length} file(s) written to ${DOWNLOADS_DIR}`);
+    console.log(`\nDownload complete: ${savedFiles.length}/${regionLinks.length} file(s) written to ${DOWNLOADS_DIR}`);
+
+    // Keep only the latest file per region
+    const savedFilenames = new Set(savedFiles.map(f => f.filename));
+    for (const entry of readdirSync(DOWNLOADS_DIR)) {
+      if (!entry.endsWith('.xlsx') || savedFilenames.has(entry)) continue;
+      rmSync(join(DOWNLOADS_DIR, entry));
+      console.log(`  Removed stale file ${entry}`);
+    }
+
+    // Record what this run saved so the ingest process knows what to process
+    const status = savedFiles.length === regionLinks.length ? 'successful' : 'failed';
+    await sql`
+      INSERT INTO async_job (source, status, duration, type, meta)
+      VALUES ('weekly-aggregates', ${status}, ${Date.now() - startTime}, 'acled_weekly_agg_download', ${JSON.stringify({ files: savedFiles })}::jsonb)
+    `;
   } catch (error) {
     console.error('Fatal error:', error);
     throw error;
@@ -177,6 +189,7 @@ async function main() {
     if (browser) {
       await browser.close();
     }
+    await sql.end();
   }
 }
 

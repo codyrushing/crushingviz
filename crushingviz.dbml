@@ -90,7 +90,7 @@ Table acled_weekly_agg {
 	}
 }
 
-Table data_job {
+Table async_job {
   id integer [pk, increment]
   created_at timestamp [default: 'now()']
   source text
@@ -98,4 +98,9 @@ Table data_job {
   duration integer
   type text [not null]
   meta jsonb
+
+  indexes {
+    (type, created_at desc)
+    (type, source, created_at desc)
+  }
 }

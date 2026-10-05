@@ -37,15 +37,15 @@ CREATE TABLE geographic_area (
     name TEXT NOT NULL,
     type geographic_area_type NOT NULL,
     iso VARCHAR(10),
-    parent_id INTEGER REFERENCES geographic_area(id),
+    parent INTEGER REFERENCES geographic_area(id),
     geojson JSONB
 );
 
 -- Create unique constraint on type + name to prevent duplicate geographies
 CREATE UNIQUE INDEX idx_geographic_area_type_name ON geographic_area(type, name);
 
--- Create index on parent_id for efficient hierarchy queries
-CREATE INDEX idx_geographic_area_parent ON geographic_area(parent_id);
+-- Create index on parent for efficient hierarchy queries
+CREATE INDEX idx_geographic_area_parent ON geographic_area(parent);
 
 -- Create acled_weekly_agg table
 CREATE TABLE acled_weekly_agg (
@@ -68,8 +68,8 @@ CREATE TABLE acled_weekly_agg (
 CREATE INDEX idx_acled_weekly_agg_country_week ON acled_weekly_agg(country_id, week);
 CREATE INDEX idx_acled_weekly_agg_admin1_week ON acled_weekly_agg(admin1_id, week);
 
--- Create data_job table
-CREATE TABLE data_job (
+-- Create async_job table
+CREATE TABLE async_job (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT NOW(),
     source TEXT,
@@ -78,3 +78,10 @@ CREATE TABLE data_job (
     type TEXT NOT NULL,
     meta JSONB
 );
+
+-- Support looking up the latest job of a given type (e.g. the most recent download run)
+CREATE INDEX idx_async_job_type_created_at ON async_job(type, created_at DESC);
+
+-- Support looking up the latest job of a given type and source
+-- (e.g. the last successful ingest job for a region)
+CREATE INDEX idx_async_job_type_source_created_at ON async_job(type, source, created_at DESC);

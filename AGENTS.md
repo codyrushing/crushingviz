@@ -45,9 +45,9 @@ bun packages/data/acled/download-weekly-aggregates.ts
 
 ## ACLED data pipeline (`packages/data/acled/`)
 
-Split into two processes, shared via `downloads/manifest.json` (both `downloads/` and `.acled-auth.json` are gitignored):
-- `download-weekly-aggregates.ts` — Playwright browser: reuses the saved session in `.acled-auth.json`, only runs the credential login when it's missing/expired, downloads each region's `.xlsx` into `downloads/`
-- `ingest-weekly-aggregates.ts` — reads the manifest, skips unchanged filenames, ingests into Postgres. Never touches the network.
+Split into two processes coordinated through the `async_job` table (`downloads/` and `.acled-auth.json` are gitignored; only the latest file per region is kept on disk):
+- `download-weekly-aggregates.ts` — Playwright browser: reuses the saved session in `.acled-auth.json`, only runs the credential login when it's missing/expired, downloads each region's `.xlsx` into `downloads/`, then records the saved files in an `async_job` row with type `acled_weekly_agg_download`
+- `ingest-weekly-aggregates.ts` — reads the latest `acled_weekly_agg_download` job, skips unchanged filenames (compared against successful `acled_weekly_agg` ingest jobs), ingests into Postgres. Never touches the network.
 
 
 ## Quirks

@@ -4,20 +4,23 @@
 Reads ACLED weekly aggregate .xlsx files downloaded by
 download-weekly-aggregates.ts and ingests them into Postgres.
 
-For each file listed in the download manifest:
-- skips files whose filename is unchanged since the last successful data_job run
+Finds the latest `async_job` row of type `acled_weekly_agg_download` and, for
+each file it lists:
+- skips files that are missing on disk or whose filename is unchanged since
+  the last successful ingest for that region
 - parses the xlsx and upserts geographic areas and acled_weekly_agg rows in a
   single transaction per region, committed only if there were no errors
-- records a data_job row for the region whether processing succeeded or failed
+- records an async_job row for the region whether processing succeeded or failed
 
 This process never talks to the ACLED website; it only reads files from disk.
 **/
 
 import * as XLSX from 'xlsx';
 import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
 import assert from 'node:assert';
 import { DisorderType, EventType, SubEventType, GeographicAreaType, GeographicArea } from '@crushingviz/types';
-import { MANIFEST_PATH, type WeeklyAggManifest } from './shared';
+import { DOWNLOADS_DIR } from './shared';
 
 // Environment variables
 const POSTGRES_CONNECTION_STRING = process.env.POSTGRES_CONNECTION_STRING!;
@@ -93,7 +96,7 @@ async function getOrCreateGeographicArea(
 // Helper function to check if filename has changed
 async function hasFilenameChanged(region: string, filename: string): Promise<boolean> {
   const rows: { meta: any }[] = await sql`
-    SELECT meta FROM data_job
+    SELECT meta FROM async_job
     WHERE type = 'acled_weekly_agg'
       AND source = ${region}
       AND status = 'successful'
@@ -251,7 +254,7 @@ async function processRegionFile(region: string, filePath: string, filename: str
     // Record data job (outside transaction, even if processing failed)
     const duration = Date.now() - startTime;
     await sql`
-      INSERT INTO data_job (source, status, duration, type, meta)
+      INSERT INTO async_job (source, status, duration, type, meta)
       VALUES (${region}, ${status}, ${duration}, 'acled_weekly_agg', ${JSON.stringify({ filename, error: errorMessage })}::jsonb)
     `;
   }
@@ -260,31 +263,43 @@ async function processRegionFile(region: string, filePath: string, filename: str
 // Main function
 async function main() {
   try {
-    if (!existsSync(MANIFEST_PATH)) {
-      throw new Error(`No download manifest at ${MANIFEST_PATH} — run download-weekly-aggregates.ts first`);
+    // The download process records the files it saved; ingest reads the latest record
+    const jobs: { status: string; meta: any }[] = await sql`
+      SELECT status, meta FROM async_job
+      WHERE type = 'acled_weekly_agg_download'
+      ORDER BY created_at DESC
+      LIMIT 1
+    `;
+    if (!jobs.length) {
+      throw new Error('No download job recorded yet — run download-weekly-aggregates.ts first');
     }
 
-    const manifest: WeeklyAggManifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
-
-    if (!manifest.files.length) {
-      console.log('Manifest contains no files, nothing to ingest');
+    const files: { region: string; filename: string }[] = jobs[0]?.meta?.files ?? [];
+    if (!files.length) {
+      console.log('Latest download job saved no files, nothing to ingest');
       return;
     }
 
-    console.log(`Ingesting ${manifest.files.length} file(s) from manifest`);
+    console.log(`Latest download job (status: ${jobs[0]?.status}) saved ${files.length} file(s)`);
 
-    for (const file of manifest.files) {
+    for (const { region, filename } of files) {
       try {
-        console.log(`\nRegion: ${file.region}`);
+        console.log(`\nRegion: ${region} (${filename})`);
 
-        if (!await hasFilenameChanged(file.region, file.filename)) {
+        const filePath = join(DOWNLOADS_DIR, filename);
+        if (!existsSync(filePath)) {
+          console.warn('  File missing from disk, skipping');
+          continue;
+        }
+
+        if (!await hasFilenameChanged(region, filename)) {
           console.log('  Filename unchanged since last successful run, skipping');
           continue;
         }
 
-        await processRegionFile(file.region, file.path, file.filename);
+        await processRegionFile(region, filePath, filename);
       } catch (error) {
-        console.error(`Failed to process region ${file.region}:`, error);
+        console.error(`Failed to process region ${region}:`, error);
         // Continue with next region
       }
     }
