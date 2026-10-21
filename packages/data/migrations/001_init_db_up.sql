@@ -68,8 +68,8 @@ CREATE TABLE acled_weekly_agg (
 CREATE INDEX idx_acled_weekly_agg_country_week ON acled_weekly_agg(country_id, week);
 CREATE INDEX idx_acled_weekly_agg_admin1_week ON acled_weekly_agg(admin1_id, week);
 
--- Create data_job table
-CREATE TABLE data_job (
+-- Create async_job table
+CREATE TABLE async_job (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMP DEFAULT NOW(),
     source TEXT,

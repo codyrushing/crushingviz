@@ -239,3 +239,5 @@ dist
 !.env.vault
 .~lock*
 *.pmtiles
+packages/data/acled/downloads/
+packages/data/acled/.acled-auth.json
