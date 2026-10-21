@@ -69,6 +69,9 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 		@apply mt-3;
 	}
 
+	.skills-list {
+	  @apply flex flex-wrap gap-2 list-none;
+	}
 	.skills-list > li {
 		@apply whitespace-nowrap list-none px-3 py-0.5 rounded-full bg-accent-500 text-center font-bold text-gray-100;
 	}
@@ -139,7 +142,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
     </header>
 
     <section class="summary border-muted border-y py-4 md:py-8 text-base md:text-lg italic flex flex-col gap-4 text-center">
-      <p>Results-driven software engineer with 15+ years of experience across early-stage startups, digital agencies, and enterprise SaaS. Full stack generalist with a focus on system design, performance, and scalability. Proven ability to lead teams, collaborate cross-functionally, and own projects from inception to delivery. Human-centered, mission-driven, lifelong learner.</p>
+      <p>Solutions-driven software engineer with 15+ years of experience across early-stage startups, digital agencies, and enterprise SaaS. Full stack generalist with a focus on system design, performance, and scalability. Proven ability to lead teams, collaborate cross-functionally, and own projects from inception to delivery. Human-centered, mission-driven, lifelong learner.</p>
     </section>
 
     <section class="work-history flex flex-col gap-4">
@@ -148,7 +151,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
         <div class="role-item pt-0">
      			<div class="brief">
      			  <h3 class="company">AidKit</h3>
-     			  <span class="position">Platform Engineer</span>
+     			  <span class="position">Full Stack Software Engineer</span>
      			  <span class="duration">
       				<span>January 2024</span>
       				<span>present</span>
@@ -157,7 +160,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
      			<div class="role-details">
      			  <ul>
      					<li>
-     					  Member of the Conversational AI team which delivered a suite of tools including:
+     					  Member of the Conversational AI team which delivered a suite of LLM-backed tools including:
       						<ul>
       						  <li>Automated message drafting to streamline support case management which reduced case duration by 40%.</li>
       						  <li>Document classification pipeline with custom document validation and real-time updates.</li>
@@ -168,6 +171,20 @@ import ChartSquareIcon from "../icons/chart-square.astro";
      					<li>Designed and delivered a privacy-focused video calling solution with end-to-end data ownership using WebRTC and AWS Chime.</li>
      			  </ul>
      			</div>
+          <ul class="skills-list mt-4 text-xs">
+            <li>TypeScript</li>
+            <li>Node.js</li>
+            <li>React</li>
+            <li>PostgreSQL</li>
+            <li>DynamoDB</li>
+            <li>Internationalization</li>
+            <li>AWS</li>
+            <li>Claude Code</li>
+            <li>Pulumi</li>
+            <li>Python</li>
+            <li>OpenAI SDK</li>
+            <li>Webhooks</li>
+          </ul>
         </div>
 
 		    <div class="role-item">
@@ -187,11 +204,27 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 							<li>Built UI dashboards for users to monitor their fleets of IoT devices and customers utilizing React and D3.js.</li>
 							<li>Developing a demand response system to shift peak demand through automated smart thermostat controls, including a fleet-wide management web portal utilizing Serverless, GraphQL, and Next.js.</li>
 							<li>Worked closely with the product team to develop functional product specs and translated those into technical design documents.</li>
-							<!-- <li>Writing automated API integration tests.</li> -->
+							<li>Writing end-to-end tests with Cypress.</li>
 							<li>Implemented a timeseries data API for all IoT sensor data utilizing Node.js and AWS Timestream to perform custom binning, aggregations, and interpolation.</li>
 							<li>Wrote infrastructure-as-code with AWS CDK to manage the deployment of ECS services, Lambdas, single-page apps, and custom third-party resources.</li>
             </ul>
           </div>
+          <ul class="skills-list mt-4 text-xs">
+            <li>TypeScript</li>
+            <li>Node.js</li>
+            <li>React</li>
+            <li>MongoDB</li>
+            <li>Redis</li>
+            <li>API design</li>
+            <li>Auth0</li>
+            <li>D3.js</li>
+            <li>AWS</li>
+            <li>Cypress</li>
+            <li>MQTT</li>
+            <li>Websockets</li>
+            <li>Next.js</li>
+            <li>GraphQL</li>
+          </ul>
 				</div>
 
         <div class="role-item">
@@ -265,8 +298,8 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 
     <section class="skills row flex flex-col gap-3 lg:gap-4">
 			<h2 class="unstyled font-serif text-2xl lg:text-4xl">Skills and technologies</h2>
-      <ul class="skills-list flex flex-wrap gap-2 list-none">
-				<li>TypeScript</li>
+      <ul class="skills-list">
+				<li>JavaScript/TypeScript</li>
 				<li>React</li>
 				<li>Node.js</li>
 				<li>Python</li>
@@ -277,6 +310,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 				<li>AWS</li>
 				<li>API design</li>
 				<li>Web accessibility</li>
+				<li>Internationalization</li>
 				<li>Websockets</li>
 				<li>D3.js</li>
 				<li>Cypress</li>
