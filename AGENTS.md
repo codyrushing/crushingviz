@@ -33,14 +33,14 @@ Use `bun` to install dependencies in packages. Do not use npm.
 
 - Postgres 18 via Docker Compose (`compose.yml`).
 - Required env vars: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` (forms `POSTGRES_CONNECTION_STRING`).
-- Migrations: `packages/api/migrate/migrations/` (numbered SQL files). Run via `./dev db` or `cd packages/api/migrate && go run . up`.
+- Migrations: `packages/data/migrations/` (numbered SQL files). Run via `./dev db` or `bun packages/data/migrate.ts up|down`.
 - Schema source of truth: `crushingviz.dbml`.
 
 ## Data scripts
 
-Use `./run_with_env <command>` to load .env (dotenvx) before running data scripts:
+Bun automatically loads `.env` from the working directory, so no env loading wrapper is needed:
 ```
-./run_with_env bun packages/data/acled/fetch-weekly-aggregates.ts
+bun packages/data/acled/fetch-weekly-aggregates.ts
 ```
 
 ## Quirks

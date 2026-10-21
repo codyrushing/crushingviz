@@ -36,9 +36,7 @@ setup_db() {
   echo "Database is ready!"
 
   echo "Running migrations..."
-  pushd packages/api/migrate > /dev/null
-  go run migrate.go up
-  popd > /dev/null
+  bun packages/data/migrate.ts up
 }
 
 # Function to start database and keep running
