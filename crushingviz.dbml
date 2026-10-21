@@ -90,7 +90,7 @@ Table acled_weekly_agg {
 	}
 }
 
-Table data_job {
+Table async_job {
   id integer [pk, increment]
   created_at timestamp [default: 'now()']
   source text

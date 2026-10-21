@@ -11,14 +11,14 @@ Here is a list of operations this script should complete:
 - navigate to https://acleddata.com/conflict-data/download-data-files
 - for each of the links titled "Aggregated data on [region]"
   - click the link to open the region aggregate page
-  - if the filename has not changed since the last successful data_job run for this region, continue
+  - if the filename has not changed since the last successful async_job run for this region, continue
   - download the .xlsx file
   - parse the contents of the file
   - for each row (aggregate) in the file
     - insert a new row in the acled_weekly_agg postgres table
     - insert a new geographic area for the region, country, and admin_1 values for the aggregate if they don't already exist
   - after processing all rows, delete any preexisting acled_weekly_agg rows for this region
-  - save a new data_job row for this region. the `status` should only be successful if there were no errors. the filename can be saved to the `meta` jsonb column so that it can be queried by future runs
+  - save a new async_job row for this region. the `status` should only be successful if there were no errors. the filename can be saved to the `meta` jsonb column so that it can be queried by future runs
 
 Other notes:
 * All database operations for each region and associated .xlsx file should be done as part of a transaction. The transaction should only be committed if there were no errors
@@ -110,7 +110,7 @@ async function getOrCreateGeographicArea(
 // Helper function to check if filename has changed
 async function hasFilenameChanged(region: string, filename: string): Promise<boolean> {
   const rows: { meta: any }[] = await sql`
-    SELECT meta FROM data_job
+    SELECT meta FROM async_job
     WHERE type = 'acled_weekly_agg'
       AND source = ${region}
       AND status = 'successful'
@@ -268,7 +268,7 @@ async function processRegionFile(region: string, filePath: string, filename: str
     // Record data job (outside transaction, even if processing failed)
     const duration = Date.now() - startTime;
     await sql`
-      INSERT INTO data_job (source, status, duration, type, meta)
+      INSERT INTO async_job (source, status, duration, type, meta)
       VALUES (${region}, ${status}, ${duration}, 'acled_weekly_agg', ${JSON.stringify({ filename, error: errorMessage })}::jsonb)
     `;
   }
