@@ -127,14 +127,14 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 	<div class="container standard-spacing flex flex-col gap-4 md:gap-6 lg:gap-10 print:gap-8">
     <header class="flex flex-col gap-2">
       <h1 class="unstyled text-5xl font-bold font-sans text-center">Cody Rushing</h1>
-			<h2 class="unstyled text-2xl font-serif text-center leading-none">Senior Software Engineer</h2>
+			<h2 class="unstyled text-2xl font-serif text-center leading-none">Senior Full Stack Software Engineer</h2>
 			<section class="flex gap-4 justify-center text-sm">
 			  <div class="flex gap-1 items-center"><MapPin class="size-4" /><span>Austin, TX USA</span></div>
 				<div class="flex gap-1 items-center" title="Phone"><PhoneMobile class="size-4" /><span>+1 512.736.7313</span></div>
 			</section>
       <section class="contact flex flex-wrap gap-x-4 gap-y-1 justify-center items-center text-sm">
         <a title="Download as PDF" class="flex items-center gap-1 px-2 print:hidden" target="_blank" href="/CodyRushingResumeCV.pdf"><FilePDF class="size-4" /> <span class="hidden md:inline print:inline">Download</span></a>
-        <a title="Email" class="flex items-center gap-1 px-2" href="mailto:codyrushing@pm.me" class="inline"><EnvelopeIcon class="size-4" /> <span class="hidden md:inline print:inline">codyrushing@pm.me</span></a>
+        <a title="Email" class="flex items-center gap-1 px-2" href="mailto:codyrushing@pm.me"><EnvelopeIcon class="size-4" /> <span class="hidden md:inline print:inline">codyrushing@pm.me</span></a>
         <a title="LinkedIn" class="flex items-center gap-1 px-2" target="_blank" href="https://linkedin.com/in/crushing"><LinkedinIcon class="size-4" /> <span class="hidden md:inline print:inline">linkedin.com/in/crushing</span></a>
         <a title="Github" class="flex items-center gap-1 px-2" target="_blank" href="https://github.com/codyrushing"><GithubIcon class="size-4" /> <span class="hidden md:inline print:inline">github.com/codyrushing</span></a>
         <a title="Portfolio" class="flex items-center gap-1 px-2" target="_blank" href="https://crushingviz.info"><ChartSquareIcon class="size-4" /> <span class="hidden md:inline print:inline">crushingviz.info</span></a>
@@ -142,12 +142,12 @@ import ChartSquareIcon from "../icons/chart-square.astro";
     </header>
 
     <section class="summary border-muted border-y py-4 md:py-8 text-base md:text-lg italic flex flex-col gap-4 text-center">
-      <p>Solutions-oriented software engineer with 15+ years of experience across early-stage startups, digital agencies, and enterprise SaaS. Full stack generalist with a focus on system design, performance, and scalability. Proven ability to lead teams, collaborate cross-functionally, and own projects from inception to delivery. Human-centered, mission-driven, lifelong learner.</p>
+      <p>Solutions-oriented software engineer with 15+ years of experience across startups, digital agencies, and enterprise SaaS. Full stack generalist with a focus on system design, performance, and scalability. Proven ability to lead teams, collaborate cross-functionally, and own projects from inception to delivery. Human-centered, mission-driven, lifelong learner.</p>
     </section>
 
     <section class="work-history flex flex-col gap-4">
       <h2 class="unstyled font-serif text-2xl lg:text-4xl">Work history</h2>
-      <ul class="roles list-none flex flex-col divide-y">
+      <div class="roles flex flex-col divide-y">
         <div class="role-item pt-0">
      			<div class="brief">
      			  <h3 class="company">AidKit</h3>
@@ -178,6 +178,8 @@ import ChartSquareIcon from "../icons/chart-square.astro";
             <li>PostgreSQL</li>
             <li>DynamoDB</li>
             <li>AWS</li>
+            <li>CI/CD</li>
+            <li>Github Actions</li>
             <li>Claude Code</li>
             <li>Internationalization</li>
             <li>Pulumi</li>
@@ -199,31 +201,34 @@ import ChartSquareIcon from "../icons/chart-square.astro";
           </div>
           <div class="role-details">
             <ul>
-							<li>Co‑architected Curb’s microservice cloud platform that enabled real‑time data for 10K+ smart meters and 800+ daily active users, improving system reliability and scalability.</li>
+              <li>Shipped SaaS product for homeowner and solar fleet operators utilitizing Node.js/Express and Python/Flask REST APIs with React and D3 on the UI. Serving 800+ daily users monitoring 10K+ smart meters.</li>
 							<li>Designed and implemented internal and public APIs to securely provide historical and real-time energy data using Node.js (Express) and Python (Flask).</li>
 							<li>Implemented a custom Redis-backed cache layer around the public API, reducing average request time by 37%.</li>
-							<li>Built UI dashboards for fleet admins to monitor thousands of IoT devices and customers, utilizing React and D3.js.</li>
 							<li>Rewrote the timeseries data API to use AWS Timestream instead of DynamoDB, unlocking custom binning, aggregations, and interpolation while decreasing average latency by 25%.</li>
 							<li>Created quarterly project roadmaps, spearheaded engineering initiatives, and mentored junior engineers.</li>
 							<li>Worked closely with the product team to develop functional product specs and translated those into technical design documents.</li>
-							<!-- <li>Developing a demand response system to shift peak demand through automated smart thermostat controls, including a fleet-wide management web portal utilizing Serverless, GraphQL, and Next.js.</li> -->
+							<li>Developing a demand response system to shift peak demand through automated smart thermostat controls, including a fleet-wide management web portal utilizing Serverless, GraphQL, and Next.js.</li>
 							<li>Led development of integration and end-to-end tests, increasing API test coverage from 20% to 100%.</li>
-							<!-- <li>Implemented a timeseries data API for all IoT sensor data utilizing Node.js and AWS Timestream to perform custom binning, aggregations, and interpolation.</li> -->
-							<li>Wrote infrastructure-as-code with AWS CDK to manage the deployment of ECS services, Lambdas, single-page apps, and custom third-party resources.</li>
+							<!-- <li>Wrote infrastructure-as-code with AWS CDK to manage the deployment of ECS services, Lambdas, single-page apps, and custom third-party resources.</li> -->
+							<!-- <li>Built containerized services with Docker and deployed them to AWS ECS through CDK-managed pipelines.</li> -->
             </ul>
           </div>
           <ul class="skills-list mt-4 text-xs">
             <li>TypeScript</li>
+            <li>Python</li>
             <li>Node.js</li>
             <li>React</li>
+            <li>AWS</li>
             <li>MongoDB</li>
             <li>Redis</li>
             <li>API design</li>
+            <li>OpenAPI</li>
             <li>Auth0</li>
             <li>D3.js</li>
-            <li>AWS</li>
             <li>Cypress</li>
             <li>MQTT</li>
+            <li>AWS CDK</li>
+            <li>Docker</li>
             <li>Websockets</li>
             <li>NextJS</li>
             <li>GraphQL</li>
@@ -278,7 +283,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
               <span>April 2012</span>
               <span>October 2014</span>
             </span>
-          </div>Developed
+          </div>
           <div class="role-details">
             <ul>
 							<li>Engineered high traffic web applications and CMS-backed websites for enterprise clients such as Samsung, Southwest Airlines, BlackBerry, and others.</li>
@@ -302,7 +307,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
             </ul>
           </div>
         </div>
-      </ul>
+      </div>
     </section>
 
     <section class="skills row flex flex-col gap-3 lg:gap-4">
@@ -317,6 +322,7 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 				<li>MongoDB</li>
 				<li>Redis</li>
 				<li>AWS</li>
+				<li>Docker</li>
 				<li>DynamoDB</li>
 				<li>API design</li>
 				<li>Web accessibility</li>
@@ -332,10 +338,10 @@ import ChartSquareIcon from "../icons/chart-square.astro";
 				<li>SolidJS</li>
 				<li>Headless CMS</li>
 				<li>Event driven systems</li>
-				<li>Coding agents</li>
+				<li>AI-assisted engineering</li>
 				<li>Three.js</li>
 				<li>OpenAPI</li>
-				<li>Devops</li>
+				<li>DevOps</li>
       </ul>
     </section>
 
@@ -348,9 +354,9 @@ import ChartSquareIcon from "../icons/chart-square.astro";
       </div>
     </section>
 
-    <section class="references italic print:hidden">
+    <!-- <section class="references italic print:hidden">
       <p>References available upon request.</p>
-    </section>
+    </section> -->
 
 	</div>
 </PageLayout>
