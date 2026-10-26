@@ -4,12 +4,16 @@
 // source: acled.go
 
 /**
- * DisorderType represents the three broad categories of disorder in ACLED data
+ * DisorderType represents the broad categories of disorder in ACLED data.
+ * "Political violence; Demonstrations" is a combined value ACLED emits for
+ * sub-events that fall in both categories (only "Excessive force against
+ * protesters" in the weekly aggregates).
  */
 export const DisorderTypePoliticalViolence = "Political violence";
 export const DisorderTypeDemonstrations = "Demonstrations";
 export const DisorderTypeStrategic = "Strategic developments";
-export type DisorderType = typeof DisorderTypePoliticalViolence | typeof DisorderTypeDemonstrations | typeof DisorderTypeStrategic;
+export const DisorderTypePoliticalViolenceDemonstrations = "Political violence; Demonstrations";
+export type DisorderType = typeof DisorderTypePoliticalViolence | typeof DisorderTypeDemonstrations | typeof DisorderTypeStrategic | typeof DisorderTypePoliticalViolenceDemonstrations;
 /**
  * EventType represents the six main event classifications in ACLED data
  */
@@ -107,7 +111,8 @@ export interface ACLEDWeeklyAggregateBase {
 	 */
 	admin1_id?: number /* int */;
 	/**
-	 * DisorderType is one of three broad categories: Political violence, Demonstrations, or Strategic developments
+	 * DisorderType is the broad category: Political violence, Demonstrations,
+	 * Strategic developments, or the combined "Political violence; Demonstrations"
 	 */
 	disorder_type: DisorderType;
 	/**

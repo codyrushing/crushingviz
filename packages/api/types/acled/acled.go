@@ -10,13 +10,17 @@ import "time"
  * https://acleddata.com/use-access/how-use-acleds-aggregated-data
  */
 
-// DisorderType represents the three broad categories of disorder in ACLED data
+// DisorderType represents the broad categories of disorder in ACLED data.
+// "Political violence; Demonstrations" is a combined value ACLED emits for
+// sub-events that fall in both categories (only "Excessive force against
+// protesters" in the weekly aggregates).
 type DisorderType string
 
 const (
-	DisorderTypePoliticalViolence DisorderType = "Political violence"
-	DisorderTypeDemonstrations    DisorderType = "Demonstrations"
-	DisorderTypeStrategic         DisorderType = "Strategic developments"
+	DisorderTypePoliticalViolence               DisorderType = "Political violence"
+	DisorderTypeDemonstrations                  DisorderType = "Demonstrations"
+	DisorderTypeStrategic                       DisorderType = "Strategic developments"
+	DisorderTypePoliticalViolenceDemonstrations DisorderType = "Political violence; Demonstrations"
 )
 
 // EventType represents the six main event classifications in ACLED data
@@ -102,7 +106,8 @@ type ACLEDWeeklyAggregateBase struct {
 	// Admin1ID is the foreign key referencing the admin1 area in the geographic_area table
 	Admin1ID *int `json:"admin1_id,omitempty"`
 
-	// DisorderType is one of three broad categories: Political violence, Demonstrations, or Strategic developments
+	// DisorderType is the broad category: Political violence, Demonstrations,
+	// Strategic developments, or the combined "Political violence; Demonstrations"
 	DisorderType DisorderType `json:"disorder_type"`
 
 	// EventType is one of six main event classifications

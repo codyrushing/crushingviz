@@ -4,16 +4,25 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest",
-    "@crushingviz/types": "link:@crushingviz/types"
+    "@crushingviz/types": "link:@crushingviz/types",
+    "@pgtyped/cli": "^2.4.3",
+    "@types/node": "latest",
+    "@types/pg": "^8.16.0"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@types/pg": "^8.16.0",
+    "@pgtyped/query": "^2.4.2",
+    "@pgtyped/runtime": "^2.4.2",
     "pg": "^8.18.0",
     "playwright": "^1.49.0",
     "xlsx": "^0.18.5"
+  },
+  "scripts": {
+    "queries:generate": "pgtyped -c pgtyped.config.cjs",
+    "acled_sync_weekly_aggregates:download": "bun run acled/download-weekly-aggregates.ts",
+    "acled_sync_weekly_aggregates:ingest": "bun run ingest-weekly-aggregates.ts",
+    "acled_sync_weekly_aggregates:all": "bun run acled_sync_weekly_aggregates:download; bun run acled_sync_weekly_aggregates:ingest;"
   }
 }

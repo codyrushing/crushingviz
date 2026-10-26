@@ -18,6 +18,10 @@ Table geographic_area {
   iso string
   parent integer [ref: > geographic_area.id]
   geojson jsonb
+
+  indexes {
+    (type, name, parent) [unique, note: '''NULLS NOT DISTINCT — enforced when parent IS NULL (regions/countries), scoped per parent for admin1''']
+  }
 }
 
 enum geographic_area_type {
