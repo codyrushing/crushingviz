@@ -57,3 +57,4 @@ Two processes coordinated via the `async_job` table:
 - Data scripts target the Node runtime (Neon Functions / AWS Lambda), so they use `pg` + pgtyped, not `Bun.SQL`. Bun still runs them locally.
 - No tests, lint, or typecheck scripts configured.
 - `packages/data/pacific-dataviz-challenge-2026/` is a separate committed project (own AGENTS.md); its JSX files break `tsc --noEmit` in `packages/data` (no React installed there).
+- Do not write to or modify files named `human.{ext}` (eg. `human.md`). These are intended to be documentation maintained by humans only. You may read these files and reply to the user about them, but do not make any changes to these files.
