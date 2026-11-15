@@ -20,7 +20,8 @@ Root `go.work` includes `./packages/api`.
 
 ## Environment
 
-- `.env` is gitignored; pull it from the committed `.env.vault` with `bun run secrets:pull` (dotenv-vault). direnv loads `.env` via `.envrc` — run `direnv allow` once.
+- `.env` is gitignored; pull it from the committed `.env.vault` with `bun run secrets:pull` (dotenv-vault).
+- The committed `.envrc` loads `.env` into your shell via direnv (`dotenv_if_exists .env`). Run `direnv allow` once per checkout, and again after editing `.envrc`. `.envrc` is exempted from the `.env*` ignore rule — keep it that way so it stays committable.
 - Required vars: `POSTGRES_CONNECTION_STRING` (scripts + migrator), `POSTGRES_USER`/`POSTGRES_PASSWORD`/`POSTGRES_DB` (Docker Compose), `ACLED_EMAIL` + `ACLED_PASSWORD` (or `ACLED_KEY`) (download script).
 
 ## Database
@@ -32,11 +33,12 @@ Root `go.work` includes `./packages/api`.
 
 ## Data scripts
 
-Bun automatically loads `.env` from the working directory, so no env loading wrapper is needed:
+Bun auto-loads `.env` from the directory it is invoked in, and does **not** walk up to parent directories. Run these from the repo root:
 ```
 bun packages/data/acled/download-weekly-aggregates.ts
 bun packages/data/acled/ingest-weekly-aggregates.ts
 ```
+For any other cwd, rely on direnv: it loads `.env` into the shell, so the vars are already exported before Bun starts.
 
 ## Coding conventions
 
