@@ -1,3 +1,3 @@
 module crushingviz.info/api
 
-go 1.21.6
+go 1.27.4
