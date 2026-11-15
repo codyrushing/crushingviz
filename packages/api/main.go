@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,8 +16,8 @@ import (
 func newRouter() http.Handler {
 	mux := http.NewServeMux()
 
+	// both a health check and way to wake from cold start
 	mux.HandleFunc("GET /ping", func(w http.ResponseWriter, r *http.Request) {
-		// wake up the server from a cold start
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 	})
@@ -50,12 +51,13 @@ func main() {
 	go func() {
 		log.Printf("Listening on %s\n", server.Addr)
 		err := server.ListenAndServe()
-		if err != nil {
+		// ignore ErrServerClosed signal, which happens during normal shutdown
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalf("Error starting server: %v", err)
-			server.Close()
 		}
 	}()
 
+	// block here until context is cancelled (SIGTERM/SIGINT)
 	<-ctx.Done()
 	log.Println("Shutdown signal received")
 

@@ -15,7 +15,6 @@
     "build": "bun types:generate && cd packages/web && bun run build"
   },
   "devDependencies": {
-    "@dotenvx/dotenvx": "^1.19.1",
     "@types/bun": "latest",
     "dotenv-vault": "^1.26.2"
   },

@@ -133,6 +133,7 @@ dist
 .flaskenv*
 !.env.project
 !.env.vault
+!.envrc
 .~lock*
 packages/history-of-violence/data
 
@@ -237,6 +238,7 @@ dist
 .flaskenv*
 !.env.project
 !.env.vault
+!.envrc
 .~lock*
 *.pmtiles
 packages/data/acled/downloads/
