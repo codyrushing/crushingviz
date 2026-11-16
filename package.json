@@ -10,6 +10,8 @@
     "secrets:pull": "dotenv-vault pull",
     "secrets:push": "dotenv-vault push",
     "types:generate": "cd packages/api && tygo generate",
+    "sql:generate": "cd packages/api && sqlc generate",
+    "sql:check": "cd packages/api && sqlc diff",
     "dev:api": "cd packages/api && go run .",
     "dev:web": "bun types:generate && cd packages/web && bun run dev",
     "build": "bun types:generate && cd packages/web && bun run build"

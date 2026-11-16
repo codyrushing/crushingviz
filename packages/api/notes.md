@@ -15,10 +15,10 @@ crushingviz/
 
 Your `go.mod` says:
 ```go
-module crushingviz.info/api
+module api.crushingviz.info
 ```
 
-This means: "This entire directory tree is one module named `crushingviz.info/api`"
+This means: "This entire directory tree is one module named `api.crushingviz.info`"
 
 ### **Package = Directory with .go files**
 A package is a directory containing `.go` files that all start with the same `package` declaration.
@@ -43,9 +43,9 @@ packages/api/
 You had:
 ```
 packages/api/
-├── go.mod                    ← Module: crushingviz.info/api
+├── go.mod                    ← Module: api.crushingviz.info
 └── types/
-    ├── go.mod                ← Module: crushingviz.info/api/types (WRONG!)
+    ├── go.mod                ← Module: api.crushingviz.info/types (WRONG!)
     └── types.go
 ```
 
@@ -111,7 +111,7 @@ With the correct structure:
 // packages/api/main.go
 package main
 
-import "crushingviz.info/api/types"  // Import the types package
+import "api.crushingviz.info/types"  // Import the types package
 
 func main() {
     var data types.ACLEDWeeklyAggregate
@@ -122,7 +122,7 @@ func main() {
 The import path is: `module_name + directory_path`
 
 ```
-crushingviz.info/api + /types = crushingviz.info/api/types
+api.crushingviz.info + /types = api.crushingviz.info/types
      ↑                    ↑
   (from go.mod)      (directory)
 ```
@@ -186,7 +186,7 @@ crushingviz/
 │
 └── packages/
     └── api/                        
-        ├── go.mod                  ← Module: crushingviz.info/api
+        ├── go.mod                  ← Module: api.crushingviz.info
         ├── main.go                 ← package main (executable)
         └── types/                  
             └── types.go            ← package types (library)

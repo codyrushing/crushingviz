@@ -7,8 +7,11 @@
  *   bun packages/data/migrate.ts [dir MIGRATIONS_DIR] [up|down|up-to VERSION|down-to VERSION|status]
  *
  * Migrations live in ./migrations by default and follow the naming pattern:
- *   {version}_{description}_up.sql
- *   {version}_{description}_down.sql
+ *   {version}_{description}.up.sql
+ *   {version}_{description}.down.sql
+ *
+ * This is the golang-migrate convention, which sqlc also understands: it
+ * ignores *.down.sql when building the schema used for code generation.
  *
  * Applied versions are tracked in the `schema_migrations` table. Each
  * migration is applied (or reverted) in its own transaction, so a failure
@@ -61,27 +64,24 @@ function loadMigrations(dirPath: string): Migration[] {
   for (const entry of readdirSync(dirPath, { withFileTypes: true })) {
     if (!entry.isFile() || !entry.name.endsWith('.sql')) continue;
     const fileName = entry.name;
-    const parts = fileName.split('_');
-    if (parts.length < 3) {
-      throw new Error(`invalid migration filename format: ${fileName}`);
+    const match = /^(\d+)_(.+)\.(up|down)\.sql$/.exec(fileName);
+    if (!match) {
+      throw new Error(
+        `invalid migration filename format (expected {version}_{description}.up.sql): ${fileName}`,
+      );
     }
 
-    const version = Number.parseInt(parts[0]!, 10);
+    const version = Number.parseInt(match[1]!, 10);
     if (Number.isNaN(version) || version < 1) {
       throw new Error(`invalid version number in migration: ${fileName}`);
     }
 
-    const lastPart = parts[parts.length - 1]!;
-    const isUp = lastPart.endsWith('up.sql');
-    const isDown = lastPart.endsWith('down.sql');
-    if (!isUp && !isDown) {
-      throw new Error(`migration file must end with up.sql or down.sql: ${fileName}`);
-    }
-    if ((isUp && ups.has(version)) || (isDown && downs.has(version))) {
+    const description = match[2]!;
+    const isUp = match[3] === 'up';
+    if ((isUp && ups.has(version)) || (!isUp && downs.has(version))) {
       throw new Error(`duplicate migration version ${version}`);
     }
 
-    const description = parts.slice(1, -1).join('_');
     const content = readFileSync(join(dirPath, fileName), 'utf8');
 
     if (isUp) {
