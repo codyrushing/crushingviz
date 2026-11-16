@@ -13,13 +13,15 @@ Viz projects and data apps
 * `packages/data` - responsible for fetching and ingesting data from various sources into database. These will run on some sort of schedule
 
 ## Database design
-The database design is documented in the [crushingviz.dbml](crushingviz.dbml) file. This can be dropped into [dbdiagram.io](https://dbdiagram.io/) to create an entity-relationship graph.
+The schema lives in the migrations at [`packages/data/migrations/`](packages/data/migrations/). Apply them (`./dev db`) and inspect the database directly to see the current schema.
 
 ## Prerequisites
 * Bun
 * Go
 * [tygo](https://github.com/gzuidhof/tygo)
   * go install github.com/gzuidhof/tygo@latest
+* [sqlc](https://sqlc.dev)
+  * go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 
 ## Development
 * `./dev all` starts runs database migrations and starts all services

@@ -1,0 +1,33 @@
+# Code generation config only — there is no schema copied into this file.
+# The schema sqlc parses is the migration directory below, which is also what
+# the real database is built from. Migrations follow the golang-migrate naming
+# convention (NNN_description.up.sql / .down.sql) so sqlc ignores the down files.
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema: "../data/migrations"
+    queries: "sql/queries"
+    gen:
+      go:
+        package: "db"
+        out: "db"
+        sql_package: "pgx/v5"
+        emit_empty_slices: true
+        # Keep generated code to what the queries actually use.
+        omit_unused_structs: true
+        # NOTE: sqlc silently ignores an override that matches nothing, so after
+        # adding a column/enum check the generated structs use these types.
+        # Enum values are mapped onto the API's domain types so there is exactly
+        # one Go definition of each enum (packages/api/types/acled).
+        overrides:
+          - db_type: "disorder_type"
+            go_type: "api.crushingviz.info/types/acled.DisorderType"
+          - db_type: "event_type"
+            go_type: "api.crushingviz.info/types/acled.EventType"
+          - db_type: "sub_event_type"
+            go_type: "api.crushingviz.info/types/acled.SubEventType"
+          # timestamps/dates come back as time.Time rather than pgtype wrappers.
+          - db_type: "pg_catalog.timestamp"
+            go_type: "time.Time"
+          - db_type: "date"
+            go_type: "time.Time"

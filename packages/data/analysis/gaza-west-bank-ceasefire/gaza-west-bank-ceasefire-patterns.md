@@ -344,7 +344,7 @@ FROM acled_weekly_agg
 WHERE admin1_id IN (11610, 11611);
 ```
 
-Window classification (see §2.2) is applied in the analysis layer as `[start_week, end_week)` ranges on the Saturday week-start dates. The exposure dimension lives under the `exposure_analysis` key of `results.json` (rolling exposure coupling, exposure-vs-fatality correlations, exposure by event type, violent vs non-violent origin, boundary transitions, monthly series), with per-window exposure statistics in `window_summary`; the strategic-development stream and its event-axis-only capture are quantified under `strategic_developments`. A natural follow-up is persisting these as a `ceasefire_period` table (migration + `crushingviz.dbml` update) so the web app can join any series against labeled regimes.
+Window classification (see §2.2) is applied in the analysis layer as `[start_week, end_week)` ranges on the Saturday week-start dates. The exposure dimension lives under the `exposure_analysis` key of `results.json` (rolling exposure coupling, exposure-vs-fatality correlations, exposure by event type, violent vs non-violent origin, boundary transitions, monthly series), with per-window exposure statistics in `window_summary`; the strategic-development stream and its event-axis-only capture are quantified under `strategic_developments`.
 
 ## 7. Sources for regime boundaries & 2026 context
 
